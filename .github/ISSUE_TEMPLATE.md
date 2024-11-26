@@ -1,4 +1,4 @@
-* Martens version:
+* Pysvgchart version:
 * Python version:
 * Operating System:
 

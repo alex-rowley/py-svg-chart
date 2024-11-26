@@ -1,5 +1,5 @@
-SVG Chart Generator
-===================
+Python SVG Chart Generator (pysvgchart)
+=======================================
 
 A Python package for creating and rendering SVG charts, including line
 charts, axes, legends, and text labels. This package supports both
@@ -33,8 +33,8 @@ Alternatively, you can clone this repository and install it locally:
 
 .. code:: bash
 
-   git clone https://github.com/yourusername/svg-chart-generator.git
-   cd svg-chart-generator
+   git clone https://github.com/arowley-ai/py-svg-chart.git
+   cd py-svg-chart
    pip install .
 
 Usage
