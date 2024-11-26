@@ -176,7 +176,6 @@ class Chart:
     def add_custom_element(self, custom_element):
         self.custom_elements.append(custom_element)
 
-    @property
     def render(self, added_elements=None):
         return '\n'.join([
             self.svg_begin_template.format(height=self.height, width=self.width),
