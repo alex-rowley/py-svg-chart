@@ -28,7 +28,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="Succinct small scale data manipulation",
+    description="Creates svg based charts in python",
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
