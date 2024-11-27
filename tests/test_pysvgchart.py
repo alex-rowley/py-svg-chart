@@ -13,9 +13,10 @@ def test_simple_line_chart_creation():
     line_chart = psc.SimpleLineChart(
         x_values=x_values,
         y_values=[y_values, [1000 + y for y in y_values]],
-        y_names=['predicted', 'actual']
+        y_names=['predicted', 'actual'],
+        x_max_ticks=20
     )
-    line_chart.add_grids(minor_y_ticks=4,minor_x_ticks=4)
+    line_chart.add_grids(minor_y_ticks=4, minor_x_ticks=4)
     line_chart.add_legend()
 
     output_dir = "outputs"

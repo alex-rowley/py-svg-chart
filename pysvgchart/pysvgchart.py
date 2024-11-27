@@ -71,11 +71,11 @@ class Text(Shape):
 class Axis(Shape):
     default_axis_styles = {'stroke': '#2e2e2c'}
 
-    def __init__(self, x_position, y_position, data_points, axis_length, label_format, limits_override=get_generic_limits, axis_styles=None, tick_length=5):
+    def __init__(self, x_position, y_position, data_points, axis_length, label_format, max_ticks=10, axis_styles=None, tick_length=5):
         super().__init__(x_position, y_position)
         self.data_points = data_points
         self.length = axis_length
-        self.limits = limits_override(data_points)
+        self.limits = get_generic_limits(data_points, max_ticks)
         self.label_format = label_format
         self.axis_line = None
         self.tick_lines, self.tick_text, self.grid_lines = [], [], []
@@ -90,8 +90,8 @@ class Axis(Shape):
 class XAxis(Axis):
     default_tick_text_styles = {'text-anchor': 'middle', 'dominant-baseline': 'hanging'}
 
-    def __init__(self, x_position, y_position, data_points, axis_length, label_format, limits_override=get_generic_limits, axis_styles=None, tick_length=5):
-        super().__init__(x_position, y_position, data_points, axis_length, label_format, limits_override, axis_styles, tick_length)
+    def __init__(self, x_position, y_position, data_points, axis_length, label_format, max_ticks=10, axis_styles=None, tick_length=5):
+        super().__init__(x_position, y_position, data_points, axis_length, label_format, max_ticks, axis_styles, tick_length)
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=axis_length, height=0, styles=styles)
         for i, m in enumerate(self.limits):
@@ -106,8 +106,8 @@ class XAxis(Axis):
 class YAxis(Axis):
     default_tick_text_styles = {'text-anchor': 'end', 'dominant-baseline': 'middle'}
 
-    def __init__(self, x_position, y_position, data_points, axis_length, label_format, limits_override=get_generic_limits, axis_styles=None, tick_length=5):
-        super().__init__(x_position, y_position, data_points, axis_length, label_format, limits_override, axis_styles, tick_length)
+    def __init__(self, x_position, y_position, data_points, axis_length, label_format, max_ticks=10, axis_styles=None, tick_length=5):
+        super().__init__(x_position, y_position, data_points, axis_length, label_format, max_ticks, axis_styles, tick_length)
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=0, height=axis_length, styles=styles)
         for i, m in enumerate(self.limits):
@@ -117,11 +117,6 @@ class YAxis(Axis):
 
     def get_positions(self, values):
         return [self.position.y + self.length * (1 - self.proportion_of_range(v)) for v in values]
-
-    def add_grid(self):
-        for i, m in enumerate(self.limits):
-            height_offset = (len(self.limits) - 1 - i) * self.length / (len(self.limits) - 1) + self.position.y
-            self.grid_lines.append(Line(x_position=self.position.x, y_position=height_offset, width=self.length, height=0, styles=self.default_grid_styles.copy()))
 
 
 class SimpleXAxis(XAxis):
@@ -247,15 +242,16 @@ class Chart:
                     styles=minor_style
                 ))
 
+
 class SimpleLineChart(Chart):
     __line_colour_defaults__ = ['green', 'red', 'blue']
 
-    def __init__(self, x_values, y_values, y_names=None, x_margin=100, y_margin=100, height=600, width=800, x_labels='{0:,}', y_labels='{0:,}'):
+    def __init__(self, x_values, y_values, y_names=None, x_max_ticks=10, y_max_ticks=10, x_margin=100, y_margin=100, height=600, width=800, x_labels='{0:,}', y_labels='{0:,}'):
         super().__init__(height, width)
         series_names = y_names if y_names is not None else ['Series {0}'.format(range(len(y_values)))]
         all_y_values = [v for series in y_values for v in series]
-        self.y_axis = YAxis(x_position=x_margin, y_position=y_margin, data_points=all_y_values, axis_length=height - 2 * y_margin, label_format=y_labels)
-        self.x_axis = SimpleXAxis(x_position=x_margin, y_position=height - y_margin, data_points=x_values, axis_length=width - 2 * x_margin, label_format=x_labels)
+        self.y_axis = YAxis(x_position=x_margin, y_position=y_margin, data_points=all_y_values, axis_length=height - 2 * y_margin, label_format=y_labels, max_ticks=y_max_ticks)
+        self.x_axis = SimpleXAxis(x_position=x_margin, y_position=height - y_margin, data_points=x_values, axis_length=width - 2 * x_margin, label_format=x_labels, max_ticks=x_max_ticks)
         self.series = {name: SimpleLineSeries([Point(x, y) for x, y in zip(self.x_axis.get_positions(x_values), self.y_axis.get_positions(y_value))]) for name, y_value in zip(series_names, y_values)}
         for index, series in enumerate(self.series):
             self.series[series].styles['stroke'] = self.__line_colour_defaults__[index]
