@@ -69,22 +69,22 @@ class Text(Shape):
 
 
 class Axis(Shape):
-    axis_default_styles = {"stroke": '#2e2e2c'}
+    default_axis_styles = {'stroke': '#2e2e2c'}
 
     def __init__(self, x_position, y_position, data_points, axis_length, label_format, limits_override=get_generic_limits, axis_styles=None, tick_length=5):
         super().__init__(x_position, y_position)
         self.data_points = data_points
-        self.axis_length = axis_length
+        self.length = axis_length
         self.limits = limits_override(data_points)
         self.label_format = label_format
         self.axis_line = None
-        self.tick_lines, self.tick_text = [], []
+        self.tick_lines, self.tick_text, self.grid_lines = [], [], []
 
     def proportion_of_range(self, value):
         return (value - min(self.limits)) / (max(self.limits) - min(self.limits))
 
     def get_element_list(self):
-        return self.axis_line.get_element_list() + collapse_element_list(self.tick_lines) + collapse_element_list(self.tick_text)
+        return self.axis_line.get_element_list() + collapse_element_list(self.tick_lines) + collapse_element_list(self.tick_text) + collapse_element_list(self.grid_lines)
 
 
 class XAxis(Axis):
@@ -92,16 +92,15 @@ class XAxis(Axis):
 
     def __init__(self, x_position, y_position, data_points, axis_length, label_format, limits_override=get_generic_limits, axis_styles=None, tick_length=5):
         super().__init__(x_position, y_position, data_points, axis_length, label_format, limits_override, axis_styles, tick_length)
-        styles = axis_styles or self.axis_default_styles.copy()
+        styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=axis_length, height=0, styles=styles)
-        self.tick_lines, self.tick_text = [], []
         for i, m in enumerate(self.limits):
-            width_offset = i * self.axis_length / (len(self.limits) - 1) + self.position.x
+            width_offset = i * self.length / (len(self.limits) - 1) + self.position.x
             self.tick_lines.append(Line(x_position=width_offset, width=0, y_position=self.position.y, height=tick_length, styles=styles))
             self.tick_text.append(Text(x_position=width_offset, y_position=self.position.y + 2 * tick_length, content=label_format.format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
-        return [self.position.x + self.proportion_of_range(v) * self.axis_length for v in values]
+        return [self.position.x + self.proportion_of_range(v) * self.length for v in values]
 
 
 class YAxis(Axis):
@@ -109,24 +108,26 @@ class YAxis(Axis):
 
     def __init__(self, x_position, y_position, data_points, axis_length, label_format, limits_override=get_generic_limits, axis_styles=None, tick_length=5):
         super().__init__(x_position, y_position, data_points, axis_length, label_format, limits_override, axis_styles, tick_length)
-        styles = axis_styles or self.axis_default_styles.copy()
+        styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=0, height=axis_length, styles=styles)
         for i, m in enumerate(self.limits):
-            height_offset = (len(self.limits) - 1 - i) * self.axis_length / (len(self.limits) - 1) + self.position.y
+            height_offset = (len(self.limits) - 1 - i) * self.length / (len(self.limits) - 1) + self.position.y
             self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=height_offset, height=0, styles=styles))
             self.tick_text.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format.format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
-        return [self.position.y + self.axis_length * (1 - self.proportion_of_range(v)) for v in values]
+        return [self.position.y + self.length * (1 - self.proportion_of_range(v)) for v in values]
 
-    def get_element_list(self):
-        return self.axis_line.get_element_list() + collapse_element_list(self.tick_lines) + collapse_element_list(self.tick_text)
+    def add_grid(self):
+        for i, m in enumerate(self.limits):
+            height_offset = (len(self.limits) - 1 - i) * self.length / (len(self.limits) - 1) + self.position.y
+            self.grid_lines.append(Line(x_position=self.position.x, y_position=height_offset, width=self.length, height=0, styles=self.default_grid_styles.copy()))
 
 
 class SimpleXAxis(XAxis):
 
     def get_positions(self, x_values):
-        return [self.position.x + x * self.axis_length / (len(x_values) - 1) for x in range(len(x_values))]
+        return [self.position.x + x * self.length / (len(x_values) - 1) for x in range(len(x_values))]
 
 
 class SimpleLineSeries(Shape):
@@ -163,6 +164,8 @@ class LineLegend(Shape):
 
 class Chart:
     svg_begin_template = '<svg height="{height}" width="{width}" viewBox="0 0 {height} {width}" xmlns="http://www.w3.org/2000/svg">'
+    default_major_grid_styles = {'stroke': '#2e2e2c'}
+    default_minor_grid_styles = {'stroke': '#2e2e2c', 'stroke-width': "0.4"}
 
     def __init__(self, height, width):
         self.height = height
@@ -179,18 +182,70 @@ class Chart:
     def render(self, added_elements=None):
         return '\n'.join([
             self.svg_begin_template.format(height=self.height, width=self.width),
-            *self.get_element_list,
+            *self.get_element_list(),
             *self.custom_elements,
             '</svg>'
         ])
 
-    @property
     def get_element_list(self):
         target_names = ['x_axis', 'y_axis', 'legend']
         targets = [getattr(self, target) for target in target_names if getattr(self, target) is not None]
         targets.extend(self.series[s] for s in self.series)
         return [e for t in targets for e in t.get_element_list()]
 
+    def add_grids(self, minor_x_ticks=0, minor_y_ticks=0, major_grid_style=None, minor_grid_style=None):
+        self.add_y_grid(minor_y_ticks, major_grid_style, minor_grid_style)
+        self.add_x_grid(minor_x_ticks, major_grid_style, minor_grid_style)
+
+    def add_y_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
+        major_style = major_grid_style.copy() if major_grid_style is not None else self.default_major_grid_styles.copy()
+        minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
+        for i, m in enumerate(self.x_axis.limits[1:]):
+            width_offset = (i + 1) * self.x_axis.length / (len(self.x_axis.limits) - 1) + self.y_axis.position.x
+            self.y_axis.grid_lines.append(
+                Line(
+                    x_position=width_offset,
+                    y_position=self.x_axis.position.y - self.y_axis.length,
+                    width=0,
+                    height=self.y_axis.length,
+                    styles=major_style
+                )
+            )
+            minor_step = self.x_axis.length / (len(self.x_axis.limits) - 1) / (minor_ticks + 1)
+            for j in range(1, minor_ticks + 1):
+                minor_offset = width_offset - j * minor_step
+                self.y_axis.grid_lines.append(Line(
+                    x_position=minor_offset,
+                    y_position=self.x_axis.position.y - self.y_axis.length,
+                    width=0,
+                    height=self.y_axis.length,
+                    styles=minor_style
+                ))
+
+    def add_x_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
+        major_style = major_grid_style.copy() if major_grid_style is not None else self.default_major_grid_styles.copy()
+        minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
+        for i, m in enumerate(self.y_axis.limits[1:]):
+            height_offset = (len(self.y_axis.limits) - 2 - i) * self.y_axis.length / (len(self.y_axis.limits) - 1) + self.x_axis.position.y
+            self.x_axis.grid_lines.append(
+                Line(
+                    x_position=self.y_axis.position.x,
+                    y_position=height_offset - self.y_axis.length,
+                    width=self.x_axis.length,
+                    height=0,
+                    styles=major_style
+                )
+            )
+            minor_step = self.y_axis.length / (len(self.y_axis.limits) - 1) / (minor_ticks + 1)
+            for j in range(1, minor_ticks + 1):
+                minor_offset = height_offset + j * minor_step
+                self.y_axis.grid_lines.append(Line(
+                    x_position=self.y_axis.position.x,
+                    y_position=minor_offset - self.y_axis.length,
+                    width=self.x_axis.length,
+                    height=0,
+                    styles=minor_style
+                ))
 
 class SimpleLineChart(Chart):
     __line_colour_defaults__ = ['green', 'red', 'blue']
