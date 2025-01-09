@@ -1,14 +1,21 @@
 import collections.abc
 import math
+import datetime as dt
+
+
+def default_format(value):
+    return '{0:,}'.format(value)
 
 
 def collapse_element_list(built_ins):
     return [e for built_in in built_ins for e in built_in.get_element_list()]
 
 
-def get_generic_limits(values, max_ticks=10):
-    if values is None or not isinstance(values, collections.abc.Iterable) or len(set(values)) <= 1:
-        raise ValueError("Values must be a non-empty iterable with at least two unique elements.")
+def safe_get_element_list(built_in):
+    return built_in.get_element_list() if built_in is not None else []
+
+
+def get_numeric_limits(values, max_ticks):
     value_min, value_max = min(values), max(values)
     raw_pad = (1.2 * value_max - 0.95 * value_min) / max_ticks
     remainder = math.log10(abs(raw_pad)) - int(math.log10(abs(raw_pad)))
@@ -17,6 +24,53 @@ def get_generic_limits(values, max_ticks=10):
     start = int(math.floor(0.95 * value_min / pad))
     end = int(math.ceil(1.2 * value_max / pad))
     return [y * pad for y in range(start, end + 1)]
+
+
+def get_big_date_limits(dates, max_ticks=10):
+    date_min, date_max = min(dates), max(dates)
+    total_days = (date_max - date_min).days
+    if total_days <= 0:
+        raise ValueError("Dates must have a positive range.")
+
+    approx_months = total_days / 30.0
+    raw_interval = approx_months / max_ticks
+
+    if raw_interval <= 1:
+        interval_months = 1
+    elif raw_interval <= 2:
+        interval_months = 2
+    elif raw_interval <= 3:
+        interval_months = 3
+    elif raw_interval <= 6:
+        interval_months = 6
+    else:
+        interval_months = 12
+
+    start = dt.datetime(date_min.year, date_min.month, 1)
+    end = dt.datetime(date_max.year, date_max.month, 1) + dt.timedelta(days=31)
+    end = dt.datetime(end.year, end.month, 1)
+
+    ticks = []
+    current_tick = start
+    while current_tick <= end:
+        ticks.append(current_tick.date())
+        month = current_tick.month + interval_months
+        year = current_tick.year + (month - 1) // 12
+        month = (month - 1) % 12 + 1
+        current_tick = dt.datetime(year, month, 1)
+
+    return ticks
+
+
+def get_limits(values, max_ticks):
+    if values is None or not isinstance(values, collections.abc.Iterable) or len(set(values)) <= 1:
+        raise ValueError("Values must be a non-empty iterable with at least two unique elements.")
+    if all(isinstance(v, dt.datetime) or isinstance(v, dt.date) for v in values):
+        return get_big_date_limits(values, max_ticks)
+    elif all(isinstance(v, int) or isinstance(v, float) for v in values):
+        return get_numeric_limits(values, max_ticks)
+    else:
+        raise ValueError("Invalid numeric data")
 
 
 class Point:
@@ -30,7 +84,7 @@ class Shape:
 
     def __init__(self, x_position, y_position):
         self.position = Point(x_position, y_position)
-        self.styles = []
+        self.styles = dict()
 
     @property
     def render_styles(self):
@@ -46,7 +100,7 @@ class Line(Shape):
     def __init__(self, x_position, y_position, width, height, styles=None):
         super().__init__(x_position, y_position)
         self.end = Point(x_position + width, y_position + height)
-        self.styles = [] if styles is None else styles
+        self.styles = dict() if styles is None else styles
 
     @property
     def start(self):
@@ -56,12 +110,23 @@ class Line(Shape):
         return [self.line_template.format(x1=self.start.x, y1=self.start.y, x2=self.end.x, y2=self.end.y, styles=self.render_styles)]
 
 
+class Circle(Shape):
+    circle_template = '<circle cx="{x}" cy="{y}" r="{r}" {styles}/>'
+
+    def __init__(self,x_position, y_position, radius, styles=None):
+        super().__init__(x_position, y_position)
+        self.styles = dict() if styles is None else styles
+        self.radius = radius
+
+    def get_element_list(self):
+        return [self.circle_template.format(x=self.position.x, y=self.position.y, r=self.radius, styles=self.render_styles)]
+
 class Text(Shape):
     text_template = '<text x="{x}" y="{y}" {styles}>{content}</text>'
 
     def __init__(self, x_position, y_position, content, styles=None):
         super().__init__(x_position, y_position)
-        self.styles = [] if styles is None else styles
+        self.styles = dict() if styles is None else styles
         self.content = content
 
     def get_element_list(self):
@@ -75,7 +140,7 @@ class Axis(Shape):
         super().__init__(x_position, y_position)
         self.data_points = data_points
         self.length = axis_length
-        self.limits = get_generic_limits(data_points, max_ticks)
+        self.limits = get_limits(data_points, max_ticks)
         self.label_format = label_format
         self.axis_line = None
         self.tick_lines, self.tick_text, self.grid_lines = [], [], []
@@ -84,7 +149,7 @@ class Axis(Shape):
         return (value - min(self.limits)) / (max(self.limits) - min(self.limits))
 
     def get_element_list(self):
-        return self.axis_line.get_element_list() + collapse_element_list(self.tick_lines) + collapse_element_list(self.tick_text) + collapse_element_list(self.grid_lines)
+        return safe_get_element_list(self.axis_line) + collapse_element_list(self.tick_lines) + collapse_element_list(self.tick_text) + collapse_element_list(self.grid_lines)
 
 
 class XAxis(Axis):
@@ -97,7 +162,7 @@ class XAxis(Axis):
         for i, m in enumerate(self.limits):
             width_offset = i * self.length / (len(self.limits) - 1) + self.position.x
             self.tick_lines.append(Line(x_position=width_offset, width=0, y_position=self.position.y, height=tick_length, styles=styles))
-            self.tick_text.append(Text(x_position=width_offset, y_position=self.position.y + 2 * tick_length, content=label_format.format(m), styles=self.default_tick_text_styles.copy()))
+            self.tick_text.append(Text(x_position=width_offset, y_position=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
         return [self.position.x + self.proportion_of_range(v) * self.length for v in values]
@@ -113,7 +178,7 @@ class YAxis(Axis):
         for i, m in enumerate(self.limits):
             height_offset = (len(self.limits) - 1 - i) * self.length / (len(self.limits) - 1) + self.position.y
             self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=height_offset, height=0, styles=styles))
-            self.tick_text.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format.format(m), styles=self.default_tick_text_styles.copy()))
+            self.tick_text.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
         return [self.position.y + self.length * (1 - self.proportion_of_range(v)) for v in values]
@@ -158,7 +223,8 @@ class LineLegend(Shape):
 
 
 class Chart:
-    svg_begin_template = '<svg height="{height}" width="{width}" viewBox="0 0 {height} {width}" xmlns="http://www.w3.org/2000/svg">'
+    # height="{height}" width="{width}"
+    svg_begin_template = '<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">'
     default_major_grid_styles = {'stroke': '#2e2e2c'}
     default_minor_grid_styles = {'stroke': '#2e2e2c', 'stroke-width': "0.4"}
 
@@ -174,11 +240,10 @@ class Chart:
     def add_custom_element(self, custom_element):
         self.custom_elements.append(custom_element)
 
-    def render(self, added_elements=None):
+    def render(self):
         return '\n'.join([
             self.svg_begin_template.format(height=self.height, width=self.width),
             *self.get_element_list(),
-            *self.custom_elements,
             '</svg>'
         ])
 
@@ -186,6 +251,7 @@ class Chart:
         target_names = ['x_axis', 'y_axis', 'legend']
         targets = [getattr(self, target) for target in target_names if getattr(self, target) is not None]
         targets.extend(self.series[s] for s in self.series)
+        targets.extend(self.custom_elements)
         return [e for t in targets for e in t.get_element_list()]
 
     def add_grids(self, minor_x_ticks=0, minor_y_ticks=0, major_grid_style=None, minor_grid_style=None):
@@ -246,7 +312,7 @@ class Chart:
 class SimpleLineChart(Chart):
     __line_colour_defaults__ = ['green', 'red', 'blue']
 
-    def __init__(self, x_values, y_values, y_names=None, x_max_ticks=10, y_max_ticks=10, x_margin=100, y_margin=100, height=600, width=800, x_labels='{0:,}', y_labels='{0:,}'):
+    def __init__(self, x_values, y_values, y_names=None, x_max_ticks=12, y_max_ticks=12, x_margin=100, y_margin=100, height=600, width=800, x_labels=default_format, y_labels=default_format):
         super().__init__(height, width)
         series_names = y_names if y_names is not None else ['Series {0}'.format(range(len(y_values)))]
         all_y_values = [v for series in y_values for v in series]
