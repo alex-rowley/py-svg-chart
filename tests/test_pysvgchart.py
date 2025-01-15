@@ -73,3 +73,5 @@ def test_stylised_line_chart():
             line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
 
     write_out(line_chart, name="detailed.svg")
+
+
