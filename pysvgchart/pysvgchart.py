@@ -203,6 +203,12 @@ class SimpleLineSeries(Shape):
         path = ' '.join(['{0} {1} {2}'.format("L" if i else "M", p.x, p.y) for i, p in enumerate(self.points)])
         return [self.path_begin_template.format(path=path, styles=self.render_styles)]
 
+    @property
+    def path_length(self):
+        if len(self.points) < 2:
+            return 0
+        return sum(math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) for (x1, y1), (x2, y2) in zip(self.points, self.points[1:]))
+
 
 class LineLegend(Shape):
     default_line_legend_text_styles = {'alignment-baseline': 'middle'}
