@@ -36,7 +36,7 @@ def test_simple_line_chart_creation():
     assert 'svg' in line_chart.render().lower(), "SVG content is not in the render output."
     assert len(line_chart.y_axis.tick_text) > 0, "Y-axis ticks are missing."
     assert line_chart.y_axis.tick_text[-1].styles, "Y-axis tick styles are missing."
-
+    assert isinstance(line_chart.series['predicted'].path_length, float), "Path length error"
 
 def test_stylised_line_chart():
     def y_labels(num):

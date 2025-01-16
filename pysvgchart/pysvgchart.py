@@ -205,9 +205,7 @@ class SimpleLineSeries(Shape):
 
     @property
     def path_length(self):
-        if len(self.points) < 2:
-            return 0
-        return sum(math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) for (x1, y1), (x2, y2) in zip(self.points, self.points[1:]))
+        return sum(math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2) for p1, p2 in zip(self.points, self.points[1:])) if len(self.points) > 2 else 0
 
 
 class LineLegend(Shape):
