@@ -324,7 +324,7 @@ class SimpleLineChart(Chart):
         self.x_axis = SimpleXAxis(x_position=x_margin, y_position=height - y_margin, data_points=x_values, axis_length=width - 2 * x_margin, label_format=x_labels, max_ticks=x_max_ticks)
         self.series = {name: SimpleLineSeries([Point(x, y) for x, y in zip(self.x_axis.get_positions(x_values), self.y_axis.get_positions(y_value))]) for name, y_value in zip(series_names, y_values)}
         for index, series in enumerate(self.series):
-            self.series[series].styles['stroke'] = self.__line_colour_defaults__[index % len(self.self.__line_colour_defaults__)]
+            self.series[series].styles['stroke'] = self.__line_colour_defaults__[index % len(self.__line_colour_defaults__)]
 
     def add_legend(self, x_position=500, y_position=60, element_x=100, element_y=0, line_length=20, line_text_gap=5):
         self.legend = LineLegend(x_position, y_position, self.series, element_x, element_y, line_length, line_text_gap)
