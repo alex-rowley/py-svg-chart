@@ -26,39 +26,62 @@ def get_numeric_limits(values, max_ticks):
     return [y * pad for y in range(start, end + 1)]
 
 
+import datetime as dt
+
+
 def get_big_date_limits(dates, max_ticks=10):
     date_min, date_max = min(dates), max(dates)
-    total_days = (date_max - date_min).days
-    if total_days <= 0:
+    if date_min >= date_max:
         raise ValueError("Dates must have a positive range.")
 
-    approx_months = total_days / 30.0
-    raw_interval = approx_months / max_ticks
+    total_seconds = (date_max - date_min).total_seconds()
 
-    if raw_interval <= 1:
-        interval_months = 1
-    elif raw_interval <= 2:
-        interval_months = 2
-    elif raw_interval <= 3:
-        interval_months = 3
-    elif raw_interval <= 6:
-        interval_months = 6
+    if total_seconds <= 3600:
+        interval = dt.timedelta(minutes=max(1, int(total_seconds // max_ticks)))
+    elif total_seconds <= 86400:
+        interval = dt.timedelta(hours=max(1, int(total_seconds // (max_ticks * 3600))))
+    elif total_seconds <= 30 * 86400:
+        interval = dt.timedelta(days=max(1, int(total_seconds // (max_ticks * 86400))))
     else:
-        interval_months = 12
+        total_days = total_seconds / 86400
+        approx_months = total_days / 30.0
+        raw_interval = approx_months / max_ticks
 
-    start = dt.datetime(date_min.year, date_min.month, 1)
-    end = dt.datetime(date_max.year, date_max.month, 1) + dt.timedelta(days=31)
-    end = dt.datetime(end.year, end.month, 1)
+        if raw_interval <= 1:
+            interval_months = 1
+        elif raw_interval <= 2:
+            interval_months = 2
+        elif raw_interval <= 3:
+            interval_months = 3
+        elif raw_interval <= 6:
+            interval_months = 6
+        else:
+            interval_months = 12
+
+        start = dt.datetime(date_min.year, date_min.month, 1)
+        end = dt.datetime(date_max.year, date_max.month, 1) + dt.timedelta(days=31)
+        end = dt.datetime(end.year, end.month, 1)
+
+        ticks = []
+        current_tick = start
+        while current_tick <= end:
+            ticks.append(current_tick)
+            month = current_tick.month + interval_months
+            year = current_tick.year + (month - 1) // 12
+            month = (month - 1) % 12 + 1
+            current_tick = dt.datetime(year, month, 1)
+
+        return ticks
 
     ticks = []
-    current_tick = start
-    while current_tick <= end:
-        ticks.append(current_tick.date())
-        month = current_tick.month + interval_months
-        year = current_tick.year + (month - 1) // 12
-        month = (month - 1) % 12 + 1
-        current_tick = dt.datetime(year, month, 1)
+    current_tick = date_min.replace(second=0, microsecond=0)
+    while True:
+        ticks.append(current_tick)
+        if current_tick > date_max:
+            break
+        current_tick += interval
 
+    print(ticks[-1])
     return ticks
 
 
@@ -113,13 +136,14 @@ class Line(Shape):
 class Circle(Shape):
     circle_template = '<circle cx="{x}" cy="{y}" r="{r}" {styles}/>'
 
-    def __init__(self,x_position, y_position, radius, styles=None):
+    def __init__(self, x_position, y_position, radius, styles=None):
         super().__init__(x_position, y_position)
         self.styles = dict() if styles is None else styles
         self.radius = radius
 
     def get_element_list(self):
         return [self.circle_template.format(x=self.position.x, y=self.position.y, r=self.radius, styles=self.render_styles)]
+
 
 class Text(Shape):
     text_template = '<text x="{x}" y="{y}" {styles}>{content}</text>'
@@ -170,15 +194,20 @@ class XAxis(Axis):
 
 class YAxis(Axis):
     default_tick_text_styles = {'text-anchor': 'end', 'dominant-baseline': 'middle'}
+    default_sec_tick_text_styles = {'text-anchor': 'start', 'dominant-baseline': 'middle'}
 
-    def __init__(self, x_position, y_position, data_points, axis_length, label_format, max_ticks=10, axis_styles=None, tick_length=5):
+    def __init__(self, x_position, y_position, data_points, axis_length, label_format, max_ticks=10, axis_styles=None, tick_length=5, secondary=False):
         super().__init__(x_position, y_position, data_points, axis_length, label_format, max_ticks, axis_styles, tick_length)
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=0, height=axis_length, styles=styles)
         for i, m in enumerate(self.limits):
             height_offset = (len(self.limits) - 1 - i) * self.length / (len(self.limits) - 1) + self.position.y
-            self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=height_offset, height=0, styles=styles))
-            self.tick_text.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+            if secondary:
+                self.tick_lines.append(Line(x_position=self.position.x, width=tick_length, y_position=height_offset, height=0, styles=styles))
+                self.tick_text.append(Text(x_position=self.position.x + 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
+            else:
+                self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=height_offset, height=0, styles=styles))
+                self.tick_text.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
         return [self.position.y + self.length * (1 - self.proportion_of_range(v)) for v in values]
@@ -252,7 +281,7 @@ class Chart:
         ])
 
     def get_element_list(self):
-        target_names = ['x_axis', 'y_axis', 'legend']
+        target_names = ['x_axis', 'y_axis', 'legend', 'sec_y_axis']
         targets = [getattr(self, target) for target in target_names if getattr(self, target) is not None]
         targets.extend(self.series[s] for s in self.series)
         targets.extend(self.custom_elements)
@@ -314,17 +343,24 @@ class Chart:
 
 
 class SimpleLineChart(Chart):
-    __line_colour_defaults__ = ['green', 'red', 'blue']
+    __line_colour_defaults__ = ['green', 'red', 'blue', 'orange', 'yellow', 'black']
 
-    def __init__(self, x_values, y_values, y_names=None, x_max_ticks=12, y_max_ticks=12, x_margin=100, y_margin=100, height=600, width=800, x_labels=default_format, y_labels=default_format):
+    def __init__(self, x_values, y_values, sec_y_values=None, y_names=None, sec_y_names=None, x_max_ticks=12, y_max_ticks=12, x_margin=100, y_margin=100, height=600, width=800, x_labels=default_format, y_labels=default_format, sec_y_labels=default_format):
         super().__init__(height, width)
-        series_names = y_names if y_names is not None else ['Series {0}'.format(range(len(y_values)))]
+        series_names = y_names if y_names is not None else ['Series {0}'.format(k) for k in range(len(y_values))]
         all_y_values = [v for series in y_values for v in series]
         self.y_axis = YAxis(x_position=x_margin, y_position=y_margin, data_points=all_y_values, axis_length=height - 2 * y_margin, label_format=y_labels, max_ticks=y_max_ticks)
         self.x_axis = SimpleXAxis(x_position=x_margin, y_position=height - y_margin, data_points=x_values, axis_length=width - 2 * x_margin, label_format=x_labels, max_ticks=x_max_ticks)
         self.series = {name: SimpleLineSeries([Point(x, y) for x, y in zip(self.x_axis.get_positions(x_values), self.y_axis.get_positions(y_value))]) for name, y_value in zip(series_names, y_values)}
+        if sec_y_values is not None:
+            sec_all_y_values = [v for series in sec_y_values for v in series]
+            sec_series_names = sec_y_names if sec_y_names is not None else ['Secondary series {0}'.format(k) for k in range(len(sec_y_values))]
+            self.sec_y_axis = YAxis(x_position=width - x_margin, y_position=y_margin, data_points=sec_all_y_values, axis_length=height - 2 * y_margin, label_format=sec_y_labels, max_ticks=y_max_ticks, secondary=True)
+            self.series.update({name: SimpleLineSeries([Point(x, y) for x, y in zip(self.x_axis.get_positions(x_values), self.sec_y_axis.get_positions(y_value))]) for name, y_value in zip(sec_series_names, sec_y_values)})
+        else:
+            self.sec_y_axis = None
         for index, series in enumerate(self.series):
-            self.series[series].styles['stroke'] = self.__line_colour_defaults__[index]
+            self.series[series].styles['stroke'] = self.__line_colour_defaults__[index % len(self.__line_colour_defaults__)]
 
     def add_legend(self, x_position=500, y_position=60, element_x=100, element_y=0, line_length=20, line_text_gap=5):
         self.legend = LineLegend(x_position, y_position, self.series, element_x, element_y, line_length, line_text_gap)
