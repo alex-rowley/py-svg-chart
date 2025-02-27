@@ -1,17 +1,27 @@
 import collections.abc
+import datetime
 import math
 import datetime as dt
 
 
 def default_format(value):
+    """
+    format a number
+    """
     return '{0:,}'.format(value)
 
 
-def collapse_element_list(built_ins):
-    return [e for built_in in built_ins for e in built_in.get_element_list()]
+def collapse_element_list(*args):
+    """
+    flatten any number of lists of lists of elements to a list of elements
+    """
+    return [e for built_ins in args for built_in in built_ins for e in built_in.get_element_list()]
 
 
 def safe_get_element_list(built_in):
+    """
+    always return a list
+    """
     return built_in.get_element_list() if built_in is not None else []
 
 
@@ -22,6 +32,14 @@ def get_numeric_limits(
         max_value=None,
         include_zero=False,
 ):
+    """
+    compute numeric limits for a series of numbers
+    :param values: actual values
+    :param max_ticks: maximum number of ticks
+    :param min_value: optional minimum value to include in limits
+    :param max_value: optional maximum value to include in limits
+    :param include_zero: whether to include zero in limits
+    """
     value_min, value_max = min(values), max(values)
     if min_value:
         value_min = min(value_min, min_value)
@@ -42,6 +60,11 @@ def get_numeric_limits(
 
 
 def get_big_date_limits(dates, max_ticks=10):
+    """
+    compute date limits for a series of dates/datetimes
+    :param dates: actual dates/datetimes
+    :param max_ticks: maximum number of ticks
+    """
     date_min, date_max = min(dates), max(dates)
     if date_min >= date_max:
         raise ValueError("Dates must have a positive range.")
@@ -70,9 +93,8 @@ def get_big_date_limits(dates, max_ticks=10):
         else:
             interval_months = 12
 
-        start = dt.datetime(date_min.year, date_min.month, 1)
-        end = dt.datetime(date_max.year, date_max.month, 1) + dt.timedelta(days=31)
-        end = dt.datetime(end.year, end.month, 1)
+        start = date_min.replace(day=1)
+        end = (date_max.replace(day=1) + dt.timedelta(days=32)).replace(day=1)  # first day of next month
 
         ticks = []
         current_tick = start
@@ -104,8 +126,17 @@ def get_limits(
         include_zero=False,
         min_unique_values=2,
     ):
+    """
+    compute numeric limits for a series of numbers
+    :param values: actual values
+    :param max_ticks: maximum number of ticks
+    :param min_value: optional minimum value to include in limits
+    :param max_value: optional maximum value to include in limits
+    :param include_zero: whether to include zero in limits
+    :param min_unique_values: minimum number of unique values required
+    """
     if values is None or not isinstance(values, collections.abc.Iterable) or len(set(values)) < min_unique_values:
-        raise ValueError("Values must be a non-empty iterable with at least two unique elements.")
+        raise ValueError("Values must be a non-empty iterable with at least %d unique elements.", min_unique_values)
     if all(isinstance(v, (dt.datetime, dt.date)) for v in values):
         return get_big_date_limits(values, max_ticks)
     elif all(isinstance(v, (int, float)) for v in values):
@@ -117,7 +148,7 @@ def get_limits(
             include_zero=include_zero,
         )
     else:
-        raise ValueError("Invalid numeric data")
+        raise TypeError("Invalid data types in values")
 
 
 class Point:
@@ -375,7 +406,7 @@ class LineLegend(Shape):
             y_pos += element_y
 
     def get_element_list(self):
-        return collapse_element_list(self.lines) + collapse_element_list(self.texts)
+        return collapse_element_list(self.lines, self.texts)
 
 
 class Chart:
@@ -483,18 +514,23 @@ class SimpleLineChart(Chart):
             sec_y_values=None,
             y_names=None,
             sec_y_names=None,
-            # x axis
+            # x-axis
             x_min=None,
             x_max=None,
             x_zero=False,
             x_max_ticks=12,
             x_label_format=default_format,
-            # y axis
+            # primary y-axis
             y_min=None,
             y_max=None,
             y_zero=False,
             y_max_ticks=12,
             y_label_format=default_format,
+            # secondary y-axis
+            sec_y_min=None,
+            sec_y_max=None,
+            sec_y_zero=False,
+            sec_y_max_ticks=12,
             sec_y_label_format=default_format,
             # canvas
             x_margin=100,
@@ -514,12 +550,16 @@ class SimpleLineChart(Chart):
         :param x_zero: optionally force 0 to be included on the x-axis
         :param x_max_ticks: optional maximum number of ticks on the x-axis
         :param x_label_format: optional format of labels on the x-axis
-        :param y_min: optional minimum y value
-        :param y_max: optional maximum y value
-        :param y_zero: optionally force 0 to be included on the y-axis
-        :param y_max_ticks: optional maximum number of ticks on the y-axis
-        :param y_label_format: optional format of labels on the y-axis
-        :param sec_y_label_format: optional format of secondary labels on the y-axis
+        :param y_min: optional minimum value on the primary y-axis
+        :param y_max: optional maximum value on the primary y-axis
+        :param y_zero: optionally force 0 to be included on the primary y-axis
+        :param y_max_ticks: optional maximum number of ticks on the primary y-axis
+        :param y_label_format: optional format of labels on the primary y-axis
+        :param sec_y_min: optional minimum value on the secondary y-axis
+        :param sec_y_max: optional maximum value on the secondary y-axis
+        :param sec_y_zero: optionally force 0 to be included on the secondary y-axis
+        :param sec_y_max_ticks: optional maximum number of ticks on the secondary y-axis
+        :param sec_y_label_format: optional format of labels on the secondary y-axis
         :param x_margin: optional margin for the x-axis
         :param y_margin: optional margin for the y-axis
         :param height: optional height of the graph
@@ -557,15 +597,34 @@ class SimpleLineChart(Chart):
                     for x, y in zip(self.x_axis.get_positions(x_values), self.y_axis.get_positions(y_value))
                 ],
             )
-            for name, y_value in zip(series_names, y_values)}
-        self.y_axis = YAxis(x_position=x_margin, y_position=y_margin, data_points=all_y_values, axis_length=height - 2 * y_margin, label_format=y_label_format, max_ticks=y_max_ticks)
-        self.x_axis = SimpleXAxis(x_position=x_margin, y_position=height - y_margin, data_points=x_values, axis_length=width - 2 * x_margin, label_format=x_label_format, max_ticks=x_max_ticks)
-        self.series = {name: SimpleLineSeries([Point(x, y) for x, y in zip(self.x_axis.get_positions(x_values), self.y_axis.get_positions(y_value))]) for name, y_value in zip(series_names, y_values)}
+            for name, y_value in zip(series_names, y_values)
+        }
         if sec_y_values is not None:
             sec_all_y_values = [v for series in sec_y_values for v in series]
             sec_series_names = sec_y_names if sec_y_names is not None else ['Secondary series {0}'.format(k) for k in range(len(sec_y_values))]
-            self.sec_y_axis = YAxis(x_position=width - x_margin, y_position=y_margin, data_points=sec_all_y_values, axis_length=height - 2 * y_margin, label_format=sec_y_label_format, max_ticks=y_max_ticks, secondary=True)
-            self.series.update({name: SimpleLineSeries([Point(x, y) for x, y in zip(self.x_axis.get_positions(x_values), self.sec_y_axis.get_positions(y_value))]) for name, y_value in zip(sec_series_names, sec_y_values)})
+            self.sec_y_axis = YAxis(
+                x_position=width - x_margin,
+                y_position=y_margin,
+                data_points=sec_all_y_values,
+                axis_length=height - 2 * y_margin,
+                label_format=sec_y_label_format,
+                max_ticks=sec_y_max_ticks,
+                min_value=sec_y_min,
+                max_value=sec_y_max,
+                include_zero=sec_y_zero,
+                secondary=True,
+            )
+            self.series.update(
+                {
+                    name: SimpleLineSeries(
+                        [
+                            Point(x, y)
+                            for x, y in zip(self.x_axis.get_positions(x_values), self.sec_y_axis.get_positions(y_value))
+                        ]
+                    )
+                    for name, y_value in zip(sec_series_names, sec_y_values)
+                }
+            )
         else:
             self.sec_y_axis = None
         for index, series in enumerate(self.series):
