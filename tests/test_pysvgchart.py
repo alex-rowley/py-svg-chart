@@ -38,6 +38,7 @@ def test_simple_line_chart_creation():
     assert line_chart.y_axis.tick_text[-1].styles, "Y-axis tick styles are missing."
     assert isinstance(line_chart.series['predicted'].path_length, float), "Path length error"
 
+
 def test_stylised_line_chart():
     def y_labels(num):
         num = float('{:.3g}'.format(num))
@@ -73,5 +74,3 @@ def test_stylised_line_chart():
             line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
 
     write_out(line_chart, name="detailed.svg")
-
-
