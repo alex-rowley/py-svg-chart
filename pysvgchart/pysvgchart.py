@@ -103,7 +103,7 @@ def get_big_date_limits(dates, max_ticks=10):
             month = current_tick.month + interval_months
             year = current_tick.year + (month - 1) // 12
             month = (month - 1) % 12 + 1
-            current_tick = dt.datetime(year, month, 1)
+            current_tick = current_tick.replace(year=year, month=month)
 
         return ticks
 
