@@ -7,7 +7,7 @@ import math
 
 
 def write_out(chart, name):
-    output_dir = "outputs"
+    output_dir = "showcase"
     output_file = os.path.join(output_dir, name)
     os.makedirs(output_dir, exist_ok=True)
     with open(output_file, 'w+') as out_file:
@@ -75,3 +75,9 @@ def test_stylised_line_chart():
             line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
 
     write_out(line_chart, name="detailed.svg")
+
+
+def test_donut():
+    values = [10, 20, 30, 40]
+    donut_chart = psc.DonutChart(values)
+    write_out(donut_chart, name="donut.svg")

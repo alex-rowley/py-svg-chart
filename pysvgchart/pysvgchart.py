@@ -124,7 +124,7 @@ def get_limits(
         max_value=None,
         include_zero=False,
         min_unique_values=2,
-    ):
+):
     """
     compute numeric limits for a series of numbers
     :param values: actual values
@@ -172,7 +172,6 @@ class Shape:
 
 
 class Line(Shape):
-
     line_template = '<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" {styles}/>'
 
     def __init__(self, x_position, y_position, width, height, styles=None):
@@ -189,7 +188,6 @@ class Line(Shape):
 
 
 class Circle(Shape):
-
     circle_template = '<circle cx="{x}" cy="{y}" r="{r}" {styles}/>'
 
     def __init__(self, x_position, y_position, radius, styles=None):
@@ -201,8 +199,91 @@ class Circle(Shape):
         return [self.circle_template.format(x=self.position.x, y=self.position.y, r=self.radius, styles=self.render_styles)]
 
 
-class Text(Shape):
+class DonutSegment(Shape):
+    path_default_styles = {'stroke-width': '2'}
+    path_template = (
+        '<path d="M {outer_begin_x},{outer_begin_y} '
+        'A {radius_outer} {radius_outer} 0 {large_arc_flag} 1 {outer_end_x} {outer_end_y} '
+        'L {inner_begin_x},{inner_begin_y} '
+        'A {radius_inner} {radius_inner} 0 {large_arc_flag} 0 {inner_end_x} {inner_end_y} '
+        'Z" fill="{colour}"></path>'
+    )
 
+    def __init__(self, colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y, styles=None):
+        super().__init__(x_position=centre_x, y_position=centre_y)
+        self.styles = dict() if styles is None else styles
+        self.start_theta = start_theta
+        self.end_theta = end_theta
+        self.centre_x = centre_x
+        self.centre_y = centre_y
+        self.radius_inner = radius_inner
+        self.radius_outer = radius_outer
+        self.colour = colour
+
+    @property
+    def start_theta_rad(self):
+        return math.radians(self.start_theta)
+
+    @property
+    def end_theta_rad(self):
+        return math.radians(self.end_theta)
+
+    @property
+    def inner_begin_x(self):
+        return self.position.x + self.radius_inner * math.cos(self.end_theta_rad)
+
+    @property
+    def inner_end_x(self):
+        return self.position.x + self.radius_inner * math.cos(self.start_theta_rad)
+
+    @property
+    def inner_begin_y(self):
+        return self.position.y + self.radius_inner * math.sin(self.end_theta_rad)
+
+    @property
+    def inner_end_y(self):
+        return self.position.y + self.radius_inner * math.sin(self.start_theta_rad)
+
+    @property
+    def outer_begin_x(self):
+        return self.position.x + self.radius_outer * math.cos(self.start_theta_rad)
+
+    @property
+    def outer_end_x(self):
+        return self.position.x + self.radius_outer * math.cos(self.end_theta_rad)
+
+    @property
+    def outer_begin_y(self):
+        return self.position.y + self.radius_outer * math.sin(self.start_theta_rad)
+
+    @property
+    def outer_end_y(self):
+        return self.position.y + self.radius_outer * math.sin(self.end_theta_rad)
+
+    @property
+    def large_arc_flag(self):
+        return 1 if (self.end_theta - self.start_theta) > 180 else 0
+
+    def get_element_list(self):
+        return [
+            self.path_template.format(
+                outer_begin_x=self.outer_begin_x,
+                outer_begin_y=self.outer_begin_y,
+                radius_inner=self.radius_inner,
+                radius_outer=self.radius_outer,
+                large_arc_flag=self.large_arc_flag,
+                outer_end_x=self.outer_end_x,
+                outer_end_y=self.outer_end_y,
+                inner_end_x=self.inner_end_x,
+                inner_end_y=self.inner_end_y,
+                inner_begin_x=self.inner_begin_x,
+                inner_begin_y=self.inner_begin_y,
+                colour=self.colour
+            )
+        ]
+
+
+class Text(Shape):
     text_template = '<text x="{x}" y="{y}" {styles}>{content}</text>'
 
     def __init__(self, x_position, y_position, content, styles=None):
@@ -357,6 +438,7 @@ class SimpleXAxis(XAxis):
     """
     x-axis of a graph with evenly spaced x values
     """
+
     def get_positions(self, x_values):
         return [self.position.x + x * self.length / (len(x_values) - 1) for x in range(len(x_values))]
 
@@ -386,14 +468,14 @@ class LineLegend(Shape):
     default_line_legend_text_styles = {'alignment-baseline': 'middle'}
 
     def __init__(self,
-            x_position,
-            y_position,
-            series,
-            element_x,
-            element_y,
-            line_length,
-            line_text_gap,
-    ):
+                 x_position,
+                 y_position,
+                 series,
+                 element_x,
+                 element_y,
+                 line_length,
+                 line_text_gap,
+                 ):
         super().__init__(x_position, y_position)
         self.series = series
         self.lines, self.texts = [], []
@@ -500,7 +582,7 @@ class Chart:
 class SimpleLineChart(Chart):
     """
     a chart with one or more lines
-    - all lines share the same x values
+    - all lines share the same x values and the distance along the axis between points is constant
     - y values differ per line
     """
     __line_colour_defaults__ = ['green', 'red', 'blue', 'orange', 'yellow', 'black']
@@ -631,3 +713,34 @@ class SimpleLineChart(Chart):
 
     def add_legend(self, x_position=500, y_position=60, element_x=100, element_y=0, line_length=20, line_text_gap=5):
         self.legend = LineLegend(x_position, y_position, self.series, element_x, element_y, line_length, line_text_gap)
+
+
+class DonutChart(Chart):
+    """
+    A donut style chart which is similar to a pie chart but has a blank interior
+    """
+    __segment_colour_defaults__ = ['green', 'red', 'blue', 'orange', 'yellow', 'black']
+
+    def __init__(self, values, height=200, width=200, centre_x=100, centre_y=100, radius_inner=55, radius_outer=100, rotation=270):
+        """
+        create a donut chart
+        :param values: values to chart
+        :param height: canvas height
+        :param width: canvas width
+        :param center_x: horizontal centre of donut
+        :param center_y: vertical centre of donut
+        :param radius_inner: inner radius of donut (blank area)
+        :param radius_outer: outer radius of donut (other area)
+        :param rotation: rotation offset
+        """
+        super().__init__(height, width)
+        self.segments = []
+        start_theta = rotation
+        for index, value in enumerate(values):
+            end_theta = start_theta + value / sum(values) * 360
+            colour = self.__segment_colour_defaults__[index % len(self.__segment_colour_defaults__)]
+            self.segments.append(DonutSegment(colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y))
+            start_theta = end_theta
+
+    def get_element_list(self):
+        return collapse_element_list(self.segments)
