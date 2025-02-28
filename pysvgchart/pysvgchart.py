@@ -10,18 +10,18 @@ def default_format(value):
     return '{0:,}'.format(value)
 
 
-def collapse_element_list(*args):
-    """
-    flatten any number of lists of elements to a list of elements
-    """
-    return [e for built_ins in args for built_in in built_ins for e in built_in.get_element_list()]
-
-
 def safe_get_element_list(built_in):
     """
     always return a list
     """
     return built_in.get_element_list() if built_in is not None else []
+
+
+def collapse_element_list(*args):
+    """
+    flatten any number of lists of elements to a list of elements
+    """
+    return [e for built_ins in args for built_in in built_ins for e in safe_get_element_list(built_in) if built_ins is not None and built_in is not None]
 
 
 def get_numeric_limits(
@@ -329,13 +329,13 @@ class Axis(Shape):
         )
         self.label_format = label_format
         self.axis_line = None
-        self.tick_lines, self.tick_text, self.grid_lines = [], [], []
+        self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
 
     def proportion_of_range(self, value):
         return (value - min(self.limits)) / (max(self.limits) - min(self.limits))
 
     def get_element_list(self):
-        return safe_get_element_list(self.axis_line) + collapse_element_list(self.tick_lines) + collapse_element_list(self.tick_text) + collapse_element_list(self.grid_lines)
+        return collapse_element_list([self.axis_line], self.tick_lines, self.tick_texts, self.grid_lines)
 
 
 class XAxis(Axis):
@@ -377,7 +377,7 @@ class XAxis(Axis):
         for i, m in enumerate(self.limits):
             width_offset = i * self.length / (len(self.limits) - 1) + self.position.x
             self.tick_lines.append(Line(x_position=width_offset, width=0, y_position=self.position.y, height=tick_length, styles=styles))
-            self.tick_text.append(Text(x_position=width_offset, y_position=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+            self.tick_texts.append(Text(x_position=width_offset, y_position=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
         return [self.position.x + self.proportion_of_range(v) * self.length for v in values]
@@ -425,10 +425,10 @@ class YAxis(Axis):
             height_offset = (len(self.limits) - 1 - i) * self.length / (len(self.limits) - 1) + self.position.y
             if secondary:
                 self.tick_lines.append(Line(x_position=self.position.x, width=tick_length, y_position=height_offset, height=0, styles=styles))
-                self.tick_text.append(Text(x_position=self.position.x + 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
+                self.tick_texts.append(Text(x_position=self.position.x + 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
             else:
                 self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=height_offset, height=0, styles=styles))
-                self.tick_text.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+                self.tick_texts.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
         return [self.position.y + self.length * (1 - self.proportion_of_range(v)) for v in values]

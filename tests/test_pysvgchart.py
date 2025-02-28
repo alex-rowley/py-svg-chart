@@ -5,6 +5,8 @@ import os
 import datetime as dt
 import math
 
+random.seed(42)
+
 
 def write_out(chart, name):
     output_dir = "showcase"
@@ -35,8 +37,8 @@ def test_simple_line_chart_creation():
 
     assert os.path.exists(output_file), "SVG file was not created."
     assert 'svg' in line_chart.render().lower(), "SVG content is not in the render output."
-    assert len(line_chart.y_axis.tick_text) > 0, "Y-axis ticks are missing."
-    assert line_chart.y_axis.tick_text[-1].styles, "Y-axis tick styles are missing."
+    assert len(line_chart.y_axis.tick_texts) > 0, "Y-axis ticks are missing."
+    assert line_chart.y_axis.tick_texts[-1].styles, "Y-axis tick styles are missing."
     assert isinstance(line_chart.series['predicted'].path_length, float), "Path length error"
 
 
@@ -70,7 +72,7 @@ def test_stylised_line_chart():
     line_end = line_chart.legend.lines[1].end
     styles = {'fill': '#2D2D2D', 'stroke': '#2D2D2D', 'stroke-width': '3'}
     line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=styles))
-    for limit, tick in zip(line_chart.x_axis.limits, line_chart.x_axis.tick_text):
+    for limit, tick in zip(line_chart.x_axis.limits, line_chart.x_axis.tick_texts):
         if tick.content == 'Jan':
             line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
 
