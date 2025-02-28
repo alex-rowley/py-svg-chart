@@ -6,6 +6,18 @@ charts, axes, legends, and text labels. This package supports both
 simple and complex chart structures and is highly customizable for
 various types of visualizations.
 
+Why did I make this project
+---------------------------
+Many charting libraries rely on JavaScript-driven client-side rendering, often requiring an intermediate canvas before
+producing a polished visual. This package takes a different approach: it generates clean, standalone SVG charts
+entirely within Python. By leveraging SVG’s inherent scalability and styling flexibility, it eliminates the need for
+JavaScript dependencies, client-side rendering, or post-processing steps. The result is a lightweight, backend-friendly
+solution for producing high-quality, resolution-independent charts without sacrificing control or maintainability.
+
+While many popular Python charting libraries focus on image-based rendering, and those that support SVG output often
+produce cumbersome, hard-to-customize files, this library is built with customization at its core. Every chart
+element is designed to be easily modified, giving developers precise control over appearance and structure.
+
 Features
 --------
 
@@ -81,12 +93,11 @@ Contributing
 We welcome contributions! If you’d like to contribute to the project,
 please follow these steps:
 
-Fork this repository.
----------------------
-
-Create a new branch (git checkout -b feature-branch). Commit your
-changes (git commit -am ‘Add feature’). Push to the branch (git push
-origin feature-branch). Open a Pull Request.
+- Fork this repository.
+- Optionally, create a new branch (eg. git checkout -b feature-branch).
+- Commit your changes (git commit -am ‘Add feature’).
+- Push to the branch (eg. git push origin feature-branch).
+- Open a pull request.
 
 License
 -------

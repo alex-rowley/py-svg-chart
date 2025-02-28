@@ -1,5 +1,4 @@
 import collections.abc
-import datetime
 import math
 import datetime as dt
 
@@ -13,7 +12,7 @@ def default_format(value):
 
 def collapse_element_list(*args):
     """
-    flatten any number of lists of lists of elements to a list of elements
+    flatten any number of lists of elements to a list of elements
     """
     return [e for built_ins in args for built_in in built_ins for e in built_in.get_element_list()]
 
@@ -59,7 +58,7 @@ def get_numeric_limits(
     return [y * pad for y in range(start, end + 1)]
 
 
-def get_big_date_limits(dates, max_ticks=10):
+def get_date_or_time_limits(dates, max_ticks=10):
     """
     compute date limits for a series of dates/datetimes
     :param dates: actual dates/datetimes
@@ -138,7 +137,7 @@ def get_limits(
     if values is None or not isinstance(values, collections.abc.Iterable) or len(set(values)) < min_unique_values:
         raise ValueError("Values must be a non-empty iterable with at least %d unique elements.", min_unique_values)
     if all(isinstance(v, (dt.datetime, dt.date)) for v in values):
-        return get_big_date_limits(values, max_ticks)
+        return get_date_or_time_limits(values, max_ticks)
     elif all(isinstance(v, (int, float)) for v in values):
         return get_numeric_limits(
             values,
@@ -411,7 +410,7 @@ class LineLegend(Shape):
 
 class Chart:
     """
-    chart canvas
+    overall svg template for chart
     """
     svg_begin_template = '<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">'
     default_major_grid_styles = {'stroke': '#2e2e2c'}
