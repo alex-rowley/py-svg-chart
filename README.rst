@@ -4,7 +4,7 @@ Python SVG Chart Generator (pysvgchart)
 A Python package for creating and rendering SVG charts, including line
 charts, axes, legends, and text labels. This package supports both
 simple and complex chart structures and is highly customisable for
-various types of visualizations.
+various types of visualisations.
 
 Why did I make this project
 ---------------------------
@@ -12,11 +12,13 @@ This project is designed for charts that are easily embedded into python web app
 
 Many charting libraries for the web rely on JavaScript-driven client-side rendering, often requiring an intermediate
 canvas before producing a polished visual. On the other hand, popular python based charting libraries focus on
-image-based rendering, and those that support SVG output often generate cumbersome, hard-to-customise files.
+image-based rendering. Such images are rigid and intractable once embedded into web applications and detailed
+customisation is impossible. If such libraries do generate resolution independent output
+it is very difficult to customise.
 
 
 This package takes a different approach: it generates clean, standalone SVG charts
-entirely within Python that can be immediately embedded in a web application. By leveraging SVG’s inherent scalability
+entirely within Python that can be immediately embedded into a web application. By leveraging SVG’s inherent scalability
 and styling flexibility, it eliminates the need for JavaScript dependencies, client-side rendering, or post-processing
 steps. The result is a lightweight, backend-friendly solution for producing high-quality, resolution-independent
 charts without sacrificing control or maintainability.
