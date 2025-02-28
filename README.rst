@@ -10,13 +10,13 @@ Why did I make this project
 ---------------------------
 This project is designed for charts that are easily embedded into python web applications (or other web applications) with minimum fuss.
 
-Many charting libraries rely on JavaScript-driven client-side rendering, often requiring an intermediate canvas before
+Many charting libraries for the web rely on JavaScript-driven client-side rendering, often requiring an intermediate canvas before
 producing a polished visual. This package takes a different approach: it generates clean, standalone SVG charts
 entirely within Python. By leveraging SVG’s inherent scalability and styling flexibility, it eliminates the need for
 JavaScript dependencies, client-side rendering, or post-processing steps. The result is a lightweight, backend-friendly
 solution for producing high-quality, resolution-independent charts without sacrificing control or maintainability.
 
-While many popular Python charting libraries focus on image-based rendering, and those that support SVG output often
+On the other hand, popular python based charting libraries focus on image-based rendering, and those that support SVG output often
 produce cumbersome, hard-to-customise files, this library is built with customisation at its core. Every chart
 element is designed to be easily modified, giving developers precise control over appearance and structure.
 As such, all of the lower level elements are accessible via properties of the charts.
