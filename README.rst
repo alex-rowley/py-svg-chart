@@ -8,7 +8,7 @@ various types of visualisations.
 
 Why did I make this project
 ---------------------------
-This project is designed for charts that are easily embedded into python web applications (or other web applications) with minimum fuss.
+This project is designed to produce charts that are easily embedded into python web applications (or other web applications) with minimum fuss.
 
 Many charting libraries for the web rely on JavaScript-driven client-side rendering, often requiring an intermediate
 canvas before producing a polished visual. On the other hand, popular python based charting libraries focus on
