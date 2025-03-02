@@ -728,8 +728,8 @@ class DonutChart(Chart):
         :param values: values to chart
         :param height: canvas height
         :param width: canvas width
-        :param center_x: horizontal centre of donut
-        :param center_y: vertical centre of donut
+        :param centre_x: horizontal centre of donut
+        :param centre_y: vertical centre of donut
         :param radius_inner: inner radius of donut (blank area)
         :param radius_outer: outer radius of donut (other area)
         :param rotation: rotation offset

@@ -13,7 +13,7 @@ This project is designed to produce charts that are easily embedded into python 
 Many charting libraries for the web rely on JavaScript-driven client-side rendering, often requiring an intermediate
 canvas before producing a polished visual. On the other hand, popular python based charting libraries focus on
 image-based rendering. Such images are rigid and intractable once embedded into web applications and detailed
-customisation is impossible. If such libraries do generate resolution independent output
+customisation is impossible. Although some libraries do generate resolution independent output
 it is very difficult to customise.
 
 
