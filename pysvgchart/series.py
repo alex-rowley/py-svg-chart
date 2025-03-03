@@ -4,7 +4,6 @@ from .shapes import Shape
 
 
 class DonutSegment(Shape):
-    path_default_styles = {'stroke-width': '2'}
     path_template = (
         '<path d="M {outer_begin_x},{outer_begin_y} '
         'A {radius_outer} {radius_outer} 0 {large_arc_flag} 1 {outer_end_x} {outer_end_y} '
@@ -13,9 +12,8 @@ class DonutSegment(Shape):
         'Z" fill="{colour}"></path>'
     )
 
-    def __init__(self, colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y, styles=None):
-        super().__init__(x_position=centre_x, y_position=centre_y)
-        self.styles = dict() if styles is None else styles
+    def __init__(self, colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y, styles=None, classes=None):
+        super().__init__(x_position=centre_x, y_position=centre_y, styles=styles, classes=classes)
         self.start_theta = start_theta
         self.end_theta = end_theta
         self.centre_x = centre_x
@@ -91,13 +89,12 @@ class SimpleLineSeries(Shape):
     """
     line series given as a number of (x, y)-points
     """
-    path_default_styles = {'stroke-width': '2'}
+    __default_styles__ = {'stroke-width': '2'}
     path_begin_template = '<path d="{path}" fill="none" {attributes}/>'
 
-    def __init__(self, points):
-        super().__init__(points[0].x, points[0].y)
+    def __init__(self, points, styles=None, classes=None):
+        super().__init__(x_position=points[0].x, y_position=points[0].y, styles=styles, classes=classes)
         self.points = points
-        self.styles = self.path_default_styles.copy()
 
     def get_element_list(self):
         path = ' '.join(['{0} {1} {2}'.format("L" if i else "M", p.x, p.y) for i, p in enumerate(self.points)])

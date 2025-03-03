@@ -276,7 +276,7 @@ class DonutChart(Chart):
             self.series[name] = DonutSegment(colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y)
             start_theta = end_theta
 
-    def do_hover_content_modifier(self, modifier):
+    def add_hover_modifier(self, modifier):
         names = list(self.series)
         segments = [self.series[name] for name in names]
         self.series = {n: Group(children=[s] + modifier(position=s.position, name=n, value=v, chart_total=sum(self.values)))

@@ -49,7 +49,7 @@ Usage depends on which chart you had in mind but each one follows similar princi
 Simple donut chart
 ^^^^^^^^^^^^^^^^^^
 
-Create a simple donut chart:
+A simple donut chart:
 
 .. code:: python
 
@@ -59,8 +59,6 @@ Create a simple donut chart:
     donut_chart = psc.DonutChart(values)
     svg_string = donut_chart.render()
 
-The following is the output of this code
-
 .. image:: https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/donut.svg
    :alt: Simple donut chart example
    :width: 200px
@@ -69,7 +67,7 @@ The following is the output of this code
 Donut chart hovers
 ^^^^^^^^^^^^^^^^^^
 The donut is nice but a little boring. To make it a bit more interesting, lets add interactive hover
-effects to charts. These effects can be added to any base elements but conceptually
+effects. These effects can be added to any base elements but conceptually
 it would primarily be used to add data labels.
 
 .. code:: python
@@ -84,10 +82,10 @@ it would primarily be used to add data labels.
     values = [10, 20, 30, 40]
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
     donut_chart = psc.DonutChart(values, names)
-    donut_chart.do_hover_content_modifier(hover_modifier)
+    donut_chart.add_hover_modifier(hover_modifier)
     write_out(donut_chart.render_with_all_styles(), name="donut_hover.svg")
 
-The `following <https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/donut_hover.svg>`_ is the output of this code
+`Here <https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/donut_hover.svg>`_ is the output of this code
 
 Simple line chart
 ^^^^^^^^^^^^^^^^^
@@ -115,15 +113,13 @@ Create a simple line chart:
 
     svg_string = line_chart.render()
 
-The following is the output of this code
-
 .. image:: https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/simple.svg
    :alt: Simple line chart example
 
 More stylised example
 ^^^^^^^^^^^^^^^^^^^^^
 
-The following code demonstrates a heavily customised line chart example
+Here's a heavily customised line chart example
 
 .. code:: python
 
@@ -161,8 +157,6 @@ The following code demonstrates a heavily customised line chart example
     for limit, tick in zip(line_chart.x_axis.limits, line_chart.x_axis.tick_texts):
         if tick.content == 'Jan':
             line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
-
-The following is the output of this code
 
 .. image:: https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/detailed.svg
    :alt: Complex line chart example
