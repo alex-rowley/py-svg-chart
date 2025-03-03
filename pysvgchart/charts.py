@@ -174,9 +174,6 @@ class SimpleLineChart(Chart):
         for index, series in enumerate(self.series):
             self.series[series].styles['stroke'] = self.__line_colour_defaults__[index % len(self.__line_colour_defaults__)]
 
-    def get_element_list(self):
-        return collapse_element_list([self.x_axis], [self.y_axis], [self.legend], [self.sec_y_axis], [self.series[s] for s in self.series], self.custom_elements)
-
     def add_legend(self, x_position=500, y_position=60, element_x=100, element_y=0, line_length=20, line_text_gap=5):
         self.legend = LineLegend(x_position, y_position, self.series, element_x, element_y, line_length, line_text_gap)
 
@@ -234,6 +231,9 @@ class SimpleLineChart(Chart):
                     styles=minor_style
                 ))
 
+    def get_element_list(self):
+        return collapse_element_list([self.x_axis], [self.y_axis], [self.legend], [self.sec_y_axis], [self.series[s] for s in self.series], self.custom_elements)
+
 
 class DonutChart(Chart):
     """
@@ -241,10 +241,11 @@ class DonutChart(Chart):
     """
     __segment_colour_defaults__ = ['green', 'red', 'blue', 'orange', 'yellow', 'black']
 
-    def __init__(self, values, height=200, width=200, centre_x=100, centre_y=100, radius_inner=55, radius_outer=100, rotation=270):
+    def __init__(self, values, labels=None, height=200, width=200, centre_x=100, centre_y=100, radius_inner=55, radius_outer=100, rotation=270):
         """
         create a donut chart
         :param values: values to chart
+        :param labels: labels to each segment
         :param height: canvas height
         :param width: canvas width
         :param centre_x: horizontal centre of donut
@@ -254,13 +255,14 @@ class DonutChart(Chart):
         :param rotation: rotation offset
         """
         super().__init__(height, width)
-        self.series = []
+        self.series = dict()
+        series_names = labels if labels is not None else ['Series {0}'.format(k) for k in range(len(values))]
         start_theta = rotation
-        for index, value in enumerate(values):
+        for index, value, name in zip(range(len(values)), values, series_names):
             end_theta = start_theta + value / sum(values) * 360
             colour = self.__segment_colour_defaults__[index % len(self.__segment_colour_defaults__)]
-            self.series.append(DonutSegment(colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y))
+            self.series[name] = DonutSegment(colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y)
             start_theta = end_theta
 
     def get_element_list(self):
-        return collapse_element_list(self.series, self.custom_elements)
+        return collapse_element_list([self.series[s] for s in self.series], self.custom_elements)
