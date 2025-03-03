@@ -92,7 +92,7 @@ class SimpleLineSeries(Shape):
     line series given as a number of (x, y)-points
     """
     path_default_styles = {'stroke-width': '2'}
-    path_begin_template = '<path d="{path}" fill="none" {styles}/>'
+    path_begin_template = '<path d="{path}" fill="none" {attributes}/>'
 
     def __init__(self, points):
         super().__init__(points[0].x, points[0].y)
@@ -101,7 +101,7 @@ class SimpleLineSeries(Shape):
 
     def get_element_list(self):
         path = ' '.join(['{0} {1} {2}'.format("L" if i else "M", p.x, p.y) for i, p in enumerate(self.points)])
-        return [self.path_begin_template.format(path=path, styles=self.render_styles)]
+        return [self.path_begin_template.format(path=path, attributes=self.attributes)]
 
     @property
     def path_length(self):

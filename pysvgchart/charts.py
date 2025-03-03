@@ -15,12 +15,16 @@ class Chart:
         self.height = height
         self.width = width
         self.custom_elements = []
+        self.series = []
 
     def get_element_list(self):
         raise NotImplementedError("Not implemented in generic chart.")
 
     def add_custom_element(self, custom_element):
         self.custom_elements.append(custom_element)
+
+    def modify_series(self, modifier):
+        self.series = [modifier(s) for s in self.series]
 
     def render(self):
         return '\n'.join([
