@@ -65,6 +65,30 @@ The following is the output of this code
    :alt: Simple donut chart example
    :width: 200px
 
+
+Donut chart hovers
+^^^^^^^^^^^^^^^^^^
+The donut is nice but a little boring. To make it a bit more interesting, lets add interactive hover
+effects to charts. These effects can be added to any base elements but conceptually
+it would primarily be used to add data labels.
+
+.. code:: python
+
+    def hover_modifier(position, name, value, chart_total):
+        text_styles = {'alignment-baseline': 'middle', 'text-anchor': 'middle'}
+        return [
+            psc.Text(x_position=position.x, y_position=position.y-10, content=name, styles=text_styles),
+            psc.Text(x_position=position.x, y_position=position.y+10, content="{:.2%}".format(value/chart_total), styles=text_styles)
+        ]
+
+    values = [10, 20, 30, 40]
+    names = ['Apples', 'Bananas', 'Cherries', 'Durians']
+    donut_chart = psc.DonutChart(values, names)
+    donut_chart.do_hover_content_modifier(hover_modifier)
+    write_out(donut_chart.render_with_all_styles(), name="donut_hover.svg")
+
+The `following <https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/donut_hover.svg>`_ is the output of this code
+
 Simple line chart
 ^^^^^^^^^^^^^^^^^
 

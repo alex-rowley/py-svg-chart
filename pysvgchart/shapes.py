@@ -1,3 +1,6 @@
+from .helpers import collapse_element_list
+
+
 class Point:
 
     def __init__(self, x_position, y_position):
@@ -5,11 +8,10 @@ class Point:
         self.y = y_position
 
 
-class Shape:
+class Element:
     __default_classes__ = []
 
-    def __init__(self, x_position, y_position):
-        self.position = Point(x_position, y_position)
+    def __init__(self):
         self.styles = dict()
         self.classes = self.__default_classes__
 
@@ -22,7 +24,14 @@ class Shape:
         self.classes.extend(classes)
 
     def get_element_list(self):
-        raise NotImplementedError("Not implemented in generic shape.")
+        raise NotImplementedError("Not implemented in generic class.")
+
+
+class Shape(Element):
+
+    def __init__(self, x_position, y_position):
+        super().__init__()
+        self.position = Point(x_position, y_position)
 
 
 class Line(Shape):
@@ -63,3 +72,17 @@ class Text(Shape):
 
     def get_element_list(self):
         return [self.text_template.format(x=self.position.x, y=self.position.y, content=self.content, attributes=self.attributes)]
+
+
+class Group(Element):
+    group_template = '<g {attributes}>'
+
+    def __init__(self, children=None):
+        super().__init__()
+        self.children = [] if children is None else children
+
+    def add_children(self, children):
+        self.children.extend(children)
+
+    def get_element_list(self):
+        return [self.group_template.format(attributes=self.attributes)] + collapse_element_list(self.children) + ['</g>']

@@ -3,7 +3,7 @@ all_styles = {
         {
             "opacity": 0
         },
-    "g:hover.text":
+    "g:hover text":
         {
             "opacity": 1
         }
@@ -19,4 +19,4 @@ def render_all_styles(styles=None):
     return '\n'.join([
         '\n'.join([name + ' {', join_indent(s + ': ' + str(styles[name][s]) + ';' for s in styles[name]), '}\n'])
         for name in styles
-    ])
+    ])[:-1]

@@ -2,6 +2,6 @@ g text {
      opacity: 0;
 }
 
-g:hover.text {
+g:hover text {
      opacity: 1;
 }

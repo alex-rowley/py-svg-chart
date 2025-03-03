@@ -1,8 +1,9 @@
 from .helpers import collapse_element_list, default_format
 from .series import DonutSegment, SimpleLineSeries
 from .axes import SimpleXAxis, YAxis
-from .shapes import Point, Line
+from .shapes import Point, Line, Group
 from .legends import LineLegend
+from .styles import render_all_styles
 
 
 class Chart:
@@ -29,6 +30,16 @@ class Chart:
     def render(self):
         return '\n'.join([
             self.svg_begin_template.format(height=self.height, width=self.width),
+            *self.get_element_list(),
+            '</svg>'
+        ])
+
+    def render_with_all_styles(self):
+        return '\n'.join([
+            self.svg_begin_template.format(height=self.height, width=self.width),
+            '<style>',
+            render_all_styles(),
+            '</style>',
             *self.get_element_list(),
             '</svg>'
         ])
@@ -256,6 +267,7 @@ class DonutChart(Chart):
         """
         super().__init__(height, width)
         self.series = dict()
+        self.values = values
         series_names = labels if labels is not None else ['Series {0}'.format(k) for k in range(len(values))]
         start_theta = rotation
         for index, value, name in zip(range(len(values)), values, series_names):
@@ -263,6 +275,12 @@ class DonutChart(Chart):
             colour = self.__segment_colour_defaults__[index % len(self.__segment_colour_defaults__)]
             self.series[name] = DonutSegment(colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y)
             start_theta = end_theta
+
+    def do_hover_content_modifier(self, modifier):
+        names = list(self.series)
+        segments = [self.series[name] for name in names]
+        self.series = {n: Group(children=[s] + modifier(position=s.position, name=n, value=v, chart_total=sum(self.values)))
+                       for n, v, s in zip(names, self.values, segments)}
 
     def get_element_list(self):
         return collapse_element_list([self.series[s] for s in self.series], self.custom_elements)
