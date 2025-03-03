@@ -98,6 +98,9 @@ def test_donut_hover():
 
     values = [10, 20, 30, 40]
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
+
     donut_chart = psc.DonutChart(values, names)
     donut_chart.add_hover_modifier(hover_modifier)
+
+
     write_out(donut_chart.render_with_all_styles(), name="donut_hover.svg")

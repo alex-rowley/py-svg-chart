@@ -279,8 +279,19 @@ class DonutChart(Chart):
     def add_hover_modifier(self, modifier):
         names = list(self.series)
         segments = [self.series[name] for name in names]
-        self.series = {n: Group(children=[s] + modifier(position=s.position, name=n, value=v, chart_total=sum(self.values)))
-                       for n, v, s in zip(names, self.values, segments)}
+        self.series = {
+            n: Group(
+                children=[s] + modifier(
+                    position=s.position,
+                    name=n,
+                    value=v,
+                    chart_total=sum(self.values)
+                )
+            )
+            for n, v, s in zip(names, self.values, segments)
+        }
+        for s in self.series:
+            self.series[s].add_classes(['psc-hover-group'])
 
     def get_element_list(self):
         return collapse_element_list([self.series[s] for s in self.series], self.custom_elements)

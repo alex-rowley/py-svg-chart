@@ -9,7 +9,7 @@ class DonutSegment(Shape):
         'A {radius_outer} {radius_outer} 0 {large_arc_flag} 1 {outer_end_x} {outer_end_y} '
         'L {inner_begin_x},{inner_begin_y} '
         'A {radius_inner} {radius_inner} 0 {large_arc_flag} 0 {inner_end_x} {inner_end_y} '
-        'Z" fill="{colour}"></path>'
+        'Z" fill="{colour}" {attributes}></path>'
     )
 
     def __init__(self, colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y, styles=None, classes=None):
@@ -80,7 +80,8 @@ class DonutSegment(Shape):
                 inner_end_y=self.inner_end_y,
                 inner_begin_x=self.inner_begin_x,
                 inner_begin_y=self.inner_begin_y,
-                colour=self.colour
+                colour=self.colour,
+                attributes=self.attributes
             )
         ]
 

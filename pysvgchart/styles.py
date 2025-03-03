@@ -1,14 +1,29 @@
 all_styles = {
-    "g text":
+    ".psc-hover-group text":
         {
-            "opacity": 0
+            "display": "none;"
         },
-    "g:hover text":
+    ".psc-hover-group:hover text":
         {
-            "opacity": 1
+            "display": "inline"
         }
 }
 
+# .segment-area text {
+#   display: none;
+# }
+#
+# .segment-area:hover text {
+#   display: inline;
+# }
+#
+# .painted-area:hover .toggle-path {
+#   opacity: 0.5;
+# }
+#
+# svg path.toggle-path:hover {
+#   opacity: 1.0 !important;
+# }
 
 def join_indent(values):
     return '\n'.join(['     ' + v for v in values])
