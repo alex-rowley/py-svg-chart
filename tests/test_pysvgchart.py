@@ -8,13 +8,16 @@ import math
 random.seed(42)
 
 
-def write_out(chart, name):
-    output_dir = "showcase"
+def write_out(content, name, output_dir="showcase"):
     output_file = os.path.join(output_dir, name)
     os.makedirs(output_dir, exist_ok=True)
     with open(output_file, 'w+') as out_file:
-        out_file.write(chart.render())
+        out_file.write(content)
     return output_file
+
+
+def test_write_out_styles():
+    write_out(psc.render_all_styles(), 'pysvgchart.css', 'styles')
 
 
 def test_simple_line_chart_creation():
@@ -33,7 +36,7 @@ def test_simple_line_chart_creation():
     line_chart.add_grids(minor_y_ticks=4, minor_x_ticks=4)
     line_chart.add_legend()
 
-    output_file = write_out(line_chart, name="simple.svg")
+    output_file = write_out(line_chart.render(), name="simple.svg")
 
     assert os.path.exists(output_file), "SVG file was not created."
     assert 'svg' in line_chart.render().lower(), "SVG content is not in the render output."
@@ -76,10 +79,10 @@ def test_stylised_line_chart():
         if tick.content == 'Jan':
             line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
 
-    write_out(line_chart, name="detailed.svg")
+    write_out(line_chart.render(), name="detailed.svg")
 
 
 def test_donut():
     values = [10, 20, 30, 40]
     donut_chart = psc.DonutChart(values)
-    write_out(donut_chart, name="donut.svg")
+    write_out(donut_chart.render(), name="donut.svg")
