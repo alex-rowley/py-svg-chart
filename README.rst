@@ -67,8 +67,7 @@ A simple donut chart:
 Donut chart hovers
 ^^^^^^^^^^^^^^^^^^
 The donut is nice but a little boring. To make it a bit more interesting, lets add interactive hover
-effects. These effects can be added to any base elements but conceptually
-it would primarily be used to add data labels.
+effects. These effects can be added to any base elements but I thought you'd mostly use it for data labels.
 
 .. code:: python
 
