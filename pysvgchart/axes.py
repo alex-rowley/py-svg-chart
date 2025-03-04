@@ -145,6 +145,6 @@ class SimpleXAxis(XAxis):
     """
     x-axis of a graph with evenly spaced x values
     """
-
-    def get_positions(self, x_values):
-        return [self.position.x + x * self.length / (len(x_values) - 1) for x in range(len(x_values))]
+    #
+    # def get_positions(self, x_values):
+    #     return [self.position.x + x * self.length / (len(x_values) - 1) for x in range(len(x_values))]
