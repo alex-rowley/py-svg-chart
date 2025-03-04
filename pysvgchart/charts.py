@@ -248,8 +248,9 @@ class LineChart(Chart):
 
     def add_hover_modifier(self, modifier, radius, series_list=None):
         def build_hover_marker(point, x_value, y_value, series_name):
+            series_styles = self.series[series_name].styles
             circle = Circle(point.x, y_position=point.y, radius=radius, styles={'style': 'opacity:0;'})
-            mod = modifier(point, x_value=x_value, y_value=y_value, series_name=series_name)
+            mod = modifier(point, x_value=x_value, y_value=y_value, series_name=series_name, styles=series_styles)
             return Group(children=[circle] + mod, classes=['psc-hover-group'])
 
         series_list = [s for s in self.series] if series_list is None else series_list
