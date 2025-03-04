@@ -1,9 +1,9 @@
 all_styles = {
-    ".psc-hover-group text":
+    ".psc-hover-group .psc-hover-data":
         {
             "display": "none;"
         },
-    ".psc-hover-group:hover text":
+    ".psc-hover-group:hover .psc-hover-data":
         {
             "display": "inline"
         }

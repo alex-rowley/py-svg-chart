@@ -1,6 +1,7 @@
 import math
 
 from .shapes import Shape
+from .helpers import collapse_element_list
 
 
 class DonutSegment(Shape):
@@ -93,14 +94,25 @@ class SimpleLineSeries(Shape):
     __default_styles__ = {'stroke-width': '2'}
     path_begin_template = '<path d="{path}" fill="none" {attributes}/>'
 
-    def __init__(self, points, styles=None, classes=None):
+    def __init__(self, points, x_values, y_values, name, styles=None, classes=None):
         super().__init__(x_position=points[0].x, y_position=points[0].y, styles=styles, classes=classes)
         self.points = points
+        self.x_values = x_values
+        self.y_values = y_values
+        self.name = name
+        self.custom_elements = []
 
-    def get_element_list(self):
-        path = ' '.join(['{0} {1} {2}'.format("L" if i else "M", p.x, p.y) for i, p in enumerate(self.points)])
-        return [self.path_begin_template.format(path=path, attributes=self.attributes)]
+    def add_custom_elements(self, custom_elements):
+        self.custom_elements.extend(custom_elements)
+
+    @property
+    def pv_generator(self):
+        return zip(self.points, self.x_values, self.y_values)
 
     @property
     def path_length(self):
         return sum(math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2) for p1, p2 in zip(self.points, self.points[1:])) if len(self.points) > 2 else 0
+
+    def get_element_list(self):
+        path = ' '.join(['{0} {1} {2}'.format("L" if i else "M", p.x, p.y) for i, p in enumerate(self.points)])
+        return [self.path_begin_template.format(path=path, attributes=self.attributes)] + collapse_element_list(self.custom_elements)

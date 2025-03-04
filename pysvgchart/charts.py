@@ -1,7 +1,7 @@
 from .helpers import collapse_element_list, default_format
 from .series import DonutSegment, SimpleLineSeries
 from .axes import SimpleXAxis, YAxis
-from .shapes import Point, Line, Group
+from .shapes import Point, Line, Group, Circle
 from .legends import LineLegend
 from .styles import render_all_styles
 
@@ -147,13 +147,17 @@ class SimpleLineChart(Chart):
         )
         self.series = {
             name: SimpleLineSeries(
-                [
+                points=[
                     Point(x, y)
                     for x, y in zip(self.x_axis.get_positions(x_values), self.y_axis.get_positions(y_value))
                 ],
+                x_values=x_values,
+                y_values=y_value,
+                name=name
             )
             for name, y_value in zip(series_names, y_values)
         }
+
         if sec_y_values is not None:
             sec_all_y_values = [v for series in sec_y_values for v in series]
             sec_series_names = sec_y_names if sec_y_names is not None else ['Secondary series {0}'.format(k) for k in range(len(sec_y_values))]
@@ -241,6 +245,18 @@ class SimpleLineChart(Chart):
                     height=0,
                     styles=minor_style
                 ))
+
+    def add_hover_modifier(self, modifier, radius, series_list=None):
+        def build_hover_marker(point, x_value, y_value, series_name):
+            circle = Circle(point.x, y_position=point.y, radius=radius, styles={'style': 'opacity:0;'})
+            mod = modifier(point, x_value=x_value, y_value=y_value, series_name=series_name)
+            return Group(children=[circle] + mod, classes=['psc-hover-group'])
+
+        series_list = [s for s in self.series] if series_list is None else series_list
+        for s in self.series:
+            if s in series_list:
+                hover_markers = [build_hover_marker(p, x, y, s) for p, x, y in self.series[s].pv_generator]
+                self.series[s].add_custom_elements(hover_markers)
 
     def get_element_list(self):
         return collapse_element_list([self.x_axis], [self.y_axis], [self.legend], [self.sec_y_axis], [self.series[s] for s in self.series], self.custom_elements)

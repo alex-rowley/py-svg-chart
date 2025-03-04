@@ -136,7 +136,7 @@ Here's a heavily customised line chart example
     def x_labels(date):
         return date.strftime('%b')
 
-    dates = [dt.date.today() - dt.timedelta(days=i) for i in range(500) if (dt.date.today() + dt.timedelta(days=i)).weekday() == 0]
+    dates = [dt.date.today() - dt.timedelta(days=i) for i in range(500) if (dt.date.today() + dt.timedelta(days=i)).weekday() == 0][::-1]
     actual = [(1 + math.sin(d.timetuple().tm_yday / 183 * math.pi)) * 50000 + 1000 * i + random.randint(-10000, 10000) for i, d in enumerate(dates)]
     expected = [a + random.randint(-10000, 10000) for a in actual]
     line_chart = psc.SimpleLineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200)
@@ -148,17 +148,34 @@ Here's a heavily customised line chart example
     line_chart.x_axis.axis_line = None
     line_chart.y_axis.axis_line.styles['stroke'] = '#E9E9DE'
     line_end = line_chart.legend.lines[0].end
-    styles = {'fill': '#FFFFFF', 'stroke': '#DB7D33', 'stroke-width': '3'}
-    line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=styles))
+    act_styles = {'fill': '#FFFFFF', 'stroke': '#DB7D33', 'stroke-width': '3'}
+    line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=act_styles))
     line_end = line_chart.legend.lines[1].end
-    styles = {'fill': '#2D2D2D', 'stroke': '#2D2D2D', 'stroke-width': '3'}
-    line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=styles))
+    pred_styles = {'fill': '#2D2D2D', 'stroke': '#2D2D2D', 'stroke-width': '3'}
+    line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=pred_styles))
     for limit, tick in zip(line_chart.x_axis.limits, line_chart.x_axis.tick_texts):
         if tick.content == 'Jan':
             line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
 
+    def hover_modifier(position, x_value, y_value, series_name):
+        text_styles = {'alignment-baseline': 'middle', 'text-anchor': 'middle'}
+        params = {'styles': text_styles, 'classes': ['psc-hover-data']}
+        marker_styles = {'Actual sales': act_styles, 'Predicted sales': pred_styles}
+        return [
+            psc.Circle(x_position=position.x, y_position=position.y, radius=3, classes=['psc-hover-data'], styles=marker_styles[series_name]),
+            psc.Text(x_position=position.x, y_position=position.y - 10, content=str(x_value), **params),
+            psc.Text(x_position=position.x, y_position=position.y - 30, content="{:,.0f}".format(y_value), **params),
+            psc.Text(x_position=position.x, y_position=position.y - 50, content=series_name, **params)
+        ]
+
+    line_chart.add_hover_modifier(hover_modifier, radius=5)
+
 .. image:: https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/detailed.svg
    :alt: Complex line chart example
+
+`View <https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/detailed.svg>`_ with hover effects
+
+
 
 Contributing
 ------------
