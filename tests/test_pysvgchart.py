@@ -81,10 +81,10 @@ def test_stylised_line_chart():
 
     def hover_modifier(position, x_value, y_value, series_name):
         text_styles = {'alignment-baseline': 'middle', 'text-anchor': 'middle'}
-        params = {'styles': text_styles, 'classes': ['psc-hover-data']}
+        params = {'styles': text_styles, 'classes': [psc.hover_style_name]}
         marker_styles = {'Actual sales': act_styles, 'Predicted sales': pred_styles}
         return [
-            psc.Circle(x_position=position.x, y_position=position.y, radius=3, classes=['psc-hover-data'], styles=marker_styles[series_name]),
+            psc.Circle(x_position=position.x, y_position=position.y, radius=3, classes=[psc.hover_style_name], styles=marker_styles[series_name]),
             psc.Text(x_position=position.x, y_position=position.y - 10, content=str(x_value), **params),
             psc.Text(x_position=position.x, y_position=position.y - 30, content="{:,.0f}".format(y_value), **params),
             psc.Text(x_position=position.x, y_position=position.y - 50, content=series_name, **params)
@@ -104,7 +104,7 @@ def test_donut():
 def test_donut_hover():
     def hover_modifier(position, name, value, chart_total):
         text_styles = {'alignment-baseline': 'middle', 'text-anchor': 'middle'}
-        params = {'styles': text_styles, 'classes': ['psc-hover-data']}
+        params = {'styles': text_styles, 'classes': [psc.hover_style_name]}
         return [
             psc.Text(x_position=position.x, y_position=position.y - 10, content=name, **params),
             psc.Text(x_position=position.x, y_position=position.y + 10, content="{:.2%}".format(value / chart_total), **params)
