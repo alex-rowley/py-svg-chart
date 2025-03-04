@@ -95,7 +95,7 @@ def test_stylised_line_chart():
 
 
 def test_donut():
-    values = [10, 20, 30, 40]
+    values = [11.3, 20, 30, 40]
     donut_chart = psc.DonutChart(values)
     write_out(donut_chart.render(), name="donut.svg")
 
@@ -109,7 +109,7 @@ def test_donut_hover():
             psc.Text(x_position=position.x, y_position=position.y + 10, content="{:.2%}".format(value / chart_total), **params)
         ]
 
-    values = [10, 20, 30, 40]
+    values = [11.3, 20, 30, 40]
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
 
     donut_chart = psc.DonutChart(values, names)

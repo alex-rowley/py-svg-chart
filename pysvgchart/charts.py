@@ -285,12 +285,18 @@ class DonutChart(Chart):
         self.series = dict()
         self.values = values
         series_names = labels if labels is not None else ['Series {0}'.format(k) for k in range(len(values))]
-        start_theta = rotation
-        for index, value, name in zip(range(len(values)), values, series_names):
-            end_theta = start_theta + value / sum(values) * 360
+        # compute value angles
+        value_sums = [0]
+        for value in values:
+            value_sums.append(value + value_sums[-1])
+        total_value = value_sums[-1]
+        unrotated_angles = [(360 * value) / total_value for value in value_sums]
+        rotated_angles = [rotation + fraction for fraction in unrotated_angles]
+        start_end_angles = [rotated_angles[index:index+2] for index in range(len(rotated_angles)-1)]
+        #
+        for index, (start_theta, end_theta), name in zip(range(len(values)), start_end_angles, series_names):
             colour = self.__segment_colour_defaults__[index % len(self.__segment_colour_defaults__)]
             self.series[name] = DonutSegment(colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y)
-            start_theta = end_theta
 
     def add_hover_modifier(self, modifier):
         names = list(self.series)
