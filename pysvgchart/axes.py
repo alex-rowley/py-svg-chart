@@ -37,6 +37,7 @@ class Axis(Shape):
         self.label_format = label_format
         self.axis_line = None
         self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
+        _ = (axis_styles, tick_length)
 
     def proportion_of_range(self, value):
         return (value - min(self.limits)) / (max(self.limits) - min(self.limits))
@@ -81,10 +82,19 @@ class XAxis(Axis):
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=axis_length, height=0, styles=styles)
-        for i, m in enumerate(self.limits):
-            width_offset = i * self.length / (len(self.limits) - 1) + self.position.x
-            self.tick_lines.append(Line(x_position=width_offset, width=0, y_position=self.position.y, height=tick_length, styles=styles))
-            self.tick_texts.append(Text(x_position=width_offset, y_position=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+        limit_positions = self.get_positions(self.limits)
+
+        # Accounts for the case where a minimum value for the axis has
+        # been selected which is between two naturally occurring major limits
+        # In this case the first 'limit' is that minimum value
+        # This solution is not awful but may need to be revisited soon
+        if len(limit_positions) > 2:
+            if (limit_positions[1] - limit_positions[0])/(limit_positions[2] - limit_positions[1]) < 0.99:
+                limit_positions = limit_positions[1:]
+
+        for m, p in zip(self.limits, limit_positions):
+            self.tick_lines.append(Line(x_position=p, width=0, y_position=self.position.y, height=tick_length, styles=styles))
+            self.tick_texts.append(Text(x_position=p, y_position=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
         return [self.position.x + self.proportion_of_range(v) * self.length for v in values]
@@ -140,11 +150,10 @@ class YAxis(Axis):
     def get_positions(self, values):
         return [self.position.y + self.length * (1 - self.proportion_of_range(v)) for v in values]
 
-
-class SimpleXAxis(XAxis):
-    """
-    x-axis of a graph with evenly spaced x values
-    """
-    #
-    # def get_positions(self, x_values):
-    #     return [self.position.x + x * self.length / (len(x_values) - 1) for x in range(len(x_values))]
+# class SimpleXAxis(XAxis):
+#     """
+#     x-axis of a graph with evenly spaced x values
+#     """
+#     #
+#     # def get_positions(self, x_values):
+#     #     return [self.position.x + x * self.length / (len(x_values) - 1) for x in range(len(x_values))]

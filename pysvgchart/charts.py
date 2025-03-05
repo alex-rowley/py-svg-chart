@@ -1,6 +1,6 @@
 from .helpers import collapse_element_list, default_format
 from .series import DonutSegment, SimpleLineSeries
-from .axes import SimpleXAxis, YAxis
+from .axes import XAxis, YAxis
 from .shapes import Point, Line, Group, Circle
 from .legends import LineLegend
 from .styles import render_all_styles
@@ -45,7 +45,7 @@ class Chart:
         ])
 
 
-class SimpleLineChart(Chart):
+class LineChart(Chart):
     """
     a chart with one or more lines
     - all lines share the same x values and the distance along the axis between points is constant
@@ -134,7 +134,7 @@ class SimpleLineChart(Chart):
             max_value=y_max,
             include_zero=y_zero,
         )
-        self.x_axis = SimpleXAxis(
+        self.x_axis = XAxis(
             x_position=x_margin,
             y_position=height - y_margin,
             data_points=x_values,
@@ -199,11 +199,11 @@ class SimpleLineChart(Chart):
     def add_y_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
         major_style = major_grid_style.copy() if major_grid_style is not None else self.default_major_grid_styles.copy()
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
-        for i, m in enumerate(self.x_axis.limits[1:]):
-            width_offset = (i + 1) * self.x_axis.length / (len(self.x_axis.limits) - 1) + self.y_axis.position.x
+        positions = self.x_axis.get_positions(self.x_axis.limits[1:])
+        for p in positions:
             self.y_axis.grid_lines.append(
                 Line(
-                    x_position=width_offset,
+                    x_position=p,
                     y_position=self.x_axis.position.y - self.y_axis.length,
                     width=0,
                     height=self.y_axis.length,
@@ -212,7 +212,7 @@ class SimpleLineChart(Chart):
             )
             minor_step = self.x_axis.length / (len(self.x_axis.limits) - 1) / (minor_ticks + 1)
             for j in range(1, minor_ticks + 1):
-                minor_offset = width_offset - j * minor_step
+                minor_offset = p - j * minor_step
                 self.y_axis.grid_lines.append(Line(
                     x_position=minor_offset,
                     y_position=self.x_axis.position.y - self.y_axis.length,
@@ -224,12 +224,12 @@ class SimpleLineChart(Chart):
     def add_x_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
         major_style = major_grid_style.copy() if major_grid_style is not None else self.default_major_grid_styles.copy()
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
-        for i, m in enumerate(self.y_axis.limits[1:]):
-            height_offset = (len(self.y_axis.limits) - 2 - i) * self.y_axis.length / (len(self.y_axis.limits) - 1) + self.x_axis.position.y
+        positions = self.x_axis.get_positions(self.y_axis.limits[1:])
+        for p in positions:
             self.x_axis.grid_lines.append(
                 Line(
                     x_position=self.y_axis.position.x,
-                    y_position=height_offset - self.y_axis.length,
+                    y_position=p - self.y_axis.length,
                     width=self.x_axis.length,
                     height=0,
                     styles=major_style
@@ -237,7 +237,7 @@ class SimpleLineChart(Chart):
             )
             minor_step = self.y_axis.length / (len(self.y_axis.limits) - 1) / (minor_ticks + 1)
             for j in range(1, minor_ticks + 1):
-                minor_offset = height_offset + j * minor_step
+                minor_offset = p + j * minor_step
                 self.y_axis.grid_lines.append(Line(
                     x_position=self.y_axis.position.x,
                     y_position=minor_offset - self.y_axis.length,
@@ -311,3 +311,10 @@ class DonutChart(Chart):
 
     def get_element_list(self):
         return collapse_element_list([self.series[s] for s in self.series], self.custom_elements)
+
+
+class SimpleLineChart(LineChart):
+
+    def __init__(self, x_values, y_values, **kwargs):
+        super().__init__(x_values, y_values, **kwargs)
+        print('SimpleLineChart is deprecated, use LineChart')
