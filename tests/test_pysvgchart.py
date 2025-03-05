@@ -79,15 +79,27 @@ def test_stylised_line_chart():
         if tick.content == 'Jan':
             line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
 
-    def hover_modifier(position, x_value, y_value, series_name):
-        text_styles = {'alignment-baseline': 'middle', 'text-anchor': 'middle'}
-        params = {'styles': text_styles, 'classes': ['psc-hover-data']}
-        marker_styles = {'Actual sales': act_styles, 'Predicted sales': pred_styles}
+    def hover_modifier(position, x_value, y_value, series_name, styles=None):
+        default_stroke = "#808080"
+        classes = [
+            psc.hover_style_name,
+        ]
+        marker_styles = {
+            "fill": "#FFFFFF",
+            "stroke": default_stroke if styles is None else styles.get("stroke", default_stroke),
+            "stroke-width": "3",
+        }
+        text_styles = {
+            "alignment-baseline": "middle",
+            "text-anchor": "middle",
+        }
+        x_content = str(x_value)
+        y_content = "{:,.0f}".format(y_value)
         return [
-            psc.Circle(x_position=position.x, y_position=position.y, radius=3, classes=['psc-hover-data'], styles=marker_styles[series_name]),
-            psc.Text(x_position=position.x, y_position=position.y - 10, content=str(x_value), **params),
-            psc.Text(x_position=position.x, y_position=position.y - 30, content="{:,.0f}".format(y_value), **params),
-            psc.Text(x_position=position.x, y_position=position.y - 50, content=series_name, **params)
+            psc.Circle(x_position=position.x, y_position=position.y, radius=3, classes=classes, styles=marker_styles),
+            psc.Text(x_position=position.x, y_position=position.y - 10, content=x_content, classes=classes, styles=text_styles),
+            psc.Text(x_position=position.x, y_position=position.y - 30, content=y_content, classes=classes, styles=text_styles),
+            psc.Text(x_position=position.x, y_position=position.y - 50, content=series_name, classes=classes, styles=text_styles)
         ]
 
     line_chart.add_hover_modifier(hover_modifier, radius=5)
@@ -104,7 +116,7 @@ def test_donut():
 def test_donut_hover():
     def hover_modifier(position, name, value, chart_total):
         text_styles = {'alignment-baseline': 'middle', 'text-anchor': 'middle'}
-        params = {'styles': text_styles, 'classes': ['psc-hover-data']}
+        params = {'styles': text_styles, 'classes': [psc.hover_style_name]}
         return [
             psc.Text(x_position=position.x, y_position=position.y - 10, content=name, **params),
             psc.Text(x_position=position.x, y_position=position.y + 10, content="{:.2%}".format(value / chart_total), **params)

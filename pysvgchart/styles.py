@@ -1,9 +1,11 @@
+hover_style_name = "psc-hover-data"
+
 all_styles = {
-    ".psc-hover-group .psc-hover-data":
+    f".psc-hover-group .{hover_style_name}":
         {
             "display": "none;"
         },
-    ".psc-hover-group:hover .psc-hover-data":
+    f".psc-hover-group:hover .{hover_style_name}":
         {
             "display": "inline"
         }

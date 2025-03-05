@@ -6,4 +6,4 @@ __version__ = '0.0.12'
 
 from .charts import LineChart, SimpleLineChart, DonutChart, Line
 from .shapes import Text, Line, Circle
-from .styles import render_all_styles
+from .styles import render_all_styles, hover_style_name
