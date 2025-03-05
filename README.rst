@@ -55,7 +55,7 @@ A simple donut chart:
 
     import pysvgchart as psc
 
-    values = [10, 20, 30, 40]
+    values = [11.3, 20, 30, 40]
     donut_chart = psc.DonutChart(values)
     svg_string = donut_chart.render()
 
@@ -78,13 +78,15 @@ effects. These effects can be added to any base elements but I thought you'd mos
             psc.Text(x_position=position.x, y_position=position.y+10, content="{:.2%}".format(value/chart_total), styles=text_styles)
         ]
 
-    values = [10, 20, 30, 40]
+    values = [11.3, 20, 30, 40]
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
     donut_chart = psc.DonutChart(values, names)
     donut_chart.add_hover_modifier(hover_modifier)
-    write_out(donut_chart.render_with_all_styles(), name="donut_hover.svg")
+    donut_chart.render_with_all_styles()
 
-`Here <https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/donut_hover.svg>`_ is the output of this code
+`Here <https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/donut_hover.svg>`_ is the output of this code.
+In order to get the hover modifiers to display successfully you will need to either render the svg with styles
+or include the relevant css separately
 
 Simple line chart
 ^^^^^^^^^^^^^^^^^

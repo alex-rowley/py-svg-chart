@@ -9,23 +9,23 @@
 }
 </style>
 <g class="psc-hover-group">
-<path d="M 99.99999999999999,0.0 A 100 100 0 0 1 158.7785252292473 19.098300562505244 L 132.32818887608602,55.504065309377886 A 55 55 0 0 0 99.99999999999999 45.0 Z" fill="green" ></path>
+<path d="M 99.99999999999999,0.0 A 100 100 0 0 1 164.4896911562772 23.573043142043247 L 135.46933013595248,57.96517372812379 A 55 55 0 0 0 99.99999999999999 45.0 Z" fill="green" ></path>
 <text x="100" y="90" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Apples</text>
-<text x="100" y="110" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">10.00%</text>
+<text x="100" y="110" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">11.15%</text>
 </g>
 <g class="psc-hover-group">
-<path d="M 158.7785252292473,19.098300562505244 A 100 100 0 0 1 195.10565162951536 130.90169943749473 L 152.30810839623345,116.9959346906221 A 55 55 0 0 0 132.32818887608602 55.504065309377886 Z" fill="red" ></path>
+<path d="M 164.4896911562772,23.573043142043247 A 100 100 0 0 1 193.2109306818016 136.21770839565053 L 151.26601187499088,119.91973961760779 A 55 55 0 0 0 135.46933013595248 57.96517372812379 Z" fill="red" ></path>
 <text x="100" y="90" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Bananas</text>
-<text x="100" y="110" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">20.00%</text>
+<text x="100" y="110" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">19.74%</text>
 </g>
 <g class="psc-hover-group">
-<path d="M 195.10565162951536,130.90169943749473 A 100 100 0 0 1 41.22147477075271 180.90169943749476 L 67.67181112391398,144.4959346906221 A 55 55 0 0 0 152.30810839623345 116.9959346906221 Z" fill="blue" ></path>
+<path d="M 193.2109306818016,136.21770839565053 A 100 100 0 0 1 38.643152930957605 178.96415210553548 L 66.25373411202668,143.43028365804452 A 55 55 0 0 0 151.26601187499088 119.91973961760779 Z" fill="blue" ></path>
 <text x="100" y="90" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Cherries</text>
-<text x="100" y="110" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">30.00%</text>
+<text x="100" y="110" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">29.62%</text>
 </g>
 <g class="psc-hover-group">
-<path d="M 41.22147477075271,180.90169943749476 A 100 100 0 0 1 99.99999999999996 0.0 L 99.99999999999997,45.0 A 55 55 0 0 0 67.67181112391398 144.4959346906221 Z" fill="orange" ></path>
+<path d="M 38.643152930957605,178.96415210553548 A 100 100 0 0 1 99.99999999999996 0.0 L 99.99999999999997,45.0 A 55 55 0 0 0 66.25373411202668 143.43028365804452 Z" fill="orange" ></path>
 <text x="100" y="90" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Durians</text>
-<text x="100" y="110" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">40.00%</text>
+<text x="100" y="110" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">39.49%</text>
 </g>
 </svg>
