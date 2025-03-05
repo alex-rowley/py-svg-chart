@@ -102,7 +102,7 @@ def test_stylised_line_chart():
             psc.Text(x_position=position.x, y_position=position.y - 50, content=series_name, classes=classes, styles=text_styles)
         ]
 
-    line_chart.add_hover_modifier(hover_modifier, radius=5)
+    line_chart.add_hover_modifier(hover_modifier, radius=3)
 
     write_out(line_chart.render_with_all_styles(), name="detailed.svg")
 
