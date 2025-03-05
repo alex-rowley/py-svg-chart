@@ -29,7 +29,7 @@ def get_numeric_limits(
         max_ticks,
         min_value=None,
         max_value=None,
-        include_zero=False,
+        include_zero=False
 ):
     """
     compute numeric limits for a series of numbers
@@ -49,12 +49,12 @@ def get_numeric_limits(
             value_min = 0
         if value_max < 0:
             value_max = 0
-    raw_pad = (1.2 * value_max - 0.95 * value_min) / max_ticks
+    raw_pad = (value_max - value_min) / max_ticks
     remainder = math.log10(abs(raw_pad)) - int(math.log10(abs(raw_pad)))
     leader = 2 if remainder < 0.301 else (5 if remainder < 0.698 else 10)
     pad = leader * 10 ** int(math.log10(abs(raw_pad)))
-    start = int(math.floor(0.95 * value_min / pad))
-    end = int(math.ceil(1.2 * value_max / pad))
+    start = int(math.floor(value_min / pad))
+    end = int(math.ceil(value_max / pad))
     return [y * pad for y in range(start, end + 1)]
 
 
@@ -125,10 +125,11 @@ def get_limits(
         min_value=None,
         max_value=None,
         include_zero=False,
-        min_unique_values=2,
+        min_unique_values=2
 ):
     """
     compute numeric limits for a series of numbers
+
     :param values: actual values
     :param max_ticks: maximum number of ticks
     :param min_value: optional minimum value to include in limits
@@ -149,7 +150,7 @@ def get_limits(
             max_ticks,
             min_value=min_value,
             max_value=max_value,
-            include_zero=include_zero,
+            include_zero=include_zero
         )
     else:
         raise TypeError("Invalid data types in values")
