@@ -171,6 +171,7 @@ Here's a heavily customised line chart example
         ]
 
     line_chart.add_hover_modifier(hover_modifier, radius=5)
+    line_chart.render_with_all_styles()
 
 .. image:: https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/detailed.svg
    :alt: Complex line chart example

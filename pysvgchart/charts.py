@@ -224,12 +224,12 @@ class LineChart(Chart):
     def add_x_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
         major_style = major_grid_style.copy() if major_grid_style is not None else self.default_major_grid_styles.copy()
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
-        positions = self.x_axis.get_positions(self.y_axis.limits[1:])
+        positions = self.y_axis.get_positions(self.y_axis.limits[1:])
         for p in positions:
             self.x_axis.grid_lines.append(
                 Line(
                     x_position=self.y_axis.position.x,
-                    y_position=p - self.y_axis.length,
+                    y_position=p,
                     width=self.x_axis.length,
                     height=0,
                     styles=major_style
@@ -240,7 +240,7 @@ class LineChart(Chart):
                 minor_offset = p + j * minor_step
                 self.y_axis.grid_lines.append(Line(
                     x_position=self.y_axis.position.x,
-                    y_position=minor_offset - self.y_axis.length,
+                    y_position=minor_offset,
                     width=self.x_axis.length,
                     height=0,
                     styles=minor_style
