@@ -95,13 +95,13 @@ class LineChart(Chart):
         :param sec_y_values:  a list line values for the secondary y-axis, each a list itself
         :param y_names: optional list of names of the lines of the primary y-axis
         :param sec_y_names: optional list of names of the lines of the secondary y-axis
-        :param x_min: optional minimum x value
-        :param x_max: optional maximum x value
+        :param x_min: optional minimum x value, only used in numeric axis
+        :param x_max: optional maximum x value, only used in numeric axis
         :param x_zero: optionally force 0 to be included on the x-axis
         :param x_max_ticks: optional maximum number of ticks on the x-axis
         :param x_label_format: optional format of labels on the x-axis
-        :param y_min: optional minimum value on the primary y-axis
-        :param y_max: optional maximum value on the primary y-axis
+        :param y_min: optional minimum value on the primary y-axis if it is numeric
+        :param y_max: optional maximum value on the primary y-axis if is is numeric
         :param y_zero: optionally force 0 to be included on the primary y-axis
         :param y_max_ticks: optional maximum number of ticks on the primary y-axis
         :param y_label_format: optional format of labels on the primary y-axis

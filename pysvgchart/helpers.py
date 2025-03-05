@@ -61,13 +61,9 @@ def get_numeric_limits(
 def get_date_or_time_limits(
         dates,
         max_ticks=10,
-        min_value=None,
-        max_value=None
 ):
     """
     compute date limits for a series of dates/datetimes
-    :param min_value: optional minimum value to include in limits
-    :param max_value: optional maximum value to include in limits
     :param dates: actual dates/datetimes
     :param max_ticks: maximum number of ticks
     """
@@ -105,7 +101,7 @@ def get_date_or_time_limits(
         ticks = []
         current_tick = start
         while current_tick <= end:
-            ticks.append(current_tick if (min_value is None or current_tick >= min_value) else min_value)
+            ticks.append(current_tick if current_tick >= min(dates) else min(dates))
             month = current_tick.month + interval_months
             year = current_tick.year + (month - 1) // 12
             month = (month - 1) % 12 + 1
@@ -115,7 +111,7 @@ def get_date_or_time_limits(
     ticks = []
     current_tick = date_min.replace(second=0, microsecond=0)
     while True:
-        ticks.append(current_tick if (min_value is None or current_tick >= min_value) else min_value)
+        ticks.append(current_tick if current_tick >= min(dates) else min(dates))
         if current_tick > date_max:
             break
         current_tick += interval
@@ -145,9 +141,7 @@ def get_limits(
     if all(isinstance(v, (dt.datetime, dt.date)) for v in values):
         return get_date_or_time_limits(
             values,
-            max_ticks,
-            min_value=min_value,
-            max_value=max_value
+            max_ticks
         )
     elif all(isinstance(v, (int, float)) for v in values):
         return get_numeric_limits(
