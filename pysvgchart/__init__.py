@@ -2,7 +2,7 @@
 
 __author__ = 'Alex Rowley'
 __email__ = ''
-__version__ = '0.0.12'
+__version__ = '0.1.0'
 
 from .charts import LineChart, SimpleLineChart, DonutChart, Line
 from .shapes import Text, Line, Circle
