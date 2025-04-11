@@ -19,7 +19,7 @@ def test_write_out_styles():
     write_out(psc.render_all_styles(), 'pysvgchart.css', 'styles')
 
 
-def test_simple_line_chart_creation():
+def test_line_chart():
     x_values = list(range(100))
     y_values = [4000]
     for i in range(99):
@@ -35,7 +35,7 @@ def test_simple_line_chart_creation():
     line_chart.add_grids(minor_y_ticks=4, minor_x_ticks=4)
     line_chart.add_legend()
 
-    output_file = write_out(line_chart.render(), name="simple.svg")
+    output_file = write_out(line_chart.render(), name="line.svg")
 
     assert os.path.exists(output_file), "SVG file was not created."
     assert 'svg' in line_chart.render().lower(), "SVG content is not in the render output."
@@ -129,3 +129,10 @@ def test_donut_hover():
     donut_chart.add_hover_modifier(hover_modifier)
 
     write_out(donut_chart.render_with_all_styles(), name="donut_hover.svg")
+
+
+def test_simple_line_chart():
+    values = [11.3, 20, 30, 40]
+    names = ['Apples', 'Bananas', 'Cherries', 'Durians']
+    simple_line_chart = psc.SimpleLineChart(x_values=names, y_values=[values], y_names=['number'], y_zero=True)
+    write_out(simple_line_chart.render(), name="simple.svg")

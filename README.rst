@@ -114,7 +114,7 @@ Create a simple line chart:
 
     svg_string = line_chart.render()
 
-.. image:: https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/simple.svg
+.. image:: https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/line.svg
    :alt: Simple line chart example
 
 More stylised example

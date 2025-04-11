@@ -1,5 +1,5 @@
 from .shapes import Shape, Text, Line
-from .helpers import get_limits, collapse_element_list
+from .helpers import simple_limits, get_limits, collapse_element_list
 
 
 class Axis(Shape):
@@ -7,6 +7,7 @@ class Axis(Shape):
     axis of a graph
     """
     default_axis_styles = {'stroke': '#2e2e2c'}
+    limits_function = staticmethod(get_limits)
 
     def __init__(
             self,
@@ -26,9 +27,9 @@ class Axis(Shape):
         super().__init__(x_position, y_position)
         self.data_points = data_points
         self.length = axis_length
-        self.limits = get_limits(
-            data_points,
-            max_ticks,
+        self.limits = self.limits_function(
+            values=data_points,
+            max_ticks=max_ticks,
             min_value=min_value,
             max_value=max_value,
             include_zero=include_zero,
@@ -89,7 +90,7 @@ class XAxis(Axis):
         # In this case the first 'limit' is that minimum value
         # This solution is not awful but may need to be revisited soon
         if len(limit_positions) > 2:
-            if (limit_positions[1] - limit_positions[0])/(limit_positions[2] - limit_positions[1]) < 0.99:
+            if (limit_positions[1] - limit_positions[0]) / (limit_positions[2] - limit_positions[1]) < 0.99:
                 limit_positions = limit_positions[1:]
 
         for m, p in zip(self.limits, limit_positions):
@@ -150,10 +151,14 @@ class YAxis(Axis):
     def get_positions(self, values):
         return [self.position.y + self.length * (1 - self.proportion_of_range(v)) for v in values]
 
-# class SimpleXAxis(XAxis):
-#     """
-#     x-axis of a graph with evenly spaced x values
-#     """
-#     #
-#     # def get_positions(self, x_values):
-#     #     return [self.position.x + x * self.length / (len(x_values) - 1) for x in range(len(x_values))]
+
+class SimpleXAxis(XAxis):
+    """
+    x-axis of a graph with evenly spaced x values
+    """
+
+    limits_function = staticmethod(simple_limits)
+
+    def get_positions(self, x_values):
+        if x_values is not None:
+            return [self.position.x + (i + 1 / 2) * self.length / len(x_values) for i in range(len(x_values))]

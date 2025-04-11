@@ -3,11 +3,15 @@ import datetime as dt
 import collections.abc
 
 
+def noop(*args, **kwargs):
+    pass
+
+
 def default_format(value):
     """
     format a number
     """
-    return '{0:,}'.format(value)
+    return '{0:,}'.format(value) if not isinstance(value,str) else value
 
 
 def safe_get_element_list(built_in):
@@ -154,3 +158,12 @@ def get_limits(
         )
     else:
         raise TypeError("Invalid data types in values")
+
+
+def simple_limits(values,
+                  max_ticks,
+                  min_value=None,
+                  max_value=None,
+                  include_zero=False,
+                  min_unique_values=2):
+    return values

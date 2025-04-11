@@ -1,6 +1,6 @@
 from .helpers import collapse_element_list, default_format
 from .series import DonutSegment, SimpleLineSeries
-from .axes import XAxis, YAxis
+from .axes import XAxis, YAxis, SimpleXAxis
 from .shapes import Point, Line, Group, Circle
 from .legends import LineLegend
 from .styles import render_all_styles
@@ -55,6 +55,8 @@ class LineChart(Chart):
 
     default_major_grid_styles = {'stroke': '#2e2e2c'}
     default_minor_grid_styles = {'stroke': '#2e2e2c', 'stroke-width': "0.4"}
+
+    x_axis_type = XAxis
 
     def __init__(
             self,
@@ -134,7 +136,7 @@ class LineChart(Chart):
             max_value=y_max,
             include_zero=y_zero,
         )
-        self.x_axis = XAxis(
+        self.x_axis = self.x_axis_type(
             x_position=x_margin,
             y_position=height - y_margin,
             data_points=x_values,
@@ -263,6 +265,10 @@ class LineChart(Chart):
         return collapse_element_list([self.x_axis], [self.y_axis], [self.legend], [self.sec_y_axis], [self.series[s] for s in self.series], self.custom_elements)
 
 
+class SimpleLineChart(LineChart):
+    x_axis_type = SimpleXAxis
+
+
 class DonutChart(Chart):
     """
     A donut style chart which is similar to a pie chart but has a blank interior
@@ -292,7 +298,7 @@ class DonutChart(Chart):
             accumulated_values.append(value + accumulated_values[-1])
         total_value = accumulated_values[-1]
         rotated_angles = [rotation + (360 * value) / total_value for value in accumulated_values]
-        start_end_angles = [rotated_angles[index:index+2] for index in range(len(rotated_angles)-1)]
+        start_end_angles = [rotated_angles[index:index + 2] for index in range(len(rotated_angles) - 1)]
         # create value segments
         for index, (start_theta, end_theta), name in zip(range(len(values)), start_end_angles, series_names):
             colour = self.__segment_colour_defaults__[index % len(self.__segment_colour_defaults__)]
@@ -317,10 +323,3 @@ class DonutChart(Chart):
 
     def get_element_list(self):
         return collapse_element_list([self.series[s] for s in self.series], self.custom_elements)
-
-
-class SimpleLineChart(LineChart):
-
-    def __init__(self, x_values, y_values, **kwargs):
-        super().__init__(x_values, y_values, **kwargs)
-        print('SimpleLineChart is deprecated, use LineChart')
