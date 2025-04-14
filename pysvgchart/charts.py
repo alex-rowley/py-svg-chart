@@ -178,10 +178,13 @@ class LineChart(Chart):
             self.series.update(
                 {
                     name: SimpleLineSeries(
-                        [
+                        points=[
                             Point(x, y)
                             for x, y in zip(self.x_axis.get_positions(x_values), self.sec_y_axis.get_positions(y_value))
-                        ]
+                        ],
+                        x_values=x_values,
+                        y_values=y_value,
+                        name=name
                     )
                     for name, y_value in zip(sec_series_names, sec_y_values)
                 }

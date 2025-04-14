@@ -11,7 +11,7 @@ def default_format(value):
     """
     format a number
     """
-    return '{0:,}'.format(value) if not isinstance(value,str) else value
+    return '{0:,}'.format(value) if not isinstance(value, str) else value
 
 
 def safe_get_element_list(built_in):
@@ -44,22 +44,35 @@ def get_numeric_limits(
     :param include_zero: whether to include zero in limits
     """
     value_min, value_max = min(values), max(values)
-    if min_value:
+    if min_value is not None:
         value_min = min(value_min, min_value)
-    if max_value:
+    if max_value is not None:
         value_max = max(value_max, max_value)
     if include_zero:
         if value_min > 0:
             value_min = 0
         if value_max < 0:
             value_max = 0
+
+    if value_max == value_min:
+        raise ValueError("All values are the same — cannot compute numeric limits.")
+
     raw_pad = (value_max - value_min) / max_ticks
-    remainder = math.log10(abs(raw_pad)) - int(math.log10(abs(raw_pad)))
-    leader = 2 if remainder < 0.301 else (5 if remainder < 0.698 else 10)
-    pad = leader * 10 ** int(math.log10(abs(raw_pad)))
-    start = int(math.floor(value_min / pad))
-    end = int(math.ceil(value_max / pad))
-    return [y * pad for y in range(start, end + 1)]
+    magnitude = 10 ** math.floor(math.log10(raw_pad))
+    residual = raw_pad / magnitude
+    if residual <= 1:
+        nice = 1
+    elif residual <= 2:
+        nice = 2
+    elif residual <= 5:
+        nice = 5
+    else:
+        nice = 10
+
+    pad = nice * magnitude
+    start = math.floor(value_min / pad)
+    end = math.ceil(value_max / pad)
+    return [round(y * pad, 10) for y in range(int(start), int(end + 1))]
 
 
 def get_date_or_time_limits(
