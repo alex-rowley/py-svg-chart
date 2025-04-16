@@ -42,16 +42,16 @@
 <text x="640.0" y="510" text-anchor="middle" dominant-baseline="hanging">90</text>
 <text x="670.0" y="510" text-anchor="middle" dominant-baseline="hanging">95</text>
 <text x="700.0" y="510" text-anchor="middle" dominant-baseline="hanging">100</text>
-<line x1="100" y1="460.0" x2="700" y2="460.0" stroke="#2e2e2c"/>
-<line x1="100" y1="420.0" x2="700" y2="420.0" stroke="#2e2e2c"/>
-<line x1="100" y1="380.0" x2="700" y2="380.0" stroke="#2e2e2c"/>
-<line x1="100" y1="340.0" x2="700" y2="340.0" stroke="#2e2e2c"/>
-<line x1="100" y1="300.0" x2="700" y2="300.0" stroke="#2e2e2c"/>
-<line x1="100" y1="260.0" x2="700" y2="260.0" stroke="#2e2e2c"/>
-<line x1="100" y1="220.0" x2="700" y2="220.0" stroke="#2e2e2c"/>
-<line x1="100" y1="180.0" x2="700" y2="180.0" stroke="#2e2e2c"/>
-<line x1="100" y1="140.0" x2="700" y2="140.0" stroke="#2e2e2c"/>
-<line x1="100" y1="100.0" x2="700" y2="100.0" stroke="#2e2e2c"/>
+<line x1="100" y1="460.0" x2="700" y2="460.0" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="100" y1="420.0" x2="700" y2="420.0" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="100" y1="380.0" x2="700" y2="380.0" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="100" y1="340.0" x2="700" y2="340.0" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="100" y1="300.0" x2="700" y2="300.0" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="100" y1="260.0" x2="700" y2="260.0" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="100" y1="220.0" x2="700" y2="220.0" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="100" y1="180.0" x2="700" y2="180.0" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="100" y1="140.0" x2="700" y2="140.0" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="100" y1="100.0" x2="700" y2="100.0" stroke="#6e6e6e" stroke-width="0.6"/>
 <line x1="100" y1="100" x2="100" y2="500" stroke="#2e2e2c"/>
 <line x1="95" y1="500.0" x2="100" y2="500.0" stroke="#2e2e2c"/>
 <line x1="95" y1="460.0" x2="100" y2="460.0" stroke="#2e2e2c"/>
@@ -75,146 +75,146 @@
 <text x="90" y="180.0" text-anchor="end" dominant-baseline="middle">8,000</text>
 <text x="90" y="140.0" text-anchor="end" dominant-baseline="middle">9,000</text>
 <text x="90" y="100.0" text-anchor="end" dominant-baseline="middle">10,000</text>
-<line x1="130.0" y1="100" x2="130.0" y2="500" stroke="#2e2e2c"/>
-<line x1="124.0" y1="100" x2="124.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="118.0" y1="100" x2="118.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="112.0" y1="100" x2="112.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="106.0" y1="100" x2="106.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="160.0" y1="100" x2="160.0" y2="500" stroke="#2e2e2c"/>
-<line x1="154.0" y1="100" x2="154.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="148.0" y1="100" x2="148.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="142.0" y1="100" x2="142.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="136.0" y1="100" x2="136.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="190.0" y1="100" x2="190.0" y2="500" stroke="#2e2e2c"/>
-<line x1="184.0" y1="100" x2="184.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="178.0" y1="100" x2="178.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="172.0" y1="100" x2="172.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="166.0" y1="100" x2="166.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="220.0" y1="100" x2="220.0" y2="500" stroke="#2e2e2c"/>
-<line x1="214.0" y1="100" x2="214.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="208.0" y1="100" x2="208.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="202.0" y1="100" x2="202.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="196.0" y1="100" x2="196.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="250.0" y1="100" x2="250.0" y2="500" stroke="#2e2e2c"/>
-<line x1="244.0" y1="100" x2="244.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="238.0" y1="100" x2="238.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="232.0" y1="100" x2="232.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="226.0" y1="100" x2="226.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="280.0" y1="100" x2="280.0" y2="500" stroke="#2e2e2c"/>
-<line x1="274.0" y1="100" x2="274.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="268.0" y1="100" x2="268.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="262.0" y1="100" x2="262.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="256.0" y1="100" x2="256.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="310.0" y1="100" x2="310.0" y2="500" stroke="#2e2e2c"/>
-<line x1="304.0" y1="100" x2="304.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="298.0" y1="100" x2="298.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="292.0" y1="100" x2="292.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="286.0" y1="100" x2="286.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="340.0" y1="100" x2="340.0" y2="500" stroke="#2e2e2c"/>
-<line x1="334.0" y1="100" x2="334.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="328.0" y1="100" x2="328.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="322.0" y1="100" x2="322.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="316.0" y1="100" x2="316.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="370.0" y1="100" x2="370.0" y2="500" stroke="#2e2e2c"/>
-<line x1="364.0" y1="100" x2="364.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="358.0" y1="100" x2="358.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="352.0" y1="100" x2="352.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="346.0" y1="100" x2="346.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="400.0" y1="100" x2="400.0" y2="500" stroke="#2e2e2c"/>
-<line x1="394.0" y1="100" x2="394.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="388.0" y1="100" x2="388.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="382.0" y1="100" x2="382.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="376.0" y1="100" x2="376.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="430.0" y1="100" x2="430.0" y2="500" stroke="#2e2e2c"/>
-<line x1="424.0" y1="100" x2="424.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="418.0" y1="100" x2="418.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="412.0" y1="100" x2="412.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="406.0" y1="100" x2="406.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="460.0" y1="100" x2="460.0" y2="500" stroke="#2e2e2c"/>
-<line x1="454.0" y1="100" x2="454.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="448.0" y1="100" x2="448.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="442.0" y1="100" x2="442.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="436.0" y1="100" x2="436.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="490.0" y1="100" x2="490.0" y2="500" stroke="#2e2e2c"/>
-<line x1="484.0" y1="100" x2="484.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="478.0" y1="100" x2="478.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="472.0" y1="100" x2="472.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="466.0" y1="100" x2="466.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="520.0" y1="100" x2="520.0" y2="500" stroke="#2e2e2c"/>
-<line x1="514.0" y1="100" x2="514.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="508.0" y1="100" x2="508.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="502.0" y1="100" x2="502.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="496.0" y1="100" x2="496.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="550.0" y1="100" x2="550.0" y2="500" stroke="#2e2e2c"/>
-<line x1="544.0" y1="100" x2="544.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="538.0" y1="100" x2="538.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="532.0" y1="100" x2="532.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="526.0" y1="100" x2="526.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="580.0" y1="100" x2="580.0" y2="500" stroke="#2e2e2c"/>
-<line x1="574.0" y1="100" x2="574.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="568.0" y1="100" x2="568.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="562.0" y1="100" x2="562.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="556.0" y1="100" x2="556.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="610.0" y1="100" x2="610.0" y2="500" stroke="#2e2e2c"/>
-<line x1="604.0" y1="100" x2="604.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="598.0" y1="100" x2="598.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="592.0" y1="100" x2="592.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="586.0" y1="100" x2="586.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="640.0" y1="100" x2="640.0" y2="500" stroke="#2e2e2c"/>
-<line x1="634.0" y1="100" x2="634.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="628.0" y1="100" x2="628.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="622.0" y1="100" x2="622.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="616.0" y1="100" x2="616.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="670.0" y1="100" x2="670.0" y2="500" stroke="#2e2e2c"/>
-<line x1="664.0" y1="100" x2="664.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="658.0" y1="100" x2="658.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="652.0" y1="100" x2="652.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="646.0" y1="100" x2="646.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="700.0" y1="100" x2="700.0" y2="500" stroke="#2e2e2c"/>
-<line x1="694.0" y1="100" x2="694.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="688.0" y1="100" x2="688.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="682.0" y1="100" x2="682.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="676.0" y1="100" x2="676.0" y2="500" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="468.0" x2="700" y2="468.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="476.0" x2="700" y2="476.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="484.0" x2="700" y2="484.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="492.0" x2="700" y2="492.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="428.0" x2="700" y2="428.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="436.0" x2="700" y2="436.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="444.0" x2="700" y2="444.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="452.0" x2="700" y2="452.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="388.0" x2="700" y2="388.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="396.0" x2="700" y2="396.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="404.0" x2="700" y2="404.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="412.0" x2="700" y2="412.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="348.0" x2="700" y2="348.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="356.0" x2="700" y2="356.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="364.0" x2="700" y2="364.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="372.0" x2="700" y2="372.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="308.0" x2="700" y2="308.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="316.0" x2="700" y2="316.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="324.0" x2="700" y2="324.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="332.0" x2="700" y2="332.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="268.0" x2="700" y2="268.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="276.0" x2="700" y2="276.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="284.0" x2="700" y2="284.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="292.0" x2="700" y2="292.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="228.0" x2="700" y2="228.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="236.0" x2="700" y2="236.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="244.0" x2="700" y2="244.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="252.0" x2="700" y2="252.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="188.0" x2="700" y2="188.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="196.0" x2="700" y2="196.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="204.0" x2="700" y2="204.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="212.0" x2="700" y2="212.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="148.0" x2="700" y2="148.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="156.0" x2="700" y2="156.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="164.0" x2="700" y2="164.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="172.0" x2="700" y2="172.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="108.0" x2="700" y2="108.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="116.0" x2="700" y2="116.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="124.0" x2="700" y2="124.0" stroke="#2e2e2c" stroke-width="0.4"/>
-<line x1="100" y1="132.0" x2="700" y2="132.0" stroke="#2e2e2c" stroke-width="0.4"/>
+<line x1="130.0" y1="100" x2="130.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="124.0" y1="100" x2="124.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="118.0" y1="100" x2="118.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="112.0" y1="100" x2="112.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="106.0" y1="100" x2="106.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="160.0" y1="100" x2="160.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="154.0" y1="100" x2="154.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="148.0" y1="100" x2="148.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="142.0" y1="100" x2="142.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="136.0" y1="100" x2="136.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="190.0" y1="100" x2="190.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="184.0" y1="100" x2="184.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="178.0" y1="100" x2="178.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="172.0" y1="100" x2="172.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="166.0" y1="100" x2="166.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="220.0" y1="100" x2="220.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="214.0" y1="100" x2="214.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="208.0" y1="100" x2="208.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="202.0" y1="100" x2="202.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="196.0" y1="100" x2="196.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="250.0" y1="100" x2="250.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="244.0" y1="100" x2="244.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="238.0" y1="100" x2="238.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="232.0" y1="100" x2="232.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="226.0" y1="100" x2="226.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="280.0" y1="100" x2="280.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="274.0" y1="100" x2="274.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="268.0" y1="100" x2="268.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="262.0" y1="100" x2="262.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="256.0" y1="100" x2="256.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="310.0" y1="100" x2="310.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="304.0" y1="100" x2="304.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="298.0" y1="100" x2="298.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="292.0" y1="100" x2="292.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="286.0" y1="100" x2="286.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="340.0" y1="100" x2="340.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="334.0" y1="100" x2="334.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="328.0" y1="100" x2="328.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="322.0" y1="100" x2="322.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="316.0" y1="100" x2="316.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="370.0" y1="100" x2="370.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="364.0" y1="100" x2="364.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="358.0" y1="100" x2="358.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="352.0" y1="100" x2="352.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="346.0" y1="100" x2="346.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="400.0" y1="100" x2="400.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="394.0" y1="100" x2="394.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="388.0" y1="100" x2="388.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="382.0" y1="100" x2="382.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="376.0" y1="100" x2="376.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="430.0" y1="100" x2="430.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="424.0" y1="100" x2="424.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="418.0" y1="100" x2="418.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="412.0" y1="100" x2="412.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="406.0" y1="100" x2="406.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="460.0" y1="100" x2="460.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="454.0" y1="100" x2="454.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="448.0" y1="100" x2="448.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="442.0" y1="100" x2="442.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="436.0" y1="100" x2="436.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="490.0" y1="100" x2="490.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="484.0" y1="100" x2="484.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="478.0" y1="100" x2="478.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="472.0" y1="100" x2="472.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="466.0" y1="100" x2="466.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="520.0" y1="100" x2="520.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="514.0" y1="100" x2="514.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="508.0" y1="100" x2="508.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="502.0" y1="100" x2="502.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="496.0" y1="100" x2="496.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="550.0" y1="100" x2="550.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="544.0" y1="100" x2="544.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="538.0" y1="100" x2="538.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="532.0" y1="100" x2="532.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="526.0" y1="100" x2="526.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="580.0" y1="100" x2="580.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="574.0" y1="100" x2="574.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="568.0" y1="100" x2="568.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="562.0" y1="100" x2="562.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="556.0" y1="100" x2="556.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="610.0" y1="100" x2="610.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="604.0" y1="100" x2="604.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="598.0" y1="100" x2="598.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="592.0" y1="100" x2="592.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="586.0" y1="100" x2="586.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="640.0" y1="100" x2="640.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="634.0" y1="100" x2="634.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="628.0" y1="100" x2="628.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="622.0" y1="100" x2="622.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="616.0" y1="100" x2="616.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="670.0" y1="100" x2="670.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="664.0" y1="100" x2="664.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="658.0" y1="100" x2="658.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="652.0" y1="100" x2="652.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="646.0" y1="100" x2="646.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="700.0" y1="100" x2="700.0" y2="500" stroke="#6e6e6e" stroke-width="0.6"/>
+<line x1="694.0" y1="100" x2="694.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="688.0" y1="100" x2="688.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="682.0" y1="100" x2="682.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="676.0" y1="100" x2="676.0" y2="500" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="468.0" x2="700" y2="468.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="476.0" x2="700" y2="476.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="484.0" x2="700" y2="484.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="492.0" x2="700" y2="492.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="428.0" x2="700" y2="428.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="436.0" x2="700" y2="436.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="444.0" x2="700" y2="444.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="452.0" x2="700" y2="452.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="388.0" x2="700" y2="388.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="396.0" x2="700" y2="396.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="404.0" x2="700" y2="404.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="412.0" x2="700" y2="412.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="348.0" x2="700" y2="348.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="356.0" x2="700" y2="356.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="364.0" x2="700" y2="364.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="372.0" x2="700" y2="372.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="308.0" x2="700" y2="308.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="316.0" x2="700" y2="316.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="324.0" x2="700" y2="324.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="332.0" x2="700" y2="332.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="268.0" x2="700" y2="268.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="276.0" x2="700" y2="276.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="284.0" x2="700" y2="284.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="292.0" x2="700" y2="292.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="228.0" x2="700" y2="228.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="236.0" x2="700" y2="236.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="244.0" x2="700" y2="244.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="252.0" x2="700" y2="252.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="188.0" x2="700" y2="188.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="196.0" x2="700" y2="196.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="204.0" x2="700" y2="204.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="212.0" x2="700" y2="212.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="148.0" x2="700" y2="148.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="156.0" x2="700" y2="156.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="164.0" x2="700" y2="164.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="172.0" x2="700" y2="172.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="108.0" x2="700" y2="108.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="116.0" x2="700" y2="116.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="124.0" x2="700" y2="124.0" stroke="#6e6e6e" stroke-width="0.2"/>
+<line x1="100" y1="132.0" x2="700" y2="132.0" stroke="#6e6e6e" stroke-width="0.2"/>
 <line x1="500" y1="60" x2="520" y2="60" stroke-width="2" stroke="green"/>
 <line x1="600" y1="60" x2="620" y2="60" stroke-width="2" stroke="red"/>
 <text x="525" y="60" alignment-baseline="middle">predicted</text>

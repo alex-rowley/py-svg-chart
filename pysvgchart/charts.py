@@ -34,11 +34,16 @@ class Chart:
             '</svg>'
         ])
 
-    def render_with_all_styles(self):
+    def render_with_all_styles(self, styles=None, include_default=True):
+        """
+        :param styles: list of styles to use
+        :param include_default: also use the default styles (to enable things like hover text)
+        :return:
+        """
         return '\n'.join([
             self.svg_begin_template.format(height=self.height, width=self.width),
             '<style>',
-            render_all_styles(),
+            render_all_styles(styles, include_default),
             '</style>',
             *self.get_element_list(),
             '</svg>'
@@ -53,8 +58,8 @@ class LineChart(Chart):
     """
     __line_colour_defaults__ = ['green', 'red', 'blue', 'orange', 'yellow', 'black']
 
-    default_major_grid_styles = {'stroke': '#2e2e2c'}
-    default_minor_grid_styles = {'stroke': '#2e2e2c', 'stroke-width': "0.4"}
+    default_major_grid_styles = {'stroke': '#6e6e6e', 'stroke-width': '0.6'}
+    default_minor_grid_styles = {'stroke': '#6e6e6e', 'stroke-width': '0.2'}
 
     x_axis_type = XAxis
 
