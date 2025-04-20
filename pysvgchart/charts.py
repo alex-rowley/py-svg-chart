@@ -1,9 +1,41 @@
 from .helpers import collapse_element_list, default_format
-from .series import DonutSegment, SimpleLineSeries
-from .axes import XAxis, YAxis, SimpleXAxis
+from .series import DonutSegment, LineSeries, BarSeries
+from .axes import Axis, XAxis, YAxis, SimpleXAxis
 from .shapes import Point, Line, Group, Circle
 from .legends import LineLegend
 from .styles import render_all_styles
+
+
+def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names):
+    return {
+        name: LineSeries(
+            points=[
+                Point(x, y)
+                for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
+            ],
+            x_values=x_values,
+            y_values=y_value
+        )
+        for name, y_value in zip(series_names, y_values)
+    }
+
+
+def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width=10, bar_gap=2):
+    no_series = len(series_names)
+    x_start_offs = (bar_width + bar_gap/2) * (no_series - 1)
+    return {
+        name: BarSeries(
+            points=[
+                Point(x - x_start_offs + (bar_width + bar_gap) * index, y)
+                for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
+            ],
+            x_values=x_values,
+            y_values=y_value,
+            bar_base=y_axis.position.y + y_axis.length,
+            bar_width=bar_width,
+        )
+        for index, name, y_value, in zip(range(no_series), series_names, y_values)
+    }
 
 
 class Chart:
@@ -50,7 +82,7 @@ class Chart:
         ])
 
 
-class LineChart(Chart):
+class VerticalChart(Chart):
     """
     a chart with one or more lines
     - all lines share the same x values and the distance along the axis between points is constant
@@ -61,7 +93,9 @@ class LineChart(Chart):
     default_major_grid_styles = {'stroke': '#6e6e6e', 'stroke-width': '0.6'}
     default_minor_grid_styles = {'stroke': '#6e6e6e', 'stroke-width': '0.2'}
 
-    x_axis_type = XAxis
+    # The defaults are for line class
+    x_axis_type = Axis
+    series_constructor = staticmethod(lambda **kwargs: kwargs)
 
     def __init__(
             self,
@@ -130,7 +164,6 @@ class LineChart(Chart):
         self.legend = None
         self.sec_y_axis = None
         self.series = []
-        series_names = y_names if y_names is not None else ['Series {0}'.format(k) for k in range(len(y_values))]
         all_y_values = [v for series in y_values for v in series]
         self.y_axis = YAxis(
             x_position=x_margin,
@@ -154,18 +187,8 @@ class LineChart(Chart):
             max_value=x_max,
             include_zero=x_zero,
         )
-        self.series = {
-            name: SimpleLineSeries(
-                points=[
-                    Point(x, y)
-                    for x, y in zip(self.x_axis.get_positions(x_values), self.y_axis.get_positions(y_value))
-                ],
-                x_values=x_values,
-                y_values=y_value,
-                name=name
-            )
-            for name, y_value in zip(series_names, y_values)
-        }
+        series_names = y_names if y_names is not None else ['Series {0}'.format(k) for k in range(len(y_values))]
+        self.series = self.series_constructor(x_values, y_values, self.x_axis, self.y_axis, series_names)
 
         if sec_y_values is not None:
             sec_all_y_values = [v for series in sec_y_values for v in series]
@@ -182,22 +205,8 @@ class LineChart(Chart):
                 include_zero=sec_y_zero,
                 secondary=True,
             )
-            self.series.update(
-                {
-                    name: SimpleLineSeries(
-                        points=[
-                            Point(x, y)
-                            for x, y in zip(self.x_axis.get_positions(x_values), self.sec_y_axis.get_positions(y_value))
-                        ],
-                        x_values=x_values,
-                        y_values=y_value,
-                        name=name
-                    )
-                    for name, y_value in zip(sec_series_names, sec_y_values)
-                }
-            )
-        else:
-            self.sec_y_axis = None
+            self.series.update(self.series_constructor(x_values, sec_y_values, self.x_axis, self.sec_y_axis, sec_series_names))
+
         for index, series in enumerate(self.series):
             series_colours = colours if colours else self.__line_colour_defaults__
             self.series[series].styles['stroke'] = series_colours[index % len(series_colours)]
@@ -276,8 +285,19 @@ class LineChart(Chart):
         return collapse_element_list([self.x_axis], [self.y_axis], [self.legend], [self.sec_y_axis], [self.series[s] for s in self.series], self.custom_elements)
 
 
+class LineChart(VerticalChart):
+    x_axis_type = XAxis
+    series_constructor = staticmethod(line_series_constructor)
+
+
 class SimpleLineChart(LineChart):
     x_axis_type = SimpleXAxis
+    series_constructor = staticmethod(line_series_constructor)
+
+
+class BarChart(LineChart):
+    x_axis_type = SimpleXAxis
+    series_constructor = staticmethod(bar_series_constructor)
 
 
 class DonutChart(Chart):

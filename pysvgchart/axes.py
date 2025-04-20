@@ -46,6 +46,9 @@ class Axis(Shape):
     def get_element_list(self):
         return collapse_element_list([self.axis_line], self.tick_lines, self.tick_texts, self.grid_lines)
 
+    def get_positions(self, values):
+        return []
+
 
 class XAxis(Axis):
     """
@@ -159,6 +162,6 @@ class SimpleXAxis(XAxis):
 
     limits_function = staticmethod(simple_limits)
 
-    def get_positions(self, x_values):
-        if x_values is not None:
-            return [self.position.x + (i + 1 / 2) * self.length / len(x_values) for i in range(len(x_values))]
+    def get_positions(self, values):
+        if values is not None:
+            return [self.position.x + (i + 1 / 2) * self.length / len(values) for i in range(len(values))]

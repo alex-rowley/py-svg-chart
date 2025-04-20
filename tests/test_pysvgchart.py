@@ -136,3 +136,10 @@ def test_simple_line_chart():
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
     simple_line_chart = psc.SimpleLineChart(x_values=names, y_values=[values], y_names=['number'], y_zero=True)
     write_out(simple_line_chart.render(), name="simple.svg")
+
+
+def test_bar_chart():
+    values = [11.3, 20, 30, 40]
+    names = ['Apples', 'Bananas', 'Cherries', 'Durians']
+    bar_chart = psc.BarChart(x_values=names, y_values=[values], y_names=['number'], y_zero=True)
+    write_out(bar_chart.render(), name="bar.svg")

@@ -4,7 +4,17 @@ from .shapes import Shape
 from .helpers import collapse_element_list
 
 
-class DonutSegment(Shape):
+class Series(Shape):
+
+    def __init__(self, x_position, y_position, styles=None, classes=None):
+        super().__init__(x_position=x_position, y_position=y_position, styles=styles, classes=classes)
+        self.custom_elements = []
+
+    def add_custom_elements(self, custom_elements):
+        self.custom_elements.extend(custom_elements)
+
+
+class DonutSegment(Series):
     path_template = (
         '<path d="M {outer_begin_x},{outer_begin_y} '
         'A {radius_outer} {radius_outer} 0 {large_arc_flag} 1 {outer_end_x} {outer_end_y} '
@@ -84,26 +94,21 @@ class DonutSegment(Shape):
                 colour=self.colour,
                 attributes=self.attributes
             )
-        ]
+        ] + collapse_element_list(self.custom_elements)
 
 
-class SimpleLineSeries(Shape):
+class LineSeries(Series):
     """
     line series given as a number of (x, y)-points
     """
     __default_styles__ = {'stroke-width': '2'}
     path_begin_template = '<path d="{path}" fill="none" {attributes}/>'
 
-    def __init__(self, points, x_values, y_values, name, styles=None, classes=None):
+    def __init__(self, points, x_values, y_values, styles=None, classes=None):
         super().__init__(x_position=points[0].x, y_position=points[0].y, styles=styles, classes=classes)
         self.points = points
         self.x_values = x_values
         self.y_values = y_values
-        self.name = name
-        self.custom_elements = []
-
-    def add_custom_elements(self, custom_elements):
-        self.custom_elements.extend(custom_elements)
 
     @property
     def pv_generator(self):
@@ -116,3 +121,25 @@ class SimpleLineSeries(Shape):
     def get_element_list(self):
         path = ' '.join(['{0} {1} {2}'.format("L" if i else "M", p.x, p.y) for i, p in enumerate(self.points)])
         return [self.path_begin_template.format(path=path, attributes=self.attributes)] + collapse_element_list(self.custom_elements)
+
+
+class BarSeries(Series):
+
+    bar_template = '<rect x="{x}" y="{y}" width="{w}" height="{h}" {attributes}/>'
+    __default_styles__ = {'stroke': 'none'}
+
+    def __init__(self, points, x_values, y_values, bar_width, bar_base, styles=None, classes=None):
+        super().__init__(x_position=points[0].x, y_position=points[0].y, styles=styles, classes=classes)
+        self.points = points
+        self.x_values = x_values
+        self.y_values = y_values
+        self.bar_width = bar_width
+        self.bar_base = bar_base
+
+    @property
+    def pv_generator(self):
+        return zip(self.points, self.x_values, self.y_values)
+
+    def get_element_list(self):
+        bars = [self.bar_template.format(x=p.x - self.bar_width/2, y=p.y, w=self.bar_width, h=self.bar_base - p.y, attributes=self.attributes) for p in self.points]
+        return bars + collapse_element_list(self.custom_elements)
