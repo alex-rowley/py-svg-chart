@@ -20,7 +20,7 @@ def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names):
     }
 
 
-def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width=10, bar_gap=2):
+def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width=40, bar_gap=2):
     no_series = len(series_names)
     x_start_offs = (bar_width + bar_gap/2) * (no_series - 1)
     return {
@@ -84,14 +84,15 @@ class Chart:
 
 class VerticalChart(Chart):
     """
-    a chart with one or more lines
-    - all lines share the same x values and the distance along the axis between points is constant
-    - y values differ per line
+    Any chart with a vertical y-axis and a horizontal x-axis
+    - all lines share the same x values
+    - y values differ
     """
-    __line_colour_defaults__ = ['green', 'red', 'blue', 'orange', 'yellow', 'black']
+    __colour_defaults__ = ['green', 'red', 'blue', 'orange', 'yellow', 'black']
 
     default_major_grid_styles = {'stroke': '#6e6e6e', 'stroke-width': '0.6'}
     default_minor_grid_styles = {'stroke': '#6e6e6e', 'stroke-width': '0.2'}
+    colour_property = 'stroke'
 
     # The defaults are for line class
     x_axis_type = Axis
@@ -208,8 +209,8 @@ class VerticalChart(Chart):
             self.series.update(self.series_constructor(x_values, sec_y_values, self.x_axis, self.sec_y_axis, sec_series_names))
 
         for index, series in enumerate(self.series):
-            series_colours = colours if colours else self.__line_colour_defaults__
-            self.series[series].styles['stroke'] = series_colours[index % len(series_colours)]
+            series_colours = colours if colours else self.__colour_defaults__
+            self.series[series].styles[self.colour_property] = series_colours[index % len(series_colours)]
 
     def add_legend(self, x_position=500, y_position=60, element_x=100, element_y=0, line_length=20, line_text_gap=5):
         self.legend = LineLegend(x_position, y_position, self.series, element_x, element_y, line_length, line_text_gap)
@@ -298,6 +299,7 @@ class SimpleLineChart(LineChart):
 class BarChart(LineChart):
     x_axis_type = SimpleXAxis
     series_constructor = staticmethod(bar_series_constructor)
+    colour_property = 'fill'
 
 
 class DonutChart(Chart):
