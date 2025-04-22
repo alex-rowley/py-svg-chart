@@ -22,7 +22,7 @@ def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names, ba
 
 def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap):
     no_series = len(series_names)
-    x_start_offs = (bar_width + bar_gap/2) * (no_series - 1)
+    x_start_offs = (bar_width + bar_gap)*(no_series-1) / 2
     return {
         name: BarSeries(
             points=[
