@@ -6,7 +6,7 @@ from .legends import LineLegend, BarLegend
 from .styles import render_all_styles
 
 
-def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names):
+def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap):
     return {
         name: LineSeries(
             points=[
@@ -20,7 +20,7 @@ def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names):
     }
 
 
-def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width=40, bar_gap=2):
+def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap):
     no_series = len(series_names)
     x_start_offs = (bar_width + bar_gap/2) * (no_series - 1)
     return {
@@ -130,6 +130,8 @@ class VerticalChart(Chart):
             y_margin=100,
             height=600,
             width=800,
+            bar_width=40,
+            bar_gap=2,
             colours=None
     ):
         """
@@ -190,7 +192,7 @@ class VerticalChart(Chart):
             include_zero=x_zero,
         )
         series_names = y_names if y_names is not None else ['Series {0}'.format(k) for k in range(len(y_values))]
-        self.series = self.series_constructor(x_values, y_values, self.x_axis, self.y_axis, series_names)
+        self.series = self.series_constructor(x_values, y_values, self.x_axis, self.y_axis, series_names, bar_width, bar_gap)
 
         if sec_y_values is not None:
             sec_all_y_values = [v for series in sec_y_values for v in series]
@@ -207,7 +209,7 @@ class VerticalChart(Chart):
                 include_zero=sec_y_zero,
                 secondary=True,
             )
-            self.series.update(self.series_constructor(x_values, sec_y_values, self.x_axis, self.sec_y_axis, sec_series_names))
+            self.series.update(self.series_constructor(x_values, sec_y_values, self.x_axis, self.sec_y_axis, sec_series_names, bar_width, bar_gap))
 
         for index, series in enumerate(self.series):
             series_colours = colours if colours else self.__colour_defaults__
