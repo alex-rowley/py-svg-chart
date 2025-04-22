@@ -31,6 +31,8 @@ def test_line_chart():
         y_names=['predicted', 'actual'],
         x_max_ticks=20,
         y_zero=True,
+        right_margin=200,
+        y_margin=150
     )
     line_chart.add_grids(minor_y_ticks=4, minor_x_ticks=4)
     line_chart.add_legend()
@@ -61,7 +63,7 @@ def test_stylised_line_chart():
     dates = [start_date - dt.timedelta(days=i) for i in range(500) if (start_date + dt.timedelta(days=i)).weekday() == 0][::-1]
     actual = [(1 + math.sin(d.timetuple().tm_yday / 183 * math.pi)) * 50000 + 1000 * i + random.randint(0, 20000) for i, d in enumerate(dates)]
     expected = [a + random.randint(-10000, 10000) for a in actual]
-    line_chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200)
+    line_chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100)
     line_chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
     line_chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
     line_chart.add_legend(x_position=700, element_x=200, element_y=0, y_position=60, line_length=35, line_text_gap=20)
@@ -140,6 +142,6 @@ def test_simple_line_chart():
 def test_bar_chart():
     values = [11.3, 20, 30, 40]
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
-    bar_chart = psc.BarChart(x_values=names, y_values=[values], y_names=['Number of fruit'], y_zero=True)
+    bar_chart = psc.BarChart(x_values=names, y_values=[values], y_names=['Number of fruit'], y_zero=True,right_margin=200)
     bar_chart.add_legend()
     write_out(bar_chart.render(), name="bar.svg")
