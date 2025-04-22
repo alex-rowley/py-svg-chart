@@ -22,7 +22,7 @@ def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names, ba
 
 def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap):
     no_series = len(series_names)
-    x_start_offs = (bar_width + bar_gap)*(no_series-1) / 2
+    x_start_offs = (bar_width + bar_gap) * (no_series - 1) / 2
     return {
         name: BarSeries(
             points=[
@@ -31,11 +31,35 @@ def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar
             ],
             x_values=x_values,
             y_values=y_value,
-            bar_base=y_axis.position.y + y_axis.length,
+            bar_heights=[y_axis.position.y + y_axis.length - y for y in y_axis.get_positions(y_value)],
             bar_width=bar_width,
         )
         for index, name, y_value, in zip(range(no_series), series_names, y_values)
     }
+
+
+def normalised_bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap):
+    rtn = dict()
+    prev_cumulative_scaled_y_values = [0] * len(y_values[0])
+    total_values = [sum(y) for y in zip(*y_values)]
+    x_positions = x_axis.get_positions(x_values)
+    for y_value, name in zip(y_values, series_names):
+        cumulative_scaled_y_values = [a + b / t for a, b, t in zip(prev_cumulative_scaled_y_values, y_value, total_values)]
+        prev_scaled_positions = y_axis.get_positions(prev_cumulative_scaled_y_values)
+        scaled_positions = y_axis.get_positions(cumulative_scaled_y_values)
+        rtn[name] = BarSeries(
+            points=[Point(x, y) for x, y in zip(x_positions, scaled_positions)],
+            x_values=x_values,
+            y_values=y_value,
+            bar_heights=[b - a for a, b in zip(scaled_positions, prev_scaled_positions)],
+            bar_width=bar_width,
+        )
+        prev_cumulative_scaled_y_values = cumulative_scaled_y_values
+    return rtn
+
+
+def default_y_range_constructor(y_values):
+    return [v for series in y_values for v in series]
 
 
 class Chart:
@@ -96,6 +120,7 @@ class VerticalChart(Chart):
 
     # The defaults are for line class
     x_axis_type = Axis
+    y_range_constructor = staticmethod(default_y_range_constructor)
     series_constructor = staticmethod(lambda **kwargs: kwargs)
 
     def __init__(
@@ -168,11 +193,10 @@ class VerticalChart(Chart):
         self.legend = None
         self.sec_y_axis = None
         self.series = []
-        all_y_values = [v for series in y_values for v in series]
         self.y_axis = YAxis(
             x_position=left_margin,
             y_position=y_margin,
-            data_points=all_y_values,
+            data_points=self.y_range_constructor(y_values),
             axis_length=height - 2 * y_margin,
             label_format=y_label_format,
             max_ticks=y_max_ticks,
@@ -302,6 +326,16 @@ class SimpleLineChart(LineChart):
 class BarChart(LineChart):
     x_axis_type = SimpleXAxis
     series_constructor = staticmethod(bar_series_constructor)
+    colour_property = 'fill'
+
+    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, bar_width=30, bar_height=5, bar_text_gap=5):
+        self.legend = BarLegend(x_position, y_position, self.series, element_x, element_y, bar_width, bar_height, bar_text_gap)
+
+
+class NormalisedBarChart(LineChart):
+    x_axis_type = SimpleXAxis
+    series_constructor = staticmethod(normalised_bar_series_constructor)
+    y_range_constructor = staticmethod(lambda y_values: [0, 1])
     colour_property = 'fill'
 
     def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, bar_width=30, bar_height=5, bar_text_gap=5):

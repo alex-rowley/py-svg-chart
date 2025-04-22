@@ -28,9 +28,15 @@
 <text x="90" y="150.0" text-anchor="end" dominant-baseline="middle">35</text>
 <text x="90" y="100.0" text-anchor="end" dominant-baseline="middle">40</text>
 <rect x="730" y="197.5" width="30" height="5" stroke="none" fill="green"/>
-<text x="765" y="200" alignment-baseline="middle">Number of fruit</text>
-<rect x="155.0" y="387.0" width="40" height="113.0" stroke="none" fill="green"/>
-<rect x="305.0" y="300.0" width="40" height="200.0" stroke="none" fill="green"/>
-<rect x="455.0" y="200.0" width="40" height="300.0" stroke="none" fill="green"/>
-<rect x="605.0" y="100.0" width="40" height="400.0" stroke="none" fill="green"/>
+<rect x="730" y="217.5" width="30" height="5" stroke="none" fill="red"/>
+<text x="765" y="200" alignment-baseline="middle">Monday</text>
+<text x="765" y="220" alignment-baseline="middle">Tuesday</text>
+<rect x="134.0" y="400.0" width="40" height="100.0" stroke="none" fill="green"/>
+<rect x="284.0" y="300.0" width="40" height="200.0" stroke="none" fill="green"/>
+<rect x="434.0" y="200.0" width="40" height="300.0" stroke="none" fill="green"/>
+<rect x="584.0" y="100.0" width="40" height="400.0" stroke="none" fill="green"/>
+<rect x="176.0" y="200.0" width="40" height="300.0" stroke="none" fill="red"/>
+<rect x="326.0" y="400.0" width="40" height="100.0" stroke="none" fill="red"/>
+<rect x="476.0" y="400.0" width="40" height="100.0" stroke="none" fill="red"/>
+<rect x="626.0" y="300.0" width="40" height="200.0" stroke="none" fill="red"/>
 </svg>

@@ -128,18 +128,18 @@ class BarSeries(Series):
     bar_template = '<rect x="{x}" y="{y}" width="{w}" height="{h}" {attributes}/>'
     __default_styles__ = {'stroke': 'none'}
 
-    def __init__(self, points, x_values, y_values, bar_width, bar_base, styles=None, classes=None):
+    def __init__(self, points, x_values, y_values, bar_width, bar_heights, styles=None, classes=None):
         super().__init__(x_position=points[0].x, y_position=points[0].y, styles=styles, classes=classes)
         self.points = points
         self.x_values = x_values
         self.y_values = y_values
         self.bar_width = bar_width
-        self.bar_base = bar_base
+        self.bar_heights = bar_heights
 
     @property
     def pv_generator(self):
         return zip(self.points, self.x_values, self.y_values)
 
     def get_element_list(self):
-        bars = [self.bar_template.format(x=p.x - self.bar_width/2, y=p.y, w=self.bar_width, h=self.bar_base - p.y, attributes=self.attributes) for p in self.points]
+        bars = [self.bar_template.format(x=p.x - self.bar_width/2, y=p.y, w=self.bar_width, h=h, attributes=self.attributes) for p, h in zip(self.points,self.bar_heights)]
         return bars + collapse_element_list(self.custom_elements)

@@ -141,8 +141,16 @@ def test_simple_line_chart():
 
 
 def test_bar_chart():
-    values = [11.3, 20, 30, 40]
+    values = [[10, 20, 30, 40], [30, 10, 10, 20]]
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
-    bar_chart = psc.BarChart(x_values=names, y_values=[values], y_names=['Number of fruit'], y_zero=True, width=900, right_margin=200)
+    bar_chart = psc.BarChart(x_values=names, y_values=values, y_names=['Monday', 'Tuesday'], y_zero=True, width=900, right_margin=200)
     bar_chart.add_legend()
     write_out(bar_chart.render(), name="bar.svg")
+
+
+def test_normalised_bar_chart():
+    values = [[10, 20, 30, 40], [30, 10, 10, 20]]
+    names = ['Apples', 'Bananas', 'Cherries', 'Durians']
+    bar_chart = psc.NormalisedBarChart(x_values=names, y_values=values, y_names=['Monday', 'Tuesday'], y_zero=True, width=900, right_margin=200, y_label_format=lambda value: "{:.0%}".format(value))
+    bar_chart.add_legend()
+    write_out(bar_chart.render(), name="normalised_bar.svg")
