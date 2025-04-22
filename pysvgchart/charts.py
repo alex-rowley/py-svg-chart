@@ -2,7 +2,7 @@ from .helpers import collapse_element_list, default_format
 from .series import DonutSegment, LineSeries, BarSeries
 from .axes import Axis, XAxis, YAxis, SimpleXAxis
 from .shapes import Point, Line, Group, Circle
-from .legends import LineLegend
+from .legends import LineLegend, BarLegend
 from .styles import render_all_styles
 
 
@@ -300,6 +300,9 @@ class BarChart(LineChart):
     x_axis_type = SimpleXAxis
     series_constructor = staticmethod(bar_series_constructor)
     colour_property = 'fill'
+
+    def add_legend(self, x_position=500, y_position=60, element_x=100, element_y=0, bar_width=30, bar_height=5, bar_text_gap=5):
+        self.legend = BarLegend(x_position, y_position, self.series, element_x, element_y, bar_width, bar_height, bar_text_gap)
 
 
 class DonutChart(Chart):

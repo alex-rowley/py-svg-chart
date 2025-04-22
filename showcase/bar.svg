@@ -27,8 +27,8 @@
 <text x="90" y="200.0" text-anchor="end" dominant-baseline="middle">30</text>
 <text x="90" y="150.0" text-anchor="end" dominant-baseline="middle">35</text>
 <text x="90" y="100.0" text-anchor="end" dominant-baseline="middle">40</text>
-<line x1="500" y1="60" x2="520" y2="60" stroke="none" fill="green"/>
-<text x="525" y="60" alignment-baseline="middle">number</text>
+<rect x="500" y="57.5" width="30" height="5" stroke="none" fill="green"/>
+<text x="535" y="60" alignment-baseline="middle">Number of fruit</text>
 <rect x="155.0" y="387.0" width="40" height="113.0" stroke="none" fill="green"/>
 <rect x="305.0" y="300.0" width="40" height="200.0" stroke="none" fill="green"/>
 <rect x="455.0" y="200.0" width="40" height="300.0" stroke="none" fill="green"/>

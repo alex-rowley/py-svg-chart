@@ -141,6 +141,6 @@ def test_simple_line_chart():
 def test_bar_chart():
     values = [11.3, 20, 30, 40]
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
-    bar_chart = psc.BarChart(x_values=names, y_values=[values], y_names=['number'], y_zero=True)
+    bar_chart = psc.BarChart(x_values=names, y_values=[values], y_names=['Number of fruit'], y_zero=True)
     bar_chart.add_legend()
     write_out(bar_chart.render(), name="bar.svg")

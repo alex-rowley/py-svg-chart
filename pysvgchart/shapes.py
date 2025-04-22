@@ -62,6 +62,24 @@ class Circle(Shape):
         return [self.circle_template.format(x=self.position.x, y=self.position.y, r=self.radius, attributes=self.attributes)]
 
 
+class Rect(Shape):
+    rect_template = '<rect x="{x}" y="{y}" width="{width}" height="{height}" {attributes}/>'
+
+    def __init__(self, x_position, y_position, width, height, styles=None, classes=None):
+        super().__init__(x_position, y_position, styles, classes)
+        self.width = width
+        self.height = height
+
+    def get_element_list(self):
+        return [self.rect_template.format(
+            x=self.position.x,
+            y=self.position.y,
+            width=self.width,
+            height=self.height,
+            attributes=self.attributes
+        )]
+
+
 class Text(Shape):
     text_template = '<text x="{x}" y="{y}" {attributes}>{content}</text>'
 
