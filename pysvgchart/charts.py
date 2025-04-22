@@ -212,7 +212,7 @@ class VerticalChart(Chart):
             series_colours = colours if colours else self.__colour_defaults__
             self.series[series].styles[self.colour_property] = series_colours[index % len(series_colours)]
 
-    def add_legend(self, x_position=500, y_position=60, element_x=100, element_y=0, line_length=20, line_text_gap=5):
+    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, line_length=20, line_text_gap=5):
         self.legend = LineLegend(x_position, y_position, self.series, element_x, element_y, line_length, line_text_gap)
 
     def add_grids(self, minor_x_ticks=0, minor_y_ticks=0, major_grid_style=None, minor_grid_style=None):
@@ -301,7 +301,7 @@ class BarChart(LineChart):
     series_constructor = staticmethod(bar_series_constructor)
     colour_property = 'fill'
 
-    def add_legend(self, x_position=500, y_position=60, element_x=100, element_y=0, bar_width=30, bar_height=5, bar_text_gap=5):
+    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, bar_width=30, bar_height=5, bar_text_gap=5):
         self.legend = BarLegend(x_position, y_position, self.series, element_x, element_y, bar_width, bar_height, bar_text_gap)
 
 

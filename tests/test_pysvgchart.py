@@ -64,7 +64,7 @@ def test_stylised_line_chart():
     line_chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200)
     line_chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
     line_chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
-    line_chart.add_legend(x_position=700, element_x=200, line_length=35, line_text_gap=20)
+    line_chart.add_legend(x_position=700, element_x=200, element_y=0, y_position=60, line_length=35, line_text_gap=20)
     line_chart.add_y_grid(minor_ticks=0, major_grid_style={'stroke': '#E9E9DE'})
     line_chart.x_axis.tick_lines, line_chart.y_axis.tick_lines = [], []
     line_chart.x_axis.axis_line = None
@@ -103,7 +103,6 @@ def test_stylised_line_chart():
         ]
 
     line_chart.add_hover_modifier(hover_modifier, radius=3)
-
     write_out(line_chart.render_with_all_styles(), name="detailed.svg")
 
 
