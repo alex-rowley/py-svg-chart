@@ -1,13 +1,13 @@
-<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-<line x1="100" y1="500" x2="600" y2="500" stroke="#2e2e2c"/>
-<line x1="162.5" y1="500" x2="162.5" y2="505" stroke="#2e2e2c"/>
-<line x1="287.5" y1="500" x2="287.5" y2="505" stroke="#2e2e2c"/>
-<line x1="412.5" y1="500" x2="412.5" y2="505" stroke="#2e2e2c"/>
-<line x1="537.5" y1="500" x2="537.5" y2="505" stroke="#2e2e2c"/>
-<text x="162.5" y="510" text-anchor="middle" dominant-baseline="hanging">Apples</text>
-<text x="287.5" y="510" text-anchor="middle" dominant-baseline="hanging">Bananas</text>
-<text x="412.5" y="510" text-anchor="middle" dominant-baseline="hanging">Cherries</text>
-<text x="537.5" y="510" text-anchor="middle" dominant-baseline="hanging">Durians</text>
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+<line x1="100" y1="500" x2="700" y2="500" stroke="#2e2e2c"/>
+<line x1="175.0" y1="500" x2="175.0" y2="505" stroke="#2e2e2c"/>
+<line x1="325.0" y1="500" x2="325.0" y2="505" stroke="#2e2e2c"/>
+<line x1="475.0" y1="500" x2="475.0" y2="505" stroke="#2e2e2c"/>
+<line x1="625.0" y1="500" x2="625.0" y2="505" stroke="#2e2e2c"/>
+<text x="175.0" y="510" text-anchor="middle" dominant-baseline="hanging">Apples</text>
+<text x="325.0" y="510" text-anchor="middle" dominant-baseline="hanging">Bananas</text>
+<text x="475.0" y="510" text-anchor="middle" dominant-baseline="hanging">Cherries</text>
+<text x="625.0" y="510" text-anchor="middle" dominant-baseline="hanging">Durians</text>
 <line x1="100" y1="100" x2="100" y2="500" stroke="#2e2e2c"/>
 <line x1="95" y1="500.0" x2="100" y2="500.0" stroke="#2e2e2c"/>
 <line x1="95" y1="450.0" x2="100" y2="450.0" stroke="#2e2e2c"/>
@@ -27,10 +27,10 @@
 <text x="90" y="200.0" text-anchor="end" dominant-baseline="middle">30</text>
 <text x="90" y="150.0" text-anchor="end" dominant-baseline="middle">35</text>
 <text x="90" y="100.0" text-anchor="end" dominant-baseline="middle">40</text>
-<rect x="630" y="197.5" width="30" height="5" stroke="none" fill="green"/>
-<text x="665" y="200" alignment-baseline="middle">Number of fruit</text>
-<rect x="142.5" y="387.0" width="40" height="113.0" stroke="none" fill="green"/>
-<rect x="267.5" y="300.0" width="40" height="200.0" stroke="none" fill="green"/>
-<rect x="392.5" y="200.0" width="40" height="300.0" stroke="none" fill="green"/>
-<rect x="517.5" y="100.0" width="40" height="400.0" stroke="none" fill="green"/>
+<rect x="730" y="197.5" width="30" height="5" stroke="none" fill="green"/>
+<text x="765" y="200" alignment-baseline="middle">Number of fruit</text>
+<rect x="155.0" y="387.0" width="40" height="113.0" stroke="none" fill="green"/>
+<rect x="305.0" y="300.0" width="40" height="200.0" stroke="none" fill="green"/>
+<rect x="455.0" y="200.0" width="40" height="300.0" stroke="none" fill="green"/>
+<rect x="605.0" y="100.0" width="40" height="400.0" stroke="none" fill="green"/>
 </svg>

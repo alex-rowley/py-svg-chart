@@ -31,6 +31,7 @@ def test_line_chart():
         y_names=['predicted', 'actual'],
         x_max_ticks=20,
         y_zero=True,
+        width=900,
         right_margin=200,
         y_margin=150
     )
@@ -142,6 +143,6 @@ def test_simple_line_chart():
 def test_bar_chart():
     values = [11.3, 20, 30, 40]
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
-    bar_chart = psc.BarChart(x_values=names, y_values=[values], y_names=['Number of fruit'], y_zero=True,right_margin=200)
+    bar_chart = psc.BarChart(x_values=names, y_values=[values], y_names=['Number of fruit'], y_zero=True, width=900, right_margin=200)
     bar_chart.add_legend()
     write_out(bar_chart.render(), name="bar.svg")
