@@ -222,7 +222,7 @@ class VerticalChart(Chart):
             sec_all_y_values = [v for series in sec_y_values for v in series]
             sec_series_names = sec_y_names if sec_y_names is not None else ['Secondary series {0}'.format(k) for k in range(len(sec_y_values))]
             self.sec_y_axis = YAxis(
-                x_position=width - left_margin,
+                x_position=width - right_margin,
                 y_position=y_margin,
                 data_points=sec_all_y_values,
                 axis_length=height - 2 * y_margin,
