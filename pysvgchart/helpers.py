@@ -33,7 +33,7 @@ def get_numeric_limits(
         max_ticks,
         min_value=None,
         max_value=None,
-        include_zero=False
+        include_zero=False,
 ):
     """
     compute numeric limits for a series of numbers
@@ -78,15 +78,25 @@ def get_numeric_limits(
 def get_date_or_time_limits(
         dates,
         max_ticks=10,
+        min_value=None,
+        max_value=None,
 ):
     """
     compute date limits for a series of dates/datetimes
     :param dates: actual dates/datetimes
     :param max_ticks: maximum number of ticks
+    :param min_value: optional minimum value to include in limits
+    :param max_value: optional maximum value to include in limits
     """
     date_min, date_max = min(dates), max(dates)
     if date_min >= date_max:
         raise ValueError("Dates must have a positive range.")
+
+    if min_value and min_value < date_min:
+        date_min = min_value
+
+    if max_value and max_value > date_max:
+        date_max = max_value
 
     total_seconds = (date_max - date_min).total_seconds()
 
@@ -159,7 +169,9 @@ def get_limits(
     if all(isinstance(v, (dt.datetime, dt.date)) for v in values):
         return get_date_or_time_limits(
             values,
-            max_ticks
+            max_ticks,
+            min_value=min_value,
+            max_value=max_value,
         )
     elif all(isinstance(v, (int, float)) for v in values):
         return get_numeric_limits(
@@ -167,16 +179,18 @@ def get_limits(
             max_ticks,
             min_value=min_value,
             max_value=max_value,
-            include_zero=include_zero
+            include_zero=include_zero,
         )
     else:
         raise TypeError("Invalid data types in values")
 
 
-def simple_limits(values,
-                  max_ticks,
-                  min_value=None,
-                  max_value=None,
-                  include_zero=False,
-                  min_unique_values=2):
+def simple_limits(
+        values,
+        max_ticks,
+        min_value=None,
+        max_value=None,
+        include_zero=False,
+        min_unique_values=2,
+):
     return values
