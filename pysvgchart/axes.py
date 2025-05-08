@@ -88,14 +88,6 @@ class XAxis(Axis):
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=axis_length, height=0, styles=styles)
         limit_positions = self.get_positions(self.limits)
 
-        # Accounts for the case where a minimum value for the axis has
-        # been selected which is between two naturally occurring major limits
-        # In this case the first 'limit' is that minimum value
-        # This solution is not awful but may need to be revisited soon
-        if len(limit_positions) > 2:
-            if (limit_positions[1] - limit_positions[0]) / (limit_positions[2] - limit_positions[1]) < 0.99:
-                limit_positions = limit_positions[1:]
-
         for m, p in zip(self.limits, limit_positions):
             self.tick_lines.append(Line(x_position=p, width=0, y_position=self.position.y, height=tick_length, styles=styles))
             self.tick_texts.append(Text(x_position=p, y_position=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
@@ -142,14 +134,15 @@ class YAxis(Axis):
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=0, height=axis_length, styles=styles)
-        for i, m in enumerate(self.limits):
-            height_offset = (len(self.limits) - 1 - i) * self.length / (len(self.limits) - 1) + self.position.y
+        max_index = len(self.limits) - 1
+        for index, limit in enumerate(self.limits):
+            height_offset = (max_index - index) * self.length / max_index + self.position.y
             if secondary:
                 self.tick_lines.append(Line(x_position=self.position.x, width=tick_length, y_position=height_offset, height=0, styles=styles))
-                self.tick_texts.append(Text(x_position=self.position.x + 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
+                self.tick_texts.append(Text(x_position=self.position.x + 2 * tick_length, y_position=height_offset, content=label_format(limit), styles=self.default_sec_tick_text_styles.copy()))
             else:
                 self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=height_offset, height=0, styles=styles))
-                self.tick_texts.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+                self.tick_texts.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format(limit), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
         return [self.position.y + self.length * (1 - self.proportion_of_range(v)) for v in values]
@@ -163,5 +156,10 @@ class SimpleXAxis(XAxis):
     limits_function = staticmethod(simple_limits)
 
     def get_positions(self, values):
-        if values is not None:
-            return [self.position.x + (i + 1 / 2) * self.length / len(values) for i in range(len(values))]
+        if values is None:
+            return None
+
+        return [
+            self.position.x + (index + 1 / 2) * self.length / len(values)
+            for index in range(len(values))
+        ]
