@@ -265,6 +265,8 @@ class VerticalChart(Chart):
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
         positions = self.x_axis.get_positions(self.x_axis.limits[1:])
         for p in positions:
+            if p is None:  # shifted out of the visible range
+                continue
             self.y_axis.grid_lines.append(
                 Line(
                     x_position=p,
@@ -290,6 +292,8 @@ class VerticalChart(Chart):
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
         positions = self.y_axis.get_positions(self.y_axis.limits[1:])
         for p in positions:
+            if p is None:  # shifted out of the visible range
+                continue
             self.x_axis.grid_lines.append(
                 Line(
                     x_position=self.y_axis.position.x,
@@ -320,7 +324,11 @@ class VerticalChart(Chart):
         series_list = [s for s in self.series] if series_list is None else series_list
         for s in self.series:
             if s in series_list:
-                hover_markers = [build_hover_marker(p, x, y, s) for p, x, y in self.series[s].pv_generator]
+                hover_markers = [
+                    build_hover_marker(p, x, y, s)
+                    for p, x, y in self.series[s].pv_generator
+                    if x is not None and y is not None and p.x is not None and p.y is not None
+                ]
                 self.series[s].add_custom_elements(hover_markers)
 
     def get_element_list(self):

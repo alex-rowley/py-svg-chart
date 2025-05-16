@@ -116,7 +116,10 @@ class LineSeries(Series):
 
     @property
     def path_length(self):
-        return sum(math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2) for p1, p2 in zip(self.points, self.points[1:])) if len(self.points) > 2 else 0
+        return sum(
+            math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
+            for p1, p2 in zip(self.points, self.points[1:])
+        ) if len(self.points) > 1 else 0
 
     def get_element_list(self):
         path = ' '.join(['{0} {1} {2}'.format("L" if i else "M", p.x, p.y) for i, p in enumerate(self.points)])
