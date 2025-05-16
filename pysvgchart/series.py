@@ -1,6 +1,6 @@
 import math
 
-from .shapes import Shape
+from .shapes import Shape, Circle
 from .helpers import collapse_element_list
 
 
@@ -124,7 +124,6 @@ class LineSeries(Series):
 
 
 class BarSeries(Series):
-
     bar_template = '<rect x="{x}" y="{y}" width="{w}" height="{h}" {attributes}/>'
     __default_styles__ = {'stroke': 'none'}
 
@@ -141,5 +140,31 @@ class BarSeries(Series):
         return zip(self.points, self.x_values, self.y_values)
 
     def get_element_list(self):
-        bars = [self.bar_template.format(x=p.x - self.bar_width/2, y=p.y, w=self.bar_width, h=h, attributes=self.attributes) for p, h in zip(self.points,self.bar_heights)]
+        bars = [self.bar_template.format(x=p.x - self.bar_width / 2, y=p.y, w=self.bar_width, h=h, attributes=self.attributes) for p, h in zip(self.points, self.bar_heights)]
         return bars + collapse_element_list(self.custom_elements)
+
+
+def default_scatter_shape_template(x, y, styles):
+    return Circle(x, y, radius=3, styles=styles)
+
+
+class ScatterSeries(Series):
+    """
+    scatter series given as a number of (x, y)-points
+    """
+    __default_styles__ = {}
+    __default_shape_template__ = staticmethod(default_scatter_shape_template)
+
+    def __init__(self, points, x_values, y_values, shape_template=None, styles=None, classes=None):
+        super().__init__(x_position=points[0].x, y_position=points[0].y, styles=styles, classes=classes)
+        self.points = points
+        self.x_values = x_values
+        self.y_values = y_values
+        self.shape_template = self.__default_shape_template__ if shape_template is None else shape_template
+
+    @property
+    def pv_generator(self):
+        return zip(self.points, self.x_values, self.y_values)
+
+    def get_element_list(self):
+        return collapse_element_list([self.shape_template(p.x, p.y, self.styles) for p in self.points]) + collapse_element_list(self.custom_elements)

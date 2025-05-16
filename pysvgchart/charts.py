@@ -1,8 +1,8 @@
 from .helpers import collapse_element_list, default_format
-from .series import DonutSegment, LineSeries, BarSeries
+from .series import DonutSegment, LineSeries, BarSeries, ScatterSeries
 from .axes import Axis, XAxis, YAxis, SimpleXAxis
 from .shapes import Point, Line, Group, Circle
-from .legends import LineLegend, BarLegend
+from .legends import LineLegend, BarLegend, ScatterLegend
 from .styles import render_all_styles
 
 
@@ -56,6 +56,20 @@ def normalised_bar_series_constructor(x_values, y_values, x_axis, y_axis, series
         )
         prev_cumulative_scaled_y_values = cumulative_scaled_y_values
     return rtn
+
+
+def scatter_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap):
+    return {
+        name: ScatterSeries(
+            points=[
+                Point(x, y)
+                for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
+            ],
+            x_values=x_values,
+            y_values=y_value
+        )
+        for name, y_value in zip(series_names, y_values)
+    }
 
 
 def default_y_range_constructor(y_values):
@@ -239,7 +253,7 @@ class VerticalChart(Chart):
             series_colours = colours if colours else self.__colour_defaults__
             self.series[series].styles[self.colour_property] = series_colours[index % len(series_colours)]
 
-    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, line_length=20, line_text_gap=5):
+    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, line_length=20, line_text_gap=5, **kwargs):
         self.legend = LineLegend(x_position, y_position, self.series, element_x, element_y, line_length, line_text_gap)
 
     def add_grids(self, minor_x_ticks=0, minor_y_ticks=0, major_grid_style=None, minor_grid_style=None):
@@ -328,7 +342,7 @@ class BarChart(LineChart):
     series_constructor = staticmethod(bar_series_constructor)
     colour_property = 'fill'
 
-    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, bar_width=30, bar_height=5, bar_text_gap=5):
+    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, bar_width=30, bar_height=5, bar_text_gap=5, **kwargs):
         self.legend = BarLegend(x_position, y_position, self.series, element_x, element_y, bar_width, bar_height, bar_text_gap)
 
 
@@ -338,8 +352,17 @@ class NormalisedBarChart(LineChart):
     y_range_constructor = staticmethod(lambda y_values: [0, 1])
     colour_property = 'fill'
 
-    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, bar_width=30, bar_height=5, bar_text_gap=5):
+    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, bar_width=30, bar_height=5, bar_text_gap=5, **kwargs):
         self.legend = BarLegend(x_position, y_position, self.series, element_x, element_y, bar_width, bar_height, bar_text_gap)
+
+
+class ScatterChart(LineChart):
+    x_axis_type = XAxis
+    series_constructor = staticmethod(scatter_series_constructor)
+    colour_property = 'fill'
+
+    def add_legend(self, x_position=730, y_position=200, element_x=0, element_y=20, shape_text_gap=5, **kwargs):
+        self.legend = ScatterLegend(x_position, y_position, self.series, element_x, element_y, shape_text_gap)
 
 
 class DonutChart(Chart):

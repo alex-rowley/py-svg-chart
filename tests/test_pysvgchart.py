@@ -154,3 +154,11 @@ def test_normalised_bar_chart():
     bar_chart = psc.NormalisedBarChart(x_values=names, y_values=values, y_names=['Monday', 'Tuesday'], y_zero=True, width=900, right_margin=200, y_label_format=lambda value: "{:.0%}".format(value))
     bar_chart.add_legend()
     write_out(bar_chart.render(), name="normalised_bar.svg")
+
+
+def test_scatter_chart():
+    x_values = [random.random() for k in range(50)]
+    y_values = list(zip(*[(x * .3 + random.random() * 0.7, x * 0.5 + random.random() * 0.5) for x in x_values]))
+    scatter_chart = psc.ScatterChart(x_values=x_values, y_values=y_values, y_names=["A", "B"])
+    scatter_chart.add_legend()
+    write_out(scatter_chart.render(), name="scatter.svg")
