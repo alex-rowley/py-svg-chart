@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from .shapes import Shape, Text, Line
 from .helpers import simple_limits, get_limits, collapse_element_list
@@ -9,23 +9,33 @@ from .helpers import simple_limits, get_limits, collapse_element_list
 
 @dataclass
 class Range:
-    lo: float | int | datetime | date
-    hi: float | int | datetime | date
-    size: float | int | datetime | date = field(init=False)
+    lo: float | int | datetime | date | str
+    hi: float | int | datetime | date | str
+    size: float | int | timedelta | None = field(init=False)
 
     def __post_init__(self):
-        self.size = self.hi - self.lo
+        if self.lo > self.hi:
+            self.lo, self.hi = self.hi, self.lo
+        if isinstance(self.hi, float | int) and isinstance(self.lo, float | int):
+            self.size = self.hi - self.lo
+        elif isinstance(self.hi, datetime) and isinstance(self.lo, datetime):
+            self.size = self.hi - self.lo
+        elif isinstance(self.hi, date) and isinstance(self.lo, date):
+            self.size = self.hi - self.lo
+        else:
+            self.size = None
 
     @classmethod
     def from_limits(cls, limits: list[float | int | datetime | date]) -> Range:
-        print(f"DBG {limits=}")
         return cls(lo=min(limits), hi=max(limits))
 
-    def value_to_fraction(self, value: float | int | datetime | date) -> float:
+    def value_to_fraction(self, value: float | int | datetime | date | str) -> float | str:
         """
         proportion of range where the value is positioned: [lo; hi] -> [0.0; 1.0]
         NOTE outside [0.0; 1.0] means the value is outside the range.
         """
+        if self.size is None:
+            return value
         return (value - self.lo) / self.size
 
 
@@ -49,8 +59,8 @@ class Axis(Shape):
             min_value=None,
             max_value=None,
             include_zero=False,
-            min_unique_values=2,
             shift=0,
+            min_unique_values=2,
     ):
         super().__init__(x_position, y_position)
         self.data_points = data_points
@@ -99,6 +109,7 @@ class XAxis(Axis):
             min_value=None,
             max_value=None,
             include_zero=False,
+            shift=0,
     ):
         super().__init__(
             x_position=x_position,
@@ -112,6 +123,7 @@ class XAxis(Axis):
             min_value=min_value,
             max_value=max_value,
             include_zero=include_zero,
+            shift=shift,
             min_unique_values=2,  # at least two unique values needed on the x-axis to create a meaningful graph
         )
         styles = axis_styles or self.default_axis_styles.copy()
@@ -187,7 +199,7 @@ class YAxis(Axis):
             values = [value - self.shift for value in values]
         proportions_of_range = [1 - self.proportion_of_range(value) for value in values]
         return [
-            self.position.y + prop * self.length if 0.0 < prop < 1.0 else None
+            self.position.y + prop * self.length if 0.0 <= prop <= 1.0 else None
             for prop in proportions_of_range
         ]
 

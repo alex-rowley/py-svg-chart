@@ -31,7 +31,10 @@ def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar
             ],
             x_values=x_values,
             y_values=y_value,
-            bar_heights=[y_axis.position.y + y_axis.length - y for y in y_axis.get_positions(y_value)],
+            bar_heights=[
+                y_axis.position.y + y_axis.length - y if y is not None else 0
+                for y in y_axis.get_positions(y_value)
+            ],
             bar_width=bar_width,
         )
         for index, name, y_value, in zip(range(no_series), series_names, y_values)
@@ -150,12 +153,14 @@ class VerticalChart(Chart):
             x_max=None,
             x_zero=False,
             x_max_ticks=12,
+            x_shift=0,
             x_label_format=default_format,
             # primary y-axis
             y_min=None,
             y_max=None,
             y_zero=False,
             y_max_ticks=12,
+            y_shift=0,
             y_label_format=default_format,
             # secondary y-axis
             sec_y_min=None,
@@ -228,6 +233,7 @@ class VerticalChart(Chart):
             min_value=x_min,
             max_value=x_max,
             include_zero=x_zero,
+            shift=x_shift,
         )
         series_names = y_names if y_names is not None else ['Series {0}'.format(k) for k in range(len(y_values))]
         self.series = self.series_constructor(x_values, y_values, self.x_axis, self.y_axis, series_names, bar_width, bar_gap)
