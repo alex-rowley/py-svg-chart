@@ -47,6 +47,25 @@ def test_line_chart():
     assert isinstance(line_chart.series['predicted'].path_length, float), "Path length error"
 
 
+STYLISED_LINE_CHART_DATA: dict | None = None
+
+def init_stylised_line_chart_data():
+    """
+    make sure that the stylised line charts use the same data
+    """
+    global STYLISED_LINE_CHART_DATA
+    if STYLISED_LINE_CHART_DATA is None:
+        start_date = dt.date(2025, 2, 14)
+        dates = [start_date - dt.timedelta(days=i) for i in range(500) if (start_date + dt.timedelta(days=i)).weekday() == 0][::-1]
+        actual = [(1 + math.sin(d.timetuple().tm_yday / 183 * math.pi)) * 50000 + 1000 * i + random.randint(0, 20000) for i, d in enumerate(dates)]
+        expected = [a + random.randint(-10000, 10000) for a in actual]
+        STYLISED_LINE_CHART_DATA = {
+            "dates": dates,
+            "actual": actual,
+            "expected": expected,
+        }
+
+
 def test_stylised_line_chart_no_shift():
     def y_labels(num):
         num = float('{:.3g}'.format(num))
@@ -60,10 +79,10 @@ def test_stylised_line_chart_no_shift():
     def x_labels(date):
         return date.strftime('%b')
 
-    start_date = dt.date(2025, 2, 14)
-    dates = [start_date - dt.timedelta(days=i) for i in range(500) if (start_date + dt.timedelta(days=i)).weekday() == 0][::-1]
-    actual = [(1 + math.sin(d.timetuple().tm_yday / 183 * math.pi)) * 50000 + 1000 * i + random.randint(0, 20000) for i, d in enumerate(dates)]
-    expected = [a + random.randint(-10000, 10000) for a in actual]
+    init_stylised_line_chart_data()
+    dates = STYLISED_LINE_CHART_DATA["dates"]
+    actual = STYLISED_LINE_CHART_DATA["actual"]
+    expected = STYLISED_LINE_CHART_DATA["expected"]
     line_chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100)
     line_chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
     line_chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
@@ -122,11 +141,11 @@ def test_stylised_line_chart_with_shift():
     def x_labels(date):
         return date.strftime('%b')
 
-    start_date = dt.date(2025, 2, 14)
-    dates = [start_date - dt.timedelta(days=i) for i in range(500) if (start_date + dt.timedelta(days=i)).weekday() == 0][::-1]
-    actual = [(1 + math.sin(d.timetuple().tm_yday / 183 * math.pi)) * 50000 + 1000 * i + random.randint(0, 20000) for i, d in enumerate(dates)]
-    expected = [a + random.randint(-10000, 10000) for a in actual]
-    line_chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100, x_shift=dt.timedelta(days=5))
+    init_stylised_line_chart_data()
+    dates = STYLISED_LINE_CHART_DATA["dates"]
+    actual = STYLISED_LINE_CHART_DATA["actual"]
+    expected = STYLISED_LINE_CHART_DATA["expected"]
+    line_chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100, x_shift=dt.timedelta(days=9))
     line_chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
     line_chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
     line_chart.add_legend(x_position=700, element_x=200, element_y=0, y_position=60, line_length=35, line_text_gap=20)
