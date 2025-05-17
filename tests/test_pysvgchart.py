@@ -128,7 +128,7 @@ def test_stylised_line_chart_no_shift():
     write_out(line_chart.render_with_all_styles(), name="detailed-no-shift.svg")
 
 
-def test_stylised_line_chart_with_shift():
+def test_stylised_line_chart_with_x_shift():
     def y_labels(num):
         num = float('{:.3g}'.format(num))
         magnitude = 0
@@ -145,7 +145,7 @@ def test_stylised_line_chart_with_shift():
     dates = STYLISED_LINE_CHART_DATA["dates"]
     actual = STYLISED_LINE_CHART_DATA["actual"]
     expected = STYLISED_LINE_CHART_DATA["expected"]
-    line_chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100, x_shift=dt.timedelta(days=9))
+    line_chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100, x_shift=True)
     line_chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
     line_chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
     line_chart.add_legend(x_position=700, element_x=200, element_y=0, y_position=60, line_length=35, line_text_gap=20)
@@ -188,6 +188,68 @@ def test_stylised_line_chart_with_shift():
 
     line_chart.add_hover_modifier(hover_modifier, radius=3)
     write_out(line_chart.render_with_all_styles(), name="detailed.svg")
+
+
+def test_stylised_line_chart_with_xy_shift():
+    def y_labels(num):
+        num = float('{:.3g}'.format(num))
+        magnitude = 0
+        while abs(num) >= 1000:
+            magnitude += 1
+            num /= 1000.0
+        rtn = '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][magnitude])
+        return rtn.replace('.00', '').replace('.0', '')
+
+    def x_labels(date):
+        return date.strftime('%b')
+
+    init_stylised_line_chart_data()
+    dates = STYLISED_LINE_CHART_DATA["dates"]
+    actual = STYLISED_LINE_CHART_DATA["actual"]
+    expected = STYLISED_LINE_CHART_DATA["expected"]
+    line_chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100, x_shift=True, y_shift=True)
+    line_chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
+    line_chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
+    line_chart.add_legend(x_position=700, element_x=200, element_y=0, y_position=60, line_length=35, line_text_gap=20)
+    line_chart.add_y_grid(minor_ticks=0, major_grid_style={'stroke': '#E9E9DE'})
+    line_chart.x_axis.tick_lines, line_chart.y_axis.tick_lines = [], []
+    line_chart.x_axis.axis_line = None
+    line_chart.y_axis.axis_line.styles['stroke'] = '#E9E9DE'
+    line_end = line_chart.legend.lines[0].end
+    act_styles = {'fill': '#FFFFFF', 'stroke': '#DB7D33', 'stroke-width': '3'}
+    line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=act_styles))
+    line_end = line_chart.legend.lines[1].end
+    pred_styles = {'fill': '#2D2D2D', 'stroke': '#2D2D2D', 'stroke-width': '3'}
+    line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=pred_styles))
+    for limit, tick in zip(line_chart.x_axis.limits, line_chart.x_axis.tick_texts):
+        if tick.content == 'Jan':
+            line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
+
+    def hover_modifier(position, x_value, y_value, series_name, styles=None):
+        default_stroke = "#808080"
+        classes = [
+            psc.hover_style_name,
+        ]
+        marker_styles = {
+            "fill": "#FFFFFF",
+            "stroke": default_stroke if styles is None else styles.get("stroke", default_stroke),
+            "stroke-width": "3",
+        }
+        text_styles = {
+            "alignment-baseline": "middle",
+            "text-anchor": "middle",
+        }
+        x_content = str(x_value)
+        y_content = "{:,.0f}".format(y_value)
+        return [
+            psc.Circle(x_position=position.x, y_position=position.y, radius=3, classes=classes, styles=marker_styles),
+            psc.Text(x_position=position.x, y_position=position.y - 10, content=x_content, classes=classes, styles=text_styles),
+            psc.Text(x_position=position.x, y_position=position.y - 30, content=y_content, classes=classes, styles=text_styles),
+            psc.Text(x_position=position.x, y_position=position.y - 50, content=series_name, classes=classes, styles=text_styles)
+        ]
+
+    line_chart.add_hover_modifier(hover_modifier, radius=3)
+    write_out(line_chart.render_with_all_styles(), name="detailed-xy-shift.svg")
 
 
 def test_donut():

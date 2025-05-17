@@ -59,7 +59,7 @@ class Axis(Shape):
             min_value=None,
             max_value=None,
             include_zero=False,
-            shift=0,
+            shift=False,
             min_unique_values=2,
     ):
         super().__init__(x_position, y_position)
@@ -75,10 +75,11 @@ class Axis(Shape):
         )
         self.range = Range.from_limits(self.limits)
         self.label_format = label_format
-        self.shift = shift
         self.axis_line = None
         self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
         _ = (axis_styles, tick_length)
+        # if shift is True, use the gap that would be created between the graph and the axis
+        self.shift = (min(self.data_points) - self.range.lo) if shift is True else shift
 
     def proportion_of_range(self, value):
         return self.range.value_to_fraction(value)
@@ -109,7 +110,7 @@ class XAxis(Axis):
             min_value=None,
             max_value=None,
             include_zero=False,
-            shift=0,
+            shift=False,
     ):
         super().__init__(
             x_position=x_position,
@@ -137,9 +138,10 @@ class XAxis(Axis):
             self.tick_texts.append(Text(x_position=p, y_position=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
-        if self.shift:
-            values = [value - self.shift for value in values]
-        proportions_of_range = [self.proportion_of_range(value) for value in values]
+        proportions_of_range = [
+            self.proportion_of_range(value - self.shift if self.shift else value)
+            for value in values
+        ]
         return [
             self.position.x + prop * self.length if 0.0 <= prop <= 1.0 else None
             for prop in proportions_of_range
@@ -166,6 +168,7 @@ class YAxis(Axis):
             min_value=None,
             max_value=None,
             include_zero=False,
+            shift=False,
             secondary=False,
     ):
         super().__init__(
@@ -180,24 +183,28 @@ class YAxis(Axis):
             min_value=min_value,
             max_value=max_value,
             include_zero=include_zero,
+            shift=shift,
             min_unique_values=1,  # one unique value is sufficient for the y-axis
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=0, height=axis_length, styles=styles)
-        max_index = len(self.limits) - 1
-        for index, limit in enumerate(self.limits):
-            height_offset = (max_index - index) * self.length / max_index + self.position.y
+        limit_positions = self.get_positions(self.limits)
+
+        for m, p in zip(self.limits, limit_positions):
+            if p is None:  # shifted out of the visible range
+                continue
             if secondary:
-                self.tick_lines.append(Line(x_position=self.position.x, width=tick_length, y_position=height_offset, height=0, styles=styles))
-                self.tick_texts.append(Text(x_position=self.position.x + 2 * tick_length, y_position=height_offset, content=label_format(limit), styles=self.default_sec_tick_text_styles.copy()))
+                self.tick_lines.append(Line(x_position=self.position.x, width=tick_length, y_position=p, height=0, styles=styles))
+                self.tick_texts.append(Text(x_position=self.position.x + 2 * tick_length, y_position=p, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
             else:
-                self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=height_offset, height=0, styles=styles))
-                self.tick_texts.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format(limit), styles=self.default_tick_text_styles.copy()))
+                self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=p, height=0, styles=styles))
+                self.tick_texts.append(Text(x_position=self.position.x - 2 * tick_length, y_position=p, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
-        if self.shift:
-            values = [value - self.shift for value in values]
-        proportions_of_range = [1 - self.proportion_of_range(value) for value in values]
+        proportions_of_range = [
+            1 - self.proportion_of_range(value - self.shift if self.shift else value)
+            for value in values
+        ]
         return [
             self.position.y + prop * self.length if 0.0 <= prop <= 1.0 else None
             for prop in proportions_of_range
