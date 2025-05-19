@@ -1,42 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from datetime import datetime, date, timedelta
-
-from .shapes import Shape, Text, Line
 from .helpers import simple_limits, get_limits, collapse_element_list
-
-
-@dataclass
-class Range:
-    lo: float | int | datetime | date | str
-    hi: float | int | datetime | date | str
-    size: float | int | timedelta | None = field(init=False)
-
-    def __post_init__(self):
-        if self.lo > self.hi:
-            self.lo, self.hi = self.hi, self.lo
-        if isinstance(self.hi, float | int) and isinstance(self.lo, float | int):
-            self.size = self.hi - self.lo
-        elif isinstance(self.hi, datetime) and isinstance(self.lo, datetime):
-            self.size = self.hi - self.lo
-        elif isinstance(self.hi, date) and isinstance(self.lo, date):
-            self.size = self.hi - self.lo
-        else:
-            self.size = None
-
-    @classmethod
-    def from_limits(cls, limits: list[float | int | datetime | date]) -> Range:
-        return cls(lo=min(limits), hi=max(limits))
-
-    def value_to_fraction(self, value: float | int | datetime | date | str) -> float | str:
-        """
-        proportion of range where the value is positioned: [lo; hi] -> [0.0; 1.0]
-        NOTE outside [0.0; 1.0] means the value is outside the range.
-        """
-        if self.size is None:
-            return value
-        return (value - self.lo) / self.size
+from .ranges import make_range
+from .shapes import Shape, Text, Line
 
 
 class Axis(Shape):
@@ -73,7 +39,7 @@ class Axis(Shape):
             include_zero=include_zero,
             min_unique_values=min_unique_values,
         )
-        self.range = Range.from_limits(self.limits)
+        self.range = make_range(self.limits)
         self.label_format = label_format
         self.axis_line = None
         self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
