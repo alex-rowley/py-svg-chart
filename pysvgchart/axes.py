@@ -45,7 +45,8 @@ class Axis(Shape):
         self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
         _ = (axis_styles, tick_length)
         # if shift is True, use the gap that would be created between the graph and the axis
-        self.shift = (min(self.data_points) - self.range.lo) if shift is True else shift
+        lo = self.range.get_lowest() if shift is True else None
+        self.shift = (min(self.data_points) - lo) if lo is not None else shift
 
     def proportion_of_range(self, value):
         return self.range.value_to_fraction(value)

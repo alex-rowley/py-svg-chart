@@ -2,12 +2,23 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from datetime import datetime, date, timedelta
+from typing import Any
 
 
 class Range(ABC):
+    """
+    base class for ranges
+    """
 
     @abstractmethod
-    def value_to_fraction(self, value):
+    def get_lowest(self) -> Any:
+        """
+        get lowest value iff meaningful, None otherwise
+        """
+        ...
+
+    @abstractmethod
+    def value_to_fraction(self, value) -> float:
         """
         proportion of range where the value is positioned: [lo; hi] -> [0.0; 1.0]
         NOTE outside [0.0; 1.0] means the value is outside the range.
@@ -33,6 +44,9 @@ class LinearRange(Range):
         self.hi = max(values)
         self.size = self.hi - self.lo
 
+    def get_lowest(self) -> date | datetime | float | int:
+        return self.lo
+
     def value_to_fraction(self, value: date | datetime | float | int) -> float:
         return (value - self.lo) / self.size
 
@@ -45,6 +59,9 @@ class MappingRange(Range):
             value: (index + 0.5) * value_width
             for index, value in enumerate(values)
         }
+
+    def get_lowest(self) -> None:
+        return None
 
     def value_to_fraction(self, value) -> float:
         return self.map.get(value)
