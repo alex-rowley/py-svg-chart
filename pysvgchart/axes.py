@@ -1,5 +1,8 @@
-from .shapes import Shape, Text, Line
+from __future__ import annotations
+
 from .helpers import simple_limits, get_limits, collapse_element_list
+from .ranges import make_range
+from .shapes import Shape, Text, Line
 
 
 class Axis(Shape):
@@ -22,6 +25,7 @@ class Axis(Shape):
             min_value=None,
             max_value=None,
             include_zero=False,
+            shift=False,
             min_unique_values=2,
     ):
         super().__init__(x_position, y_position)
@@ -35,13 +39,17 @@ class Axis(Shape):
             include_zero=include_zero,
             min_unique_values=min_unique_values,
         )
+        self.range = make_range(self.limits)
         self.label_format = label_format
         self.axis_line = None
         self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
         _ = (axis_styles, tick_length)
+        # if shift is True, use the gap that would be created between the graph and the axis
+        lo = self.range.get_lowest() if shift is True else None
+        self.shift = (min(self.data_points) - lo) if lo is not None else shift
 
     def proportion_of_range(self, value):
-        return (value - min(self.limits)) / (max(self.limits) - min(self.limits))
+        return self.range.value_to_fraction(value - self.shift if self.shift else value)
 
     def get_element_list(self):
         return collapse_element_list([self.axis_line], self.tick_lines, self.tick_texts, self.grid_lines)
@@ -69,6 +77,7 @@ class XAxis(Axis):
             min_value=None,
             max_value=None,
             include_zero=False,
+            shift=False,
     ):
         super().__init__(
             x_position=x_position,
@@ -82,26 +91,28 @@ class XAxis(Axis):
             min_value=min_value,
             max_value=max_value,
             include_zero=include_zero,
+            shift=shift,
             min_unique_values=2,  # at least two unique values needed on the x-axis to create a meaningful graph
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=axis_length, height=0, styles=styles)
         limit_positions = self.get_positions(self.limits)
 
-        # Accounts for the case where a minimum value for the axis has
-        # been selected which is between two naturally occurring major limits
-        # In this case the first 'limit' is that minimum value
-        # This solution is not awful but may need to be revisited soon
-        if len(limit_positions) > 2:
-            if (limit_positions[1] - limit_positions[0]) / (limit_positions[2] - limit_positions[1]) < 0.99:
-                limit_positions = limit_positions[1:]
-
         for m, p in zip(self.limits, limit_positions):
+            if p is None:  # shifted out of the visible range
+                continue
             self.tick_lines.append(Line(x_position=p, width=0, y_position=self.position.y, height=tick_length, styles=styles))
             self.tick_texts.append(Text(x_position=p, y_position=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
-        return [self.position.x + self.proportion_of_range(v) * self.length for v in values]
+        proportions_of_range = [
+            self.proportion_of_range(value)
+            for value in values
+        ]
+        return [
+            self.position.x + prop * self.length if 0.0 <= prop <= 1.0 else None
+            for prop in proportions_of_range
+        ]
 
 
 class YAxis(Axis):
@@ -124,6 +135,7 @@ class YAxis(Axis):
             min_value=None,
             max_value=None,
             include_zero=False,
+            shift=False,
             secondary=False,
     ):
         super().__init__(
@@ -138,21 +150,32 @@ class YAxis(Axis):
             min_value=min_value,
             max_value=max_value,
             include_zero=include_zero,
+            shift=shift,
             min_unique_values=1,  # one unique value is sufficient for the y-axis
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=0, height=axis_length, styles=styles)
-        for i, m in enumerate(self.limits):
-            height_offset = (len(self.limits) - 1 - i) * self.length / (len(self.limits) - 1) + self.position.y
+        limit_positions = self.get_positions(self.limits)
+
+        for m, p in zip(self.limits, limit_positions):
+            if p is None:  # shifted out of the visible range
+                continue
             if secondary:
-                self.tick_lines.append(Line(x_position=self.position.x, width=tick_length, y_position=height_offset, height=0, styles=styles))
-                self.tick_texts.append(Text(x_position=self.position.x + 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
+                self.tick_lines.append(Line(x_position=self.position.x, width=tick_length, y_position=p, height=0, styles=styles))
+                self.tick_texts.append(Text(x_position=self.position.x + 2 * tick_length, y_position=p, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
             else:
-                self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=height_offset, height=0, styles=styles))
-                self.tick_texts.append(Text(x_position=self.position.x - 2 * tick_length, y_position=height_offset, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+                self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=p, height=0, styles=styles))
+                self.tick_texts.append(Text(x_position=self.position.x - 2 * tick_length, y_position=p, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
-        return [self.position.y + self.length * (1 - self.proportion_of_range(v)) for v in values]
+        proportions_of_range = [
+            1 - self.proportion_of_range(value)
+            for value in values
+        ]
+        return [
+            self.position.y + prop * self.length if 0.0 <= prop <= 1.0 else None
+            for prop in proportions_of_range
+        ]
 
 
 class SimpleXAxis(XAxis):
@@ -163,5 +186,10 @@ class SimpleXAxis(XAxis):
     limits_function = staticmethod(simple_limits)
 
     def get_positions(self, values):
-        if values is not None:
-            return [self.position.x + (i + 1 / 2) * self.length / len(values) for i in range(len(values))]
+        if values is None:
+            return None
+
+        return [
+            self.position.x + (index + 1 / 2) * self.length / len(values)
+            for index in range(len(values))
+        ]

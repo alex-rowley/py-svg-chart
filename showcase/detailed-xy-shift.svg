@@ -1,0 +1,1059 @@
+<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+<style>
+.psc-hover-group .psc-hover-data {
+     display: none;;
+}
+
+.psc-hover-group:hover .psc-hover-data {
+     display: inline;
+}
+</style>
+<text x="142.5531914893617" y="510" text-anchor="middle" dominant-baseline="hanging">Nov</text>
+<text x="200.58027079303673" y="510" text-anchor="middle" dominant-baseline="hanging">Dec</text>
+<text x="260.541586073501" y="510" text-anchor="middle" dominant-baseline="hanging">Jan</text>
+<text x="320.50290135396517" y="510" text-anchor="middle" dominant-baseline="hanging">Feb</text>
+<text x="376.59574468085106" y="510" text-anchor="middle" dominant-baseline="hanging">Mar</text>
+<text x="436.5570599613153" y="510" text-anchor="middle" dominant-baseline="hanging">Apr</text>
+<text x="494.5841392649903" y="510" text-anchor="middle" dominant-baseline="hanging">May</text>
+<text x="554.5454545454545" y="510" text-anchor="middle" dominant-baseline="hanging">Jun</text>
+<text x="612.5725338491296" y="510" text-anchor="middle" dominant-baseline="hanging">Jul</text>
+<text x="672.5338491295938" y="510" text-anchor="middle" dominant-baseline="hanging">Aug</text>
+<text x="732.495164410058" y="510" text-anchor="middle" dominant-baseline="hanging">Sep</text>
+<text x="790.522243713733" y="510" text-anchor="middle" dominant-baseline="hanging">Oct</text>
+<text x="850.4835589941973" y="510" text-anchor="middle" dominant-baseline="hanging">Nov</text>
+<text x="908.5106382978723" y="510" text-anchor="middle" dominant-baseline="hanging">Dec</text>
+<text x="968.4719535783365" y="510" text-anchor="middle" dominant-baseline="hanging">Jan</text>
+<text x="1028.4332688588006" y="510" text-anchor="middle" dominant-baseline="hanging">Feb</text>
+<text x="1082.5918762088975" y="510" text-anchor="middle" dominant-baseline="hanging">Mar</text>
+<line x1="100" y1="100" x2="100" y2="500" stroke="#E9E9DE"/>
+<text x="90" y="465.3586207755908" text-anchor="end" dominant-baseline="middle">20K</text>
+<text x="90" y="420.91417633114634" text-anchor="end" dominant-baseline="middle">40K</text>
+<text x="90" y="376.4697318867019" text-anchor="end" dominant-baseline="middle">60K</text>
+<text x="90" y="332.0252874422574" text-anchor="end" dominant-baseline="middle">80K</text>
+<text x="90" y="287.58084299781297" text-anchor="end" dominant-baseline="middle">100K</text>
+<text x="90" y="243.13639855336854" text-anchor="end" dominant-baseline="middle">120K</text>
+<text x="90" y="198.69195410892414" text-anchor="end" dominant-baseline="middle">140K</text>
+<text x="90" y="154.24750966447965" text-anchor="end" dominant-baseline="middle">160K</text>
+<text x="90" y="109.80306522003525" text-anchor="end" dominant-baseline="middle">180K</text>
+<line x1="142.5531914893617" y1="100" x2="142.5531914893617" y2="500" stroke="#E9E9DE"/>
+<line x1="200.58027079303673" y1="100" x2="200.58027079303673" y2="500" stroke="#E9E9DE"/>
+<line x1="260.541586073501" y1="100" x2="260.541586073501" y2="500" stroke="#E9E9DE"/>
+<line x1="320.50290135396517" y1="100" x2="320.50290135396517" y2="500" stroke="#E9E9DE"/>
+<line x1="376.59574468085106" y1="100" x2="376.59574468085106" y2="500" stroke="#E9E9DE"/>
+<line x1="436.5570599613153" y1="100" x2="436.5570599613153" y2="500" stroke="#E9E9DE"/>
+<line x1="494.5841392649903" y1="100" x2="494.5841392649903" y2="500" stroke="#E9E9DE"/>
+<line x1="554.5454545454545" y1="100" x2="554.5454545454545" y2="500" stroke="#E9E9DE"/>
+<line x1="612.5725338491296" y1="100" x2="612.5725338491296" y2="500" stroke="#E9E9DE"/>
+<line x1="672.5338491295938" y1="100" x2="672.5338491295938" y2="500" stroke="#E9E9DE"/>
+<line x1="732.495164410058" y1="100" x2="732.495164410058" y2="500" stroke="#E9E9DE"/>
+<line x1="790.522243713733" y1="100" x2="790.522243713733" y2="500" stroke="#E9E9DE"/>
+<line x1="850.4835589941973" y1="100" x2="850.4835589941973" y2="500" stroke="#E9E9DE"/>
+<line x1="908.5106382978723" y1="100" x2="908.5106382978723" y2="500" stroke="#E9E9DE"/>
+<line x1="968.4719535783365" y1="100" x2="968.4719535783365" y2="500" stroke="#E9E9DE"/>
+<line x1="1028.4332688588006" y1="100" x2="1028.4332688588006" y2="500" stroke="#E9E9DE"/>
+<line x1="1082.5918762088975" y1="100" x2="1082.5918762088975" y2="500" stroke="#E9E9DE"/>
+<line x1="700" y1="60" x2="735" y2="60" stroke="#DB7D33" stroke-width="3"/>
+<line x1="900" y1="60" x2="935" y2="60" stroke="#2D2D2D" stroke-width="3" stroke-dasharray="4,4"/>
+<text x="755" y="60" alignment-baseline="middle">Actual sales</text>
+<text x="955" y="60" alignment-baseline="middle">Predicted sales</text>
+<path d="M 100.0 482.1911111111111 L 113.53965183752418 481.27930254823127 L 127.07930367504835 479.7368394702013 L 140.61895551257254 484.9720605345952 L 154.1586073500967 462.2680499816769 L 167.6982591876209 427.8103281569463 L 181.23791102514508 451.53202825632485 L 194.77756286266924 438.1343585616575 L 208.31721470019343 395.2045977739367 L 221.85686653771762 411.05831902524744 L 235.39651837524178 362.2725412625278 L 248.93617021276594 376.51650934640867 L 262.47582205029016 358.8622207185638 L 276.0154738878143 318.09522336402836 L 289.5551257253385 297.41040847860074 L 303.09477756286265 310.5958319192573 L 316.63442940038686 289.1088354473836 L 330.174081237911 256.56675806700946 L 343.71373307543524 238.3511089451224 L 357.2533849129594 240.33857121596856 L 370.79303675048357 245.58775915821366 L 384.3326885880077 212.9462039361738 L 397.8723404255319 230.2131509107395 L 411.4119922630561 216.3204144996629 L 424.95164410058027 205.68908808714212 L 438.49129593810443 204.87101327400046 L 452.0309477756286 199.08390821784826 L 465.5705996131528 193.8046056696169 L 479.110251450677 200.66929096986908 L 492.64990328820113 228.271847683253 L 506.18955512572535 223.97141379172683 L 519.7292069632495 231.90024672756863 L 533.2688588007737 251.01187996152342 L 546.8085106382978 239.50732743396853 L 560.348162475822 271.9281993328003 L 573.8878143133462 240.67225585926738 L 587.4274661508705 253.76692251087601 L 600.9671179883945 288.2896210936618 L 614.5067698259188 273.305990748336 L 628.046421663443 311.2015161004214 L 641.5860735009671 337.5776341357273 L 655.1257253384913 343.38561313028623 L 668.6653771760155 354.1314970464228 L 682.2050290135396 350.84763168720895 L 695.7446808510638 370.7796234595722 L 709.284332688588 380.4909167029755 L 722.8239845261122 364.5960667258817 L 736.3636363636364 388.0471218118953 L 749.9032882011605 358.8886418046957 L 763.4429400386848 380.6146622978555 L 776.9825918762089 377.7231396676462 L 790.522243713733 361.1189720253363 L 804.0618955512572 377.7278067907132 L 817.6015473887815 349.3361836021745 L 831.1411992263056 372.68689939101546 L 844.6808510638298 332.9651539228738 L 858.220502901354 323.39770554501047 L 871.7601547388781 320.43393820540194 L 885.2998065764023 325.4599675168388 L 898.8394584139264 295.9569178838956 L 912.3791102514507 287.09450665375914 L 925.9187620889749 288.4666303921569 L 939.458413926499 280.4956515602003 L 952.9980657640233 264.9543088088383 L 966.5377176015475 225.08306522003525 L 980.0773694390715 215.12959940900998 L 993.6170212765957 194.7349233243146 L 1007.1566731141199 180.67505560346913 L 1020.6963249516441 162.19829045297803 L 1034.2359767891683 178.5981014450638 L 1047.7756286266924 162.6217184787873" fill="none" stroke="#DB7D33" stroke-width="3"/>
+<g class="psc-hover-group">
+<circle cx="100.0" cy="482.1911111111111" r="3" style="opacity:0;"/>
+<circle cx="100.0" cy="482.1911111111111" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="100.0" y="472.1911111111111" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-10-10</text>
+<text x="100.0" y="452.1911111111111" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">12,425</text>
+<text x="100.0" y="432.1911111111111" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="113.53965183752418" cy="481.27930254823127" r="3" style="opacity:0;"/>
+<circle cx="113.53965183752418" cy="481.27930254823127" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="113.53965183752418" y="471.27930254823127" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-10-17</text>
+<text x="113.53965183752418" y="451.27930254823127" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">12,836</text>
+<text x="113.53965183752418" y="431.27930254823127" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="127.07930367504835" cy="479.7368394702013" r="3" style="opacity:0;"/>
+<circle cx="127.07930367504835" cy="479.7368394702013" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="127.07930367504835" y="469.7368394702013" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-10-24</text>
+<text x="127.07930367504835" y="449.7368394702013" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">13,530</text>
+<text x="127.07930367504835" y="429.7368394702013" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="140.61895551257254" cy="484.9720605345952" r="3" style="opacity:0;"/>
+<circle cx="140.61895551257254" cy="484.9720605345952" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="140.61895551257254" y="474.9720605345952" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-10-31</text>
+<text x="140.61895551257254" y="454.9720605345952" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">11,174</text>
+<text x="140.61895551257254" y="434.9720605345952" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="154.1586073500967" cy="462.2680499816769" r="3" style="opacity:0;"/>
+<circle cx="154.1586073500967" cy="462.2680499816769" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="154.1586073500967" y="452.2680499816769" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-11-07</text>
+<text x="154.1586073500967" y="432.2680499816769" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">21,391</text>
+<text x="154.1586073500967" y="412.2680499816769" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="167.6982591876209" cy="427.8103281569463" r="3" style="opacity:0;"/>
+<circle cx="167.6982591876209" cy="427.8103281569463" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="167.6982591876209" y="417.8103281569463" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-11-14</text>
+<text x="167.6982591876209" y="397.8103281569463" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">36,897</text>
+<text x="167.6982591876209" y="377.8103281569463" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="181.23791102514508" cy="451.53202825632485" r="3" style="opacity:0;"/>
+<circle cx="181.23791102514508" cy="451.53202825632485" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="181.23791102514508" y="441.53202825632485" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-11-21</text>
+<text x="181.23791102514508" y="421.53202825632485" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">26,222</text>
+<text x="181.23791102514508" y="401.53202825632485" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="194.77756286266924" cy="438.1343585616575" r="3" style="opacity:0;"/>
+<circle cx="194.77756286266924" cy="438.1343585616575" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="194.77756286266924" y="428.1343585616575" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-11-28</text>
+<text x="194.77756286266924" y="408.1343585616575" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">32,251</text>
+<text x="194.77756286266924" y="388.1343585616575" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="208.31721470019343" cy="395.2045977739367" r="3" style="opacity:0;"/>
+<circle cx="208.31721470019343" cy="395.2045977739367" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="208.31721470019343" y="385.2045977739367" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-12-05</text>
+<text x="208.31721470019343" y="365.2045977739367" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">51,569</text>
+<text x="208.31721470019343" y="345.2045977739367" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="221.85686653771762" cy="411.05831902524744" r="3" style="opacity:0;"/>
+<circle cx="221.85686653771762" cy="411.05831902524744" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="221.85686653771762" y="401.05831902524744" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-12-12</text>
+<text x="221.85686653771762" y="381.05831902524744" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">44,435</text>
+<text x="221.85686653771762" y="361.05831902524744" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="235.39651837524178" cy="362.2725412625278" r="3" style="opacity:0;"/>
+<circle cx="235.39651837524178" cy="362.2725412625278" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="235.39651837524178" y="352.2725412625278" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-12-19</text>
+<text x="235.39651837524178" y="332.2725412625278" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">66,389</text>
+<text x="235.39651837524178" y="312.2725412625278" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="248.93617021276594" cy="376.51650934640867" r="3" style="opacity:0;"/>
+<circle cx="248.93617021276594" cy="376.51650934640867" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="248.93617021276594" y="366.51650934640867" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-12-26</text>
+<text x="248.93617021276594" y="346.51650934640867" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">59,979</text>
+<text x="248.93617021276594" y="326.51650934640867" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="262.47582205029016" cy="358.8622207185638" r="3" style="opacity:0;"/>
+<circle cx="262.47582205029016" cy="358.8622207185638" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="262.47582205029016" y="348.8622207185638" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-02</text>
+<text x="262.47582205029016" y="328.8622207185638" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">67,923</text>
+<text x="262.47582205029016" y="308.8622207185638" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="276.0154738878143" cy="318.09522336402836" r="3" style="opacity:0;"/>
+<circle cx="276.0154738878143" cy="318.09522336402836" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="276.0154738878143" y="308.09522336402836" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-09</text>
+<text x="276.0154738878143" y="288.09522336402836" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">86,269</text>
+<text x="276.0154738878143" y="268.09522336402836" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="289.5551257253385" cy="297.41040847860074" r="3" style="opacity:0;"/>
+<circle cx="289.5551257253385" cy="297.41040847860074" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="289.5551257253385" y="287.41040847860074" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-16</text>
+<text x="289.5551257253385" y="267.41040847860074" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">95,577</text>
+<text x="289.5551257253385" y="247.41040847860074" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="303.09477756286265" cy="310.5958319192573" r="3" style="opacity:0;"/>
+<circle cx="303.09477756286265" cy="310.5958319192573" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="303.09477756286265" y="300.5958319192573" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-23</text>
+<text x="303.09477756286265" y="280.5958319192573" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">89,643</text>
+<text x="303.09477756286265" y="260.5958319192573" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="316.63442940038686" cy="289.1088354473836" r="3" style="opacity:0;"/>
+<circle cx="316.63442940038686" cy="289.1088354473836" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="316.63442940038686" y="279.1088354473836" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-30</text>
+<text x="316.63442940038686" y="259.1088354473836" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">99,312</text>
+<text x="316.63442940038686" y="239.10883544738363" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="330.174081237911" cy="256.56675806700946" r="3" style="opacity:0;"/>
+<circle cx="330.174081237911" cy="256.56675806700946" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="330.174081237911" y="246.56675806700946" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-02-06</text>
+<text x="330.174081237911" y="226.56675806700946" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">113,956</text>
+<text x="330.174081237911" y="206.56675806700946" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="343.71373307543524" cy="238.3511089451224" r="3" style="opacity:0;"/>
+<circle cx="343.71373307543524" cy="238.3511089451224" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="343.71373307543524" y="228.3511089451224" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-02-13</text>
+<text x="343.71373307543524" y="208.3511089451224" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">122,153</text>
+<text x="343.71373307543524" y="188.3511089451224" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="357.2533849129594" cy="240.33857121596856" r="3" style="opacity:0;"/>
+<circle cx="357.2533849129594" cy="240.33857121596856" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="357.2533849129594" y="230.33857121596856" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-02-20</text>
+<text x="357.2533849129594" y="210.33857121596856" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">121,259</text>
+<text x="357.2533849129594" y="190.33857121596856" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="370.79303675048357" cy="245.58775915821366" r="3" style="opacity:0;"/>
+<circle cx="370.79303675048357" cy="245.58775915821366" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="370.79303675048357" y="235.58775915821366" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-02-27</text>
+<text x="370.79303675048357" y="215.58775915821366" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">118,897</text>
+<text x="370.79303675048357" y="195.58775915821366" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="384.3326885880077" cy="212.9462039361738" r="3" style="opacity:0;"/>
+<circle cx="384.3326885880077" cy="212.9462039361738" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="384.3326885880077" y="202.9462039361738" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-03-05</text>
+<text x="384.3326885880077" y="182.9462039361738" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">133,586</text>
+<text x="384.3326885880077" y="162.9462039361738" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="397.8723404255319" cy="230.2131509107395" r="3" style="opacity:0;"/>
+<circle cx="397.8723404255319" cy="230.2131509107395" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="397.8723404255319" y="220.2131509107395" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-03-12</text>
+<text x="397.8723404255319" y="200.2131509107395" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">125,815</text>
+<text x="397.8723404255319" y="180.2131509107395" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="411.4119922630561" cy="216.3204144996629" r="3" style="opacity:0;"/>
+<circle cx="411.4119922630561" cy="216.3204144996629" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="411.4119922630561" y="206.3204144996629" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-03-19</text>
+<text x="411.4119922630561" y="186.3204144996629" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">132,067</text>
+<text x="411.4119922630561" y="166.3204144996629" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="424.95164410058027" cy="205.68908808714212" r="3" style="opacity:0;"/>
+<circle cx="424.95164410058027" cy="205.68908808714212" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="424.95164410058027" y="195.68908808714212" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-03-26</text>
+<text x="424.95164410058027" y="175.68908808714212" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">136,851</text>
+<text x="424.95164410058027" y="155.68908808714212" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="438.49129593810443" cy="204.87101327400046" r="3" style="opacity:0;"/>
+<circle cx="438.49129593810443" cy="204.87101327400046" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="438.49129593810443" y="194.87101327400046" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-02</text>
+<text x="438.49129593810443" y="174.87101327400046" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">137,219</text>
+<text x="438.49129593810443" y="154.87101327400046" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="452.0309477756286" cy="199.08390821784826" r="3" style="opacity:0;"/>
+<circle cx="452.0309477756286" cy="199.08390821784826" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="452.0309477756286" y="189.08390821784826" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-09</text>
+<text x="452.0309477756286" y="169.08390821784826" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">139,824</text>
+<text x="452.0309477756286" y="149.08390821784826" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="465.5705996131528" cy="193.8046056696169" r="3" style="opacity:0;"/>
+<circle cx="465.5705996131528" cy="193.8046056696169" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="465.5705996131528" y="183.8046056696169" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-16</text>
+<text x="465.5705996131528" y="163.8046056696169" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">142,199</text>
+<text x="465.5705996131528" y="143.8046056696169" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="479.110251450677" cy="200.66929096986908" r="3" style="opacity:0;"/>
+<circle cx="479.110251450677" cy="200.66929096986908" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="479.110251450677" y="190.66929096986908" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-23</text>
+<text x="479.110251450677" y="170.66929096986908" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">139,110</text>
+<text x="479.110251450677" y="150.66929096986908" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="492.64990328820113" cy="228.271847683253" r="3" style="opacity:0;"/>
+<circle cx="492.64990328820113" cy="228.271847683253" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="492.64990328820113" y="218.271847683253" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-30</text>
+<text x="492.64990328820113" y="198.271847683253" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">126,689</text>
+<text x="492.64990328820113" y="178.271847683253" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="506.18955512572535" cy="223.97141379172683" r="3" style="opacity:0;"/>
+<circle cx="506.18955512572535" cy="223.97141379172683" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="506.18955512572535" y="213.97141379172683" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-05-07</text>
+<text x="506.18955512572535" y="193.97141379172683" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">128,624</text>
+<text x="506.18955512572535" y="173.97141379172683" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="519.7292069632495" cy="231.90024672756863" r="3" style="opacity:0;"/>
+<circle cx="519.7292069632495" cy="231.90024672756863" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="519.7292069632495" y="221.90024672756863" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-05-14</text>
+<text x="519.7292069632495" y="201.90024672756863" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">125,056</text>
+<text x="519.7292069632495" y="181.90024672756863" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="533.2688588007737" cy="251.01187996152342" r="3" style="opacity:0;"/>
+<circle cx="533.2688588007737" cy="251.01187996152342" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="533.2688588007737" y="241.01187996152342" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-05-21</text>
+<text x="533.2688588007737" y="221.01187996152342" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">116,456</text>
+<text x="533.2688588007737" y="201.01187996152342" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="546.8085106382978" cy="239.50732743396853" r="3" style="opacity:0;"/>
+<circle cx="546.8085106382978" cy="239.50732743396853" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="546.8085106382978" y="229.50732743396853" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-05-28</text>
+<text x="546.8085106382978" y="209.50732743396853" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">121,633</text>
+<text x="546.8085106382978" y="189.50732743396853" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="560.348162475822" cy="271.9281993328003" r="3" style="opacity:0;"/>
+<circle cx="560.348162475822" cy="271.9281993328003" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="560.348162475822" y="261.9281993328003" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-06-04</text>
+<text x="560.348162475822" y="241.92819933280032" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">107,044</text>
+<text x="560.348162475822" y="221.92819933280032" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="573.8878143133462" cy="240.67225585926738" r="3" style="opacity:0;"/>
+<circle cx="573.8878143133462" cy="240.67225585926738" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="573.8878143133462" y="230.67225585926738" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-06-11</text>
+<text x="573.8878143133462" y="210.67225585926738" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">121,109</text>
+<text x="573.8878143133462" y="190.67225585926738" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="587.4274661508705" cy="253.76692251087601" r="3" style="opacity:0;"/>
+<circle cx="587.4274661508705" cy="253.76692251087601" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="587.4274661508705" y="243.76692251087601" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-06-18</text>
+<text x="587.4274661508705" y="223.76692251087601" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">115,216</text>
+<text x="587.4274661508705" y="203.76692251087601" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="600.9671179883945" cy="288.2896210936618" r="3" style="opacity:0;"/>
+<circle cx="600.9671179883945" cy="288.2896210936618" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="600.9671179883945" y="278.2896210936618" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-06-25</text>
+<text x="600.9671179883945" y="258.2896210936618" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">99,681</text>
+<text x="600.9671179883945" y="238.28962109366182" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="614.5067698259188" cy="273.305990748336" r="3" style="opacity:0;"/>
+<circle cx="614.5067698259188" cy="273.305990748336" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="614.5067698259188" y="263.305990748336" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-02</text>
+<text x="614.5067698259188" y="243.305990748336" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">106,424</text>
+<text x="614.5067698259188" y="223.305990748336" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="628.046421663443" cy="311.2015161004214" r="3" style="opacity:0;"/>
+<circle cx="628.046421663443" cy="311.2015161004214" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="628.046421663443" y="301.2015161004214" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-09</text>
+<text x="628.046421663443" y="281.2015161004214" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">89,371</text>
+<text x="628.046421663443" y="261.2015161004214" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="641.5860735009671" cy="337.5776341357273" r="3" style="opacity:0;"/>
+<circle cx="641.5860735009671" cy="337.5776341357273" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="641.5860735009671" y="327.5776341357273" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-16</text>
+<text x="641.5860735009671" y="307.5776341357273" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">77,501</text>
+<text x="641.5860735009671" y="287.5776341357273" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="655.1257253384913" cy="343.38561313028623" r="3" style="opacity:0;"/>
+<circle cx="655.1257253384913" cy="343.38561313028623" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="655.1257253384913" y="333.38561313028623" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-23</text>
+<text x="655.1257253384913" y="313.38561313028623" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">74,888</text>
+<text x="655.1257253384913" y="293.38561313028623" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="668.6653771760155" cy="354.1314970464228" r="3" style="opacity:0;"/>
+<circle cx="668.6653771760155" cy="354.1314970464228" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="668.6653771760155" y="344.1314970464228" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-30</text>
+<text x="668.6653771760155" y="324.1314970464228" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">70,052</text>
+<text x="668.6653771760155" y="304.1314970464228" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="682.2050290135396" cy="350.84763168720895" r="3" style="opacity:0;"/>
+<circle cx="682.2050290135396" cy="350.84763168720895" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="682.2050290135396" y="340.84763168720895" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-08-06</text>
+<text x="682.2050290135396" y="320.84763168720895" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">71,530</text>
+<text x="682.2050290135396" y="300.84763168720895" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="695.7446808510638" cy="370.7796234595722" r="3" style="opacity:0;"/>
+<circle cx="695.7446808510638" cy="370.7796234595722" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="695.7446808510638" y="360.7796234595722" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-08-13</text>
+<text x="695.7446808510638" y="340.7796234595722" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">62,561</text>
+<text x="695.7446808510638" y="320.7796234595722" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="709.284332688588" cy="380.4909167029755" r="3" style="opacity:0;"/>
+<circle cx="709.284332688588" cy="380.4909167029755" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="709.284332688588" y="370.4909167029755" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-08-20</text>
+<text x="709.284332688588" y="350.4909167029755" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">58,190</text>
+<text x="709.284332688588" y="330.4909167029755" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="722.8239845261122" cy="364.5960667258817" r="3" style="opacity:0;"/>
+<circle cx="722.8239845261122" cy="364.5960667258817" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="722.8239845261122" y="354.5960667258817" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-08-27</text>
+<text x="722.8239845261122" y="334.5960667258817" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">65,343</text>
+<text x="722.8239845261122" y="314.5960667258817" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="736.3636363636364" cy="388.0471218118953" r="3" style="opacity:0;"/>
+<circle cx="736.3636363636364" cy="388.0471218118953" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="736.3636363636364" y="378.0471218118953" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-09-03</text>
+<text x="736.3636363636364" y="358.0471218118953" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">54,790</text>
+<text x="736.3636363636364" y="338.0471218118953" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="749.9032882011605" cy="358.8886418046957" r="3" style="opacity:0;"/>
+<circle cx="749.9032882011605" cy="358.8886418046957" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="749.9032882011605" y="348.8886418046957" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-09-10</text>
+<text x="749.9032882011605" y="328.8886418046957" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">67,911</text>
+<text x="749.9032882011605" y="308.8886418046957" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="763.4429400386848" cy="380.6146622978555" r="3" style="opacity:0;"/>
+<circle cx="763.4429400386848" cy="380.6146622978555" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="763.4429400386848" y="370.6146622978555" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-09-17</text>
+<text x="763.4429400386848" y="350.6146622978555" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">58,135</text>
+<text x="763.4429400386848" y="330.6146622978555" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="776.9825918762089" cy="377.7231396676462" r="3" style="opacity:0;"/>
+<circle cx="776.9825918762089" cy="377.7231396676462" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="776.9825918762089" y="367.7231396676462" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-09-24</text>
+<text x="776.9825918762089" y="347.7231396676462" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">59,436</text>
+<text x="776.9825918762089" y="327.7231396676462" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="790.522243713733" cy="361.1189720253363" r="3" style="opacity:0;"/>
+<circle cx="790.522243713733" cy="361.1189720253363" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="790.522243713733" y="351.1189720253363" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-01</text>
+<text x="790.522243713733" y="331.1189720253363" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">66,908</text>
+<text x="790.522243713733" y="311.1189720253363" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="804.0618955512572" cy="377.7278067907132" r="3" style="opacity:0;"/>
+<circle cx="804.0618955512572" cy="377.7278067907132" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="804.0618955512572" y="367.7278067907132" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-08</text>
+<text x="804.0618955512572" y="347.7278067907132" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">59,434</text>
+<text x="804.0618955512572" y="327.7278067907132" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="817.6015473887815" cy="349.3361836021745" r="3" style="opacity:0;"/>
+<circle cx="817.6015473887815" cy="349.3361836021745" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="817.6015473887815" y="339.3361836021745" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-15</text>
+<text x="817.6015473887815" y="319.3361836021745" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">72,210</text>
+<text x="817.6015473887815" y="299.3361836021745" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="831.1411992263056" cy="372.68689939101546" r="3" style="opacity:0;"/>
+<circle cx="831.1411992263056" cy="372.68689939101546" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="831.1411992263056" y="362.68689939101546" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-22</text>
+<text x="831.1411992263056" y="342.68689939101546" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">61,702</text>
+<text x="831.1411992263056" y="322.68689939101546" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="844.6808510638298" cy="332.9651539228738" r="3" style="opacity:0;"/>
+<circle cx="844.6808510638298" cy="332.9651539228738" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="844.6808510638298" y="322.9651539228738" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-29</text>
+<text x="844.6808510638298" y="302.9651539228738" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">79,577</text>
+<text x="844.6808510638298" y="282.9651539228738" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="858.220502901354" cy="323.39770554501047" r="3" style="opacity:0;"/>
+<circle cx="858.220502901354" cy="323.39770554501047" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="858.220502901354" y="313.39770554501047" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-11-05</text>
+<text x="858.220502901354" y="293.39770554501047" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">83,882</text>
+<text x="858.220502901354" y="273.39770554501047" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="871.7601547388781" cy="320.43393820540194" r="3" style="opacity:0;"/>
+<circle cx="871.7601547388781" cy="320.43393820540194" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="871.7601547388781" y="310.43393820540194" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-11-12</text>
+<text x="871.7601547388781" y="290.43393820540194" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">85,216</text>
+<text x="871.7601547388781" y="270.43393820540194" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="885.2998065764023" cy="325.4599675168388" r="3" style="opacity:0;"/>
+<circle cx="885.2998065764023" cy="325.4599675168388" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="885.2998065764023" y="315.4599675168388" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-11-19</text>
+<text x="885.2998065764023" y="295.4599675168388" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">82,954</text>
+<text x="885.2998065764023" y="275.4599675168388" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="898.8394584139264" cy="295.9569178838956" r="3" style="opacity:0;"/>
+<circle cx="898.8394584139264" cy="295.9569178838956" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="898.8394584139264" y="285.9569178838956" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-11-26</text>
+<text x="898.8394584139264" y="265.9569178838956" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">96,231</text>
+<text x="898.8394584139264" y="245.95691788389558" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="912.3791102514507" cy="287.09450665375914" r="3" style="opacity:0;"/>
+<circle cx="912.3791102514507" cy="287.09450665375914" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="912.3791102514507" y="277.09450665375914" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-03</text>
+<text x="912.3791102514507" y="257.09450665375914" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">100,219</text>
+<text x="912.3791102514507" y="237.09450665375914" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="925.9187620889749" cy="288.4666303921569" r="3" style="opacity:0;"/>
+<circle cx="925.9187620889749" cy="288.4666303921569" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="925.9187620889749" y="278.4666303921569" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-10</text>
+<text x="925.9187620889749" y="258.4666303921569" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">99,601</text>
+<text x="925.9187620889749" y="238.4666303921569" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="939.458413926499" cy="280.4956515602003" r="3" style="opacity:0;"/>
+<circle cx="939.458413926499" cy="280.4956515602003" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="939.458413926499" y="270.4956515602003" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-17</text>
+<text x="939.458413926499" y="250.49565156020032" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">103,188</text>
+<text x="939.458413926499" y="230.49565156020032" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="952.9980657640233" cy="264.9543088088383" r="3" style="opacity:0;"/>
+<circle cx="952.9980657640233" cy="264.9543088088383" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="952.9980657640233" y="254.95430880883828" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-24</text>
+<text x="952.9980657640233" y="234.95430880883828" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">110,182</text>
+<text x="952.9980657640233" y="214.95430880883828" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="966.5377176015475" cy="225.08306522003525" r="3" style="opacity:0;"/>
+<circle cx="966.5377176015475" cy="225.08306522003525" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="966.5377176015475" y="215.08306522003525" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-31</text>
+<text x="966.5377176015475" y="195.08306522003525" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">128,124</text>
+<text x="966.5377176015475" y="175.08306522003525" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="980.0773694390715" cy="215.12959940900998" r="3" style="opacity:0;"/>
+<circle cx="980.0773694390715" cy="215.12959940900998" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="980.0773694390715" y="205.12959940900998" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-01-07</text>
+<text x="980.0773694390715" y="185.12959940900998" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">132,603</text>
+<text x="980.0773694390715" y="165.12959940900998" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="993.6170212765957" cy="194.7349233243146" r="3" style="opacity:0;"/>
+<circle cx="993.6170212765957" cy="194.7349233243146" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="993.6170212765957" y="184.7349233243146" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-01-14</text>
+<text x="993.6170212765957" y="164.7349233243146" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">141,781</text>
+<text x="993.6170212765957" y="144.7349233243146" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="1007.1566731141199" cy="180.67505560346913" r="3" style="opacity:0;"/>
+<circle cx="1007.1566731141199" cy="180.67505560346913" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="1007.1566731141199" y="170.67505560346913" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-01-21</text>
+<text x="1007.1566731141199" y="150.67505560346913" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">148,108</text>
+<text x="1007.1566731141199" y="130.67505560346913" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="1020.6963249516441" cy="162.19829045297803" r="3" style="opacity:0;"/>
+<circle cx="1020.6963249516441" cy="162.19829045297803" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="1020.6963249516441" y="152.19829045297803" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-01-28</text>
+<text x="1020.6963249516441" y="132.19829045297803" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">156,422</text>
+<text x="1020.6963249516441" y="112.19829045297803" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="1034.2359767891683" cy="178.5981014450638" r="3" style="opacity:0;"/>
+<circle cx="1034.2359767891683" cy="178.5981014450638" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="1034.2359767891683" y="168.5981014450638" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-02-04</text>
+<text x="1034.2359767891683" y="148.5981014450638" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">149,042</text>
+<text x="1034.2359767891683" y="128.5981014450638" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="1047.7756286266924" cy="162.6217184787873" r="3" style="opacity:0;"/>
+<circle cx="1047.7756286266924" cy="162.6217184787873" r="3" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3" class="psc-hover-data"/>
+<text x="1047.7756286266924" y="152.6217184787873" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-02-11</text>
+<text x="1047.7756286266924" y="132.6217184787873" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">156,232</text>
+<text x="1047.7756286266924" y="112.6217184787873" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Actual sales</text>
+</g>
+<path d="M 100.0 500.0 L 113.53965183752418 474.18374699267576 L 127.07930367504835 477.25239502575687 L 140.61895551257254 499.23872720126184 L 154.1586073500967 466.3858277594547 L 167.6982591876209 436.08143926805735 L 181.23791102514508 459.9053615896582 L 194.77756286266924 421.30546967276865 L 208.31721470019343 384.7601533294923 L 221.85686653771762 423.07387458080296 L 235.39651837524178 353.77476348474994 L 248.93617021276594 385.3787315686309 L 262.47582205029016 360.8022207185637 L 276.0154738878143 306.6307789195839 L 289.5551257253385 301.4437418119341 L 303.09477756286265 327.32916525259066 L 316.63442940038686 279.06439100293915 L 330.174081237911 238.71564695589834 L 343.71373307543524 253.44444227845574 L 357.2533849129594 258.8785712159686 L 370.79303675048357 228.4477591582137 L 384.3326885880077 234.0950928250627 L 397.8723404255319 245.64426202185058 L 411.4119922630561 221.331525610774 L 424.95164410058027 215.8024214204754 L 438.49129593810443 197.49990216288938 L 452.0309477756286 185.94390821784822 L 465.5705996131528 180.97571678072802 L 479.110251450677 207.32706874764688 L 492.64990328820113 221.29184768325302 L 506.18955512572535 241.92474712506015 L 519.7292069632495 242.13580228312418 L 533.2688588007737 245.63854662819006 L 546.8085106382978 261.5739941006352 L 560.348162475822 265.7215326661336 L 573.8878143133462 243.5833669703785 L 587.4274661508705 242.85803362198712 L 600.9671179883945 289.74073220477294 L 614.5067698259188 264.725990748336 L 628.046421663443 292.9548494337547 L 641.5860735009671 324.3620785801718 L 655.1257253384913 354.3367242413974 L 668.6653771760155 362.52705260197837 L 682.2050290135396 351.4654094649867 L 695.7446808510638 377.1507345706833 L 709.284332688588 398.4553611474199 L 722.8239845261122 344.6449556147706 L 736.3636363636364 370.78934403411745 L 749.9032882011605 376.67308624914017 L 763.4429400386848 380.00132896452214 L 776.9825918762089 395.78313966764614 L 790.522243713733 379.6900831364474 L 804.0618955512572 357.4122512351576 L 817.6015473887815 336.8406280466189 L 831.1411992263056 358.29356605768214 L 844.6808510638298 316.5140428117627 L 858.220502901354 334.1577055450104 L 871.7601547388781 338.5161604276242 L 885.2998065764023 310.7044119612832 L 898.8394584139264 312.3458067727845 L 912.3791102514507 295.78561776487027 L 925.9187620889749 305.69996372549025 L 939.458413926499 259.3889848935336 L 952.9980657640233 282.22986436439385 L 966.5377176015475 230.1786207755908 L 980.0773694390715 207.9518216312322 L 993.6170212765957 208.228256657648 L 1007.1566731141199 161.4150556034691 L 1020.6963249516441 166.49384600853358 L 1034.2359767891683 158.6647681117305 L 1047.7756286266924 141.5528295898984" fill="none" stroke="#2D2D2D" stroke-width="3" stroke-dasharray="4,4"/>
+<g class="psc-hover-group">
+<circle cx="100.0" cy="500.0" r="3" style="opacity:0;"/>
+<circle cx="100.0" cy="500.0" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="100.0" y="490.0" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-10-10</text>
+<text x="100.0" y="470.0" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">4,411</text>
+<text x="100.0" y="450.0" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="113.53965183752418" cy="474.18374699267576" r="3" style="opacity:0;"/>
+<circle cx="113.53965183752418" cy="474.18374699267576" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="113.53965183752418" y="464.18374699267576" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-10-17</text>
+<text x="113.53965183752418" y="444.18374699267576" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">16,029</text>
+<text x="113.53965183752418" y="424.18374699267576" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="127.07930367504835" cy="477.25239502575687" r="3" style="opacity:0;"/>
+<circle cx="127.07930367504835" cy="477.25239502575687" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="127.07930367504835" y="467.25239502575687" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-10-24</text>
+<text x="127.07930367504835" y="447.25239502575687" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">14,648</text>
+<text x="127.07930367504835" y="427.25239502575687" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="140.61895551257254" cy="499.23872720126184" r="3" style="opacity:0;"/>
+<circle cx="140.61895551257254" cy="499.23872720126184" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="140.61895551257254" y="489.23872720126184" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-10-31</text>
+<text x="140.61895551257254" y="469.23872720126184" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">4,754</text>
+<text x="140.61895551257254" y="449.23872720126184" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="154.1586073500967" cy="466.3858277594547" r="3" style="opacity:0;"/>
+<circle cx="154.1586073500967" cy="466.3858277594547" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="154.1586073500967" y="456.3858277594547" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-11-07</text>
+<text x="154.1586073500967" y="436.3858277594547" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">19,538</text>
+<text x="154.1586073500967" y="416.3858277594547" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="167.6982591876209" cy="436.08143926805735" r="3" style="opacity:0;"/>
+<circle cx="167.6982591876209" cy="436.08143926805735" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="167.6982591876209" y="426.08143926805735" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-11-14</text>
+<text x="167.6982591876209" y="406.08143926805735" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">33,175</text>
+<text x="167.6982591876209" y="386.08143926805735" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="181.23791102514508" cy="459.9053615896582" r="3" style="opacity:0;"/>
+<circle cx="181.23791102514508" cy="459.9053615896582" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="181.23791102514508" y="449.9053615896582" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-11-21</text>
+<text x="181.23791102514508" y="429.9053615896582" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">22,454</text>
+<text x="181.23791102514508" y="409.9053615896582" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="194.77756286266924" cy="421.30546967276865" r="3" style="opacity:0;"/>
+<circle cx="194.77756286266924" cy="421.30546967276865" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="194.77756286266924" y="411.30546967276865" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-11-28</text>
+<text x="194.77756286266924" y="391.30546967276865" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">39,824</text>
+<text x="194.77756286266924" y="371.30546967276865" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="208.31721470019343" cy="384.7601533294923" r="3" style="opacity:0;"/>
+<circle cx="208.31721470019343" cy="384.7601533294923" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="208.31721470019343" y="374.7601533294923" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-12-05</text>
+<text x="208.31721470019343" y="354.7601533294923" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">56,269</text>
+<text x="208.31721470019343" y="334.7601533294923" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="221.85686653771762" cy="423.07387458080296" r="3" style="opacity:0;"/>
+<circle cx="221.85686653771762" cy="423.07387458080296" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="221.85686653771762" y="413.07387458080296" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-12-12</text>
+<text x="221.85686653771762" y="393.07387458080296" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">39,028</text>
+<text x="221.85686653771762" y="373.07387458080296" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="235.39651837524178" cy="353.77476348474994" r="3" style="opacity:0;"/>
+<circle cx="235.39651837524178" cy="353.77476348474994" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="235.39651837524178" y="343.77476348474994" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-12-19</text>
+<text x="235.39651837524178" y="323.77476348474994" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">70,213</text>
+<text x="235.39651837524178" y="303.77476348474994" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="248.93617021276594" cy="385.3787315686309" r="3" style="opacity:0;"/>
+<circle cx="248.93617021276594" cy="385.3787315686309" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="248.93617021276594" y="375.3787315686309" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2023-12-26</text>
+<text x="248.93617021276594" y="355.3787315686309" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">55,991</text>
+<text x="248.93617021276594" y="335.3787315686309" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="262.47582205029016" cy="360.8022207185637" r="3" style="opacity:0;"/>
+<circle cx="262.47582205029016" cy="360.8022207185637" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="262.47582205029016" y="350.8022207185637" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-02</text>
+<text x="262.47582205029016" y="330.8022207185637" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">67,050</text>
+<text x="262.47582205029016" y="310.8022207185637" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="276.0154738878143" cy="306.6307789195839" r="3" style="opacity:0;"/>
+<circle cx="276.0154738878143" cy="306.6307789195839" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="276.0154738878143" y="296.6307789195839" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-09</text>
+<text x="276.0154738878143" y="276.6307789195839" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">91,428</text>
+<text x="276.0154738878143" y="256.6307789195839" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="289.5551257253385" cy="301.4437418119341" r="3" style="opacity:0;"/>
+<circle cx="289.5551257253385" cy="301.4437418119341" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="289.5551257253385" y="291.4437418119341" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-16</text>
+<text x="289.5551257253385" y="271.4437418119341" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">93,762</text>
+<text x="289.5551257253385" y="251.4437418119341" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="303.09477756286265" cy="327.32916525259066" r="3" style="opacity:0;"/>
+<circle cx="303.09477756286265" cy="327.32916525259066" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="303.09477756286265" y="317.32916525259066" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-23</text>
+<text x="303.09477756286265" y="297.32916525259066" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">82,113</text>
+<text x="303.09477756286265" y="277.32916525259066" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="316.63442940038686" cy="279.06439100293915" r="3" style="opacity:0;"/>
+<circle cx="316.63442940038686" cy="279.06439100293915" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="316.63442940038686" y="269.06439100293915" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-01-30</text>
+<text x="316.63442940038686" y="249.06439100293915" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">103,832</text>
+<text x="316.63442940038686" y="229.06439100293915" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="330.174081237911" cy="238.71564695589834" r="3" style="opacity:0;"/>
+<circle cx="330.174081237911" cy="238.71564695589834" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="330.174081237911" y="228.71564695589834" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-02-06</text>
+<text x="330.174081237911" y="208.71564695589834" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">121,989</text>
+<text x="330.174081237911" y="188.71564695589834" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="343.71373307543524" cy="253.44444227845574" r="3" style="opacity:0;"/>
+<circle cx="343.71373307543524" cy="253.44444227845574" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="343.71373307543524" y="243.44444227845574" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-02-13</text>
+<text x="343.71373307543524" y="223.44444227845574" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">115,361</text>
+<text x="343.71373307543524" y="203.44444227845574" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="357.2533849129594" cy="258.8785712159686" r="3" style="opacity:0;"/>
+<circle cx="357.2533849129594" cy="258.8785712159686" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="357.2533849129594" y="248.87857121596858" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-02-20</text>
+<text x="357.2533849129594" y="228.87857121596858" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">112,916</text>
+<text x="357.2533849129594" y="208.87857121596858" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="370.79303675048357" cy="228.4477591582137" r="3" style="opacity:0;"/>
+<circle cx="370.79303675048357" cy="228.4477591582137" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="370.79303675048357" y="218.4477591582137" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-02-27</text>
+<text x="370.79303675048357" y="198.4477591582137" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">126,610</text>
+<text x="370.79303675048357" y="178.4477591582137" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="384.3326885880077" cy="234.0950928250627" r="3" style="opacity:0;"/>
+<circle cx="384.3326885880077" cy="234.0950928250627" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="384.3326885880077" y="224.0950928250627" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-03-05</text>
+<text x="384.3326885880077" y="204.0950928250627" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">124,069</text>
+<text x="384.3326885880077" y="184.0950928250627" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="397.8723404255319" cy="245.64426202185058" r="3" style="opacity:0;"/>
+<circle cx="397.8723404255319" cy="245.64426202185058" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="397.8723404255319" y="235.64426202185058" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-03-12</text>
+<text x="397.8723404255319" y="215.64426202185058" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">118,871</text>
+<text x="397.8723404255319" y="195.64426202185058" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="411.4119922630561" cy="221.331525610774" r="3" style="opacity:0;"/>
+<circle cx="411.4119922630561" cy="221.331525610774" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="411.4119922630561" y="211.331525610774" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-03-19</text>
+<text x="411.4119922630561" y="191.331525610774" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">129,812</text>
+<text x="411.4119922630561" y="171.331525610774" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="424.95164410058027" cy="215.8024214204754" r="3" style="opacity:0;"/>
+<circle cx="424.95164410058027" cy="215.8024214204754" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="424.95164410058027" y="205.8024214204754" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-03-26</text>
+<text x="424.95164410058027" y="185.8024214204754" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">132,300</text>
+<text x="424.95164410058027" y="165.8024214204754" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="438.49129593810443" cy="197.49990216288938" r="3" style="opacity:0;"/>
+<circle cx="438.49129593810443" cy="197.49990216288938" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="438.49129593810443" y="187.49990216288938" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-02</text>
+<text x="438.49129593810443" y="167.49990216288938" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">140,536</text>
+<text x="438.49129593810443" y="147.49990216288938" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="452.0309477756286" cy="185.94390821784822" r="3" style="opacity:0;"/>
+<circle cx="452.0309477756286" cy="185.94390821784822" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="452.0309477756286" y="175.94390821784822" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-09</text>
+<text x="452.0309477756286" y="155.94390821784822" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">145,737</text>
+<text x="452.0309477756286" y="135.94390821784822" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="465.5705996131528" cy="180.97571678072802" r="3" style="opacity:0;"/>
+<circle cx="465.5705996131528" cy="180.97571678072802" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="465.5705996131528" y="170.97571678072802" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-16</text>
+<text x="465.5705996131528" y="150.97571678072802" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">147,972</text>
+<text x="465.5705996131528" y="130.97571678072802" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="479.110251450677" cy="207.32706874764688" r="3" style="opacity:0;"/>
+<circle cx="479.110251450677" cy="207.32706874764688" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="479.110251450677" y="197.32706874764688" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-23</text>
+<text x="479.110251450677" y="177.32706874764688" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">136,114</text>
+<text x="479.110251450677" y="157.32706874764688" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="492.64990328820113" cy="221.29184768325302" r="3" style="opacity:0;"/>
+<circle cx="492.64990328820113" cy="221.29184768325302" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="492.64990328820113" y="211.29184768325302" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-04-30</text>
+<text x="492.64990328820113" y="191.29184768325302" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">129,830</text>
+<text x="492.64990328820113" y="171.29184768325302" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="506.18955512572535" cy="241.92474712506015" r="3" style="opacity:0;"/>
+<circle cx="506.18955512572535" cy="241.92474712506015" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="506.18955512572535" y="231.92474712506015" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-05-07</text>
+<text x="506.18955512572535" y="211.92474712506015" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">120,545</text>
+<text x="506.18955512572535" y="191.92474712506015" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="519.7292069632495" cy="242.13580228312418" r="3" style="opacity:0;"/>
+<circle cx="519.7292069632495" cy="242.13580228312418" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="519.7292069632495" y="232.13580228312418" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-05-14</text>
+<text x="519.7292069632495" y="212.13580228312418" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">120,450</text>
+<text x="519.7292069632495" y="192.13580228312418" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="533.2688588007737" cy="245.63854662819006" r="3" style="opacity:0;"/>
+<circle cx="533.2688588007737" cy="245.63854662819006" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="533.2688588007737" y="235.63854662819006" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-05-21</text>
+<text x="533.2688588007737" y="215.63854662819006" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">118,874</text>
+<text x="533.2688588007737" y="195.63854662819006" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="546.8085106382978" cy="261.5739941006352" r="3" style="opacity:0;"/>
+<circle cx="546.8085106382978" cy="261.5739941006352" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="546.8085106382978" y="251.57399410063522" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-05-28</text>
+<text x="546.8085106382978" y="231.57399410063522" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">111,703</text>
+<text x="546.8085106382978" y="211.57399410063522" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="560.348162475822" cy="265.7215326661336" r="3" style="opacity:0;"/>
+<circle cx="560.348162475822" cy="265.7215326661336" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="560.348162475822" y="255.7215326661336" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-06-04</text>
+<text x="560.348162475822" y="235.7215326661336" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">109,837</text>
+<text x="560.348162475822" y="215.7215326661336" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="573.8878143133462" cy="243.5833669703785" r="3" style="opacity:0;"/>
+<circle cx="573.8878143133462" cy="243.5833669703785" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="573.8878143133462" y="233.5833669703785" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-06-11</text>
+<text x="573.8878143133462" y="213.5833669703785" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">119,799</text>
+<text x="573.8878143133462" y="193.5833669703785" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="587.4274661508705" cy="242.85803362198712" r="3" style="opacity:0;"/>
+<circle cx="587.4274661508705" cy="242.85803362198712" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="587.4274661508705" y="232.85803362198712" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-06-18</text>
+<text x="587.4274661508705" y="212.85803362198712" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">120,125</text>
+<text x="587.4274661508705" y="192.85803362198712" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="600.9671179883945" cy="289.74073220477294" r="3" style="opacity:0;"/>
+<circle cx="600.9671179883945" cy="289.74073220477294" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="600.9671179883945" y="279.74073220477294" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-06-25</text>
+<text x="600.9671179883945" y="259.74073220477294" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">99,028</text>
+<text x="600.9671179883945" y="239.74073220477294" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="614.5067698259188" cy="264.725990748336" r="3" style="opacity:0;"/>
+<circle cx="614.5067698259188" cy="264.725990748336" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="614.5067698259188" y="254.72599074833602" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-02</text>
+<text x="614.5067698259188" y="234.72599074833602" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">110,285</text>
+<text x="614.5067698259188" y="214.72599074833602" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="628.046421663443" cy="292.9548494337547" r="3" style="opacity:0;"/>
+<circle cx="628.046421663443" cy="292.9548494337547" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="628.046421663443" y="282.9548494337547" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-09</text>
+<text x="628.046421663443" y="262.9548494337547" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">97,582</text>
+<text x="628.046421663443" y="242.9548494337547" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="641.5860735009671" cy="324.3620785801718" r="3" style="opacity:0;"/>
+<circle cx="641.5860735009671" cy="324.3620785801718" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="641.5860735009671" y="314.3620785801718" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-16</text>
+<text x="641.5860735009671" y="294.3620785801718" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">83,448</text>
+<text x="641.5860735009671" y="274.3620785801718" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="655.1257253384913" cy="354.3367242413974" r="3" style="opacity:0;"/>
+<circle cx="655.1257253384913" cy="354.3367242413974" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="655.1257253384913" y="344.3367242413974" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-23</text>
+<text x="655.1257253384913" y="324.3367242413974" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">69,960</text>
+<text x="655.1257253384913" y="304.3367242413974" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="668.6653771760155" cy="362.52705260197837" r="3" style="opacity:0;"/>
+<circle cx="668.6653771760155" cy="362.52705260197837" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="668.6653771760155" y="352.52705260197837" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-07-30</text>
+<text x="668.6653771760155" y="332.52705260197837" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">66,274</text>
+<text x="668.6653771760155" y="312.52705260197837" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="682.2050290135396" cy="351.4654094649867" r="3" style="opacity:0;"/>
+<circle cx="682.2050290135396" cy="351.4654094649867" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="682.2050290135396" y="341.4654094649867" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-08-06</text>
+<text x="682.2050290135396" y="321.4654094649867" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">71,252</text>
+<text x="682.2050290135396" y="301.4654094649867" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="695.7446808510638" cy="377.1507345706833" r="3" style="opacity:0;"/>
+<circle cx="695.7446808510638" cy="377.1507345706833" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="695.7446808510638" y="367.1507345706833" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-08-13</text>
+<text x="695.7446808510638" y="347.1507345706833" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">59,694</text>
+<text x="695.7446808510638" y="327.1507345706833" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="709.284332688588" cy="398.4553611474199" r="3" style="opacity:0;"/>
+<circle cx="709.284332688588" cy="398.4553611474199" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="709.284332688588" y="388.4553611474199" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-08-20</text>
+<text x="709.284332688588" y="368.4553611474199" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">50,106</text>
+<text x="709.284332688588" y="348.4553611474199" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="722.8239845261122" cy="344.6449556147706" r="3" style="opacity:0;"/>
+<circle cx="722.8239845261122" cy="344.6449556147706" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="722.8239845261122" y="334.6449556147706" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-08-27</text>
+<text x="722.8239845261122" y="314.6449556147706" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">74,321</text>
+<text x="722.8239845261122" y="294.6449556147706" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="736.3636363636364" cy="370.78934403411745" r="3" style="opacity:0;"/>
+<circle cx="736.3636363636364" cy="370.78934403411745" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="736.3636363636364" y="360.78934403411745" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-09-03</text>
+<text x="736.3636363636364" y="340.78934403411745" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">62,556</text>
+<text x="736.3636363636364" y="320.78934403411745" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="749.9032882011605" cy="376.67308624914017" r="3" style="opacity:0;"/>
+<circle cx="749.9032882011605" cy="376.67308624914017" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="749.9032882011605" y="366.67308624914017" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-09-10</text>
+<text x="749.9032882011605" y="346.67308624914017" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">59,908</text>
+<text x="749.9032882011605" y="326.67308624914017" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="763.4429400386848" cy="380.00132896452214" r="3" style="opacity:0;"/>
+<circle cx="763.4429400386848" cy="380.00132896452214" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="763.4429400386848" y="370.00132896452214" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-09-17</text>
+<text x="763.4429400386848" y="350.00132896452214" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">58,411</text>
+<text x="763.4429400386848" y="330.00132896452214" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="776.9825918762089" cy="395.78313966764614" r="3" style="opacity:0;"/>
+<circle cx="776.9825918762089" cy="395.78313966764614" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="776.9825918762089" y="385.78313966764614" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-09-24</text>
+<text x="776.9825918762089" y="365.78313966764614" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">51,309</text>
+<text x="776.9825918762089" y="345.78313966764614" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="790.522243713733" cy="379.6900831364474" r="3" style="opacity:0;"/>
+<circle cx="790.522243713733" cy="379.6900831364474" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="790.522243713733" y="369.6900831364474" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-01</text>
+<text x="790.522243713733" y="349.6900831364474" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">58,551</text>
+<text x="790.522243713733" y="329.6900831364474" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="804.0618955512572" cy="357.4122512351576" r="3" style="opacity:0;"/>
+<circle cx="804.0618955512572" cy="357.4122512351576" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="804.0618955512572" y="347.4122512351576" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-08</text>
+<text x="804.0618955512572" y="327.4122512351576" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">68,576</text>
+<text x="804.0618955512572" y="307.4122512351576" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="817.6015473887815" cy="336.8406280466189" r="3" style="opacity:0;"/>
+<circle cx="817.6015473887815" cy="336.8406280466189" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="817.6015473887815" y="326.8406280466189" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-15</text>
+<text x="817.6015473887815" y="306.8406280466189" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">77,833</text>
+<text x="817.6015473887815" y="286.8406280466189" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="831.1411992263056" cy="358.29356605768214" r="3" style="opacity:0;"/>
+<circle cx="831.1411992263056" cy="358.29356605768214" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="831.1411992263056" y="348.29356605768214" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-22</text>
+<text x="831.1411992263056" y="328.29356605768214" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">68,179</text>
+<text x="831.1411992263056" y="308.29356605768214" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="844.6808510638298" cy="316.5140428117627" r="3" style="opacity:0;"/>
+<circle cx="844.6808510638298" cy="316.5140428117627" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="844.6808510638298" y="306.5140428117627" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-10-29</text>
+<text x="844.6808510638298" y="286.5140428117627" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">86,980</text>
+<text x="844.6808510638298" y="266.5140428117627" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="858.220502901354" cy="334.1577055450104" r="3" style="opacity:0;"/>
+<circle cx="858.220502901354" cy="334.1577055450104" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="858.220502901354" y="324.1577055450104" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-11-05</text>
+<text x="858.220502901354" y="304.1577055450104" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">79,040</text>
+<text x="858.220502901354" y="284.1577055450104" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="871.7601547388781" cy="338.5161604276242" r="3" style="opacity:0;"/>
+<circle cx="871.7601547388781" cy="338.5161604276242" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="871.7601547388781" y="328.5161604276242" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-11-12</text>
+<text x="871.7601547388781" y="308.5161604276242" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">77,079</text>
+<text x="871.7601547388781" y="288.5161604276242" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="885.2998065764023" cy="310.7044119612832" r="3" style="opacity:0;"/>
+<circle cx="885.2998065764023" cy="310.7044119612832" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="885.2998065764023" y="300.7044119612832" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-11-19</text>
+<text x="885.2998065764023" y="280.7044119612832" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">89,594</text>
+<text x="885.2998065764023" y="260.7044119612832" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="898.8394584139264" cy="312.3458067727845" r="3" style="opacity:0;"/>
+<circle cx="898.8394584139264" cy="312.3458067727845" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="898.8394584139264" y="302.3458067727845" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-11-26</text>
+<text x="898.8394584139264" y="282.3458067727845" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">88,856</text>
+<text x="898.8394584139264" y="262.3458067727845" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="912.3791102514507" cy="295.78561776487027" r="3" style="opacity:0;"/>
+<circle cx="912.3791102514507" cy="295.78561776487027" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="912.3791102514507" y="285.78561776487027" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-03</text>
+<text x="912.3791102514507" y="265.78561776487027" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">96,308</text>
+<text x="912.3791102514507" y="245.78561776487027" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="925.9187620889749" cy="305.69996372549025" r="3" style="opacity:0;"/>
+<circle cx="925.9187620889749" cy="305.69996372549025" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="925.9187620889749" y="295.69996372549025" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-10</text>
+<text x="925.9187620889749" y="275.69996372549025" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">91,846</text>
+<text x="925.9187620889749" y="255.69996372549025" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="939.458413926499" cy="259.3889848935336" r="3" style="opacity:0;"/>
+<circle cx="939.458413926499" cy="259.3889848935336" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="939.458413926499" y="249.38898489353357" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-17</text>
+<text x="939.458413926499" y="229.38898489353357" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">112,686</text>
+<text x="939.458413926499" y="209.38898489353357" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="952.9980657640233" cy="282.22986436439385" r="3" style="opacity:0;"/>
+<circle cx="952.9980657640233" cy="282.22986436439385" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="952.9980657640233" y="272.22986436439385" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-24</text>
+<text x="952.9980657640233" y="252.22986436439385" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">102,408</text>
+<text x="952.9980657640233" y="232.22986436439385" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="966.5377176015475" cy="230.1786207755908" r="3" style="opacity:0;"/>
+<circle cx="966.5377176015475" cy="230.1786207755908" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="966.5377176015475" y="220.1786207755908" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2024-12-31</text>
+<text x="966.5377176015475" y="200.1786207755908" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">125,831</text>
+<text x="966.5377176015475" y="180.1786207755908" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="980.0773694390715" cy="207.9518216312322" r="3" style="opacity:0;"/>
+<circle cx="980.0773694390715" cy="207.9518216312322" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="980.0773694390715" y="197.9518216312322" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-01-07</text>
+<text x="980.0773694390715" y="177.9518216312322" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">135,833</text>
+<text x="980.0773694390715" y="157.9518216312322" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="993.6170212765957" cy="208.228256657648" r="3" style="opacity:0;"/>
+<circle cx="993.6170212765957" cy="208.228256657648" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="993.6170212765957" y="198.228256657648" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-01-14</text>
+<text x="993.6170212765957" y="178.228256657648" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">135,709</text>
+<text x="993.6170212765957" y="158.228256657648" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="1007.1566731141199" cy="161.4150556034691" r="3" style="opacity:0;"/>
+<circle cx="1007.1566731141199" cy="161.4150556034691" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="1007.1566731141199" y="151.4150556034691" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-01-21</text>
+<text x="1007.1566731141199" y="131.4150556034691" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">156,775</text>
+<text x="1007.1566731141199" y="111.41505560346911" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="1020.6963249516441" cy="166.49384600853358" r="3" style="opacity:0;"/>
+<circle cx="1020.6963249516441" cy="166.49384600853358" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="1020.6963249516441" y="156.49384600853358" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-01-28</text>
+<text x="1020.6963249516441" y="136.49384600853358" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">154,489</text>
+<text x="1020.6963249516441" y="116.49384600853358" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="1034.2359767891683" cy="158.6647681117305" r="3" style="opacity:0;"/>
+<circle cx="1034.2359767891683" cy="158.6647681117305" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="1034.2359767891683" y="148.6647681117305" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-02-04</text>
+<text x="1034.2359767891683" y="128.6647681117305" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">158,012</text>
+<text x="1034.2359767891683" y="108.6647681117305" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<g class="psc-hover-group">
+<circle cx="1047.7756286266924" cy="141.5528295898984" r="3" style="opacity:0;"/>
+<circle cx="1047.7756286266924" cy="141.5528295898984" r="3" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="3" class="psc-hover-data"/>
+<text x="1047.7756286266924" y="131.5528295898984" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">2025-02-11</text>
+<text x="1047.7756286266924" y="111.55282958989841" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">165,713</text>
+<text x="1047.7756286266924" y="91.55282958989841" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Predicted sales</text>
+</g>
+<circle cx="735" cy="60" r="4" fill="#FFFFFF" stroke="#DB7D33" stroke-width="3"/>
+<circle cx="935" cy="60" r="4" fill="#2D2D2D" stroke="#2D2D2D" stroke-width="3"/>
+<text x="260.541586073501" y="525" text-anchor="middle" dominant-baseline="hanging">2023</text>
+<text x="968.4719535783365" y="525" text-anchor="middle" dominant-baseline="hanging">2024</text>
+</svg>

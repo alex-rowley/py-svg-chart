@@ -18,14 +18,20 @@ def safe_get_element_list(built_in):
     """
     always return a list
     """
-    return built_in.get_element_list() if built_in is not None else []
+    if built_in is not None and hasattr(built_in, "get_element_list"):
+        yield from built_in.get_element_list()
 
 
 def collapse_element_list(*args):
     """
     flatten any number of lists of elements to a list of elements
     """
-    return [e for built_ins in args for built_in in built_ins for e in safe_get_element_list(built_in) if built_ins is not None and built_in is not None]
+    return [
+        e
+        for built_ins in args
+        for built_in in (built_ins if isinstance(built_ins, (list, tuple, set)) else [])
+        for e in safe_get_element_list(built_in)
+    ]
 
 
 def get_numeric_limits(
@@ -100,11 +106,13 @@ def get_date_or_time_limits(
 
     total_seconds = (date_max - date_min).total_seconds()
 
-    if total_seconds <= 3600:
-        interval = dt.timedelta(minutes=max(1, int(total_seconds // max_ticks)))
-    elif total_seconds <= 86400:
+    if total_seconds <= 300:  # 5 minutes
+        interval = dt.timedelta(seconds=max(1, int(total_seconds // max_ticks)))
+    elif total_seconds <= 3600:  # an hour
+        interval = dt.timedelta(minutes=max(1, int(total_seconds // (max_ticks * 60))))
+    elif total_seconds <= 86400:  # a day
         interval = dt.timedelta(hours=max(1, int(total_seconds // (max_ticks * 3600))))
-    elif total_seconds <= 30 * 86400:
+    elif total_seconds <= 30 * 86400:  # about a month
         interval = dt.timedelta(days=max(1, int(total_seconds // (max_ticks * 86400))))
     else:
         total_days = total_seconds / 86400
@@ -122,26 +130,34 @@ def get_date_or_time_limits(
         else:
             interval_months = 12
 
+        # enclosing period of whole months
         start = date_min.replace(day=1)
-        end = (date_max.replace(day=1) + dt.timedelta(days=32)).replace(day=1)  # first day of next month
+        end = (date_max.replace(day=1) + dt.timedelta(days=32)).replace(day=1)
+        # time to 00:00:00 for datetimes
+        if isinstance(start, dt.datetime):
+            start = dt.datetime.combine(start.date(), dt.time(0, 0, 0))
+        if isinstance(end, dt.datetime):
+            end = dt.datetime.combine(end.date(), dt.time(0, 0, 0))
 
-        ticks = []
         current_tick = start
-        while current_tick <= end:
-            ticks.append(current_tick if current_tick >= min(dates) else min(dates))
+        ticks = [current_tick]
+        while ticks[-1] < end:
             month = current_tick.month + interval_months
             year = current_tick.year + (month - 1) // 12
             month = (month - 1) % 12 + 1
             current_tick = current_tick.replace(year=year, month=month)
+            ticks.append(current_tick)
         return ticks
 
-    ticks = []
-    current_tick = date_min.replace(second=0, microsecond=0)
-    while True:
-        ticks.append(current_tick if current_tick >= min(dates) else min(dates))
-        if current_tick > date_max:
-            break
+    current_tick = (
+        date_min.replace(second=0, microsecond=0)
+        if isinstance(date_min, dt.datetime)
+        else date_min
+    )
+    ticks = [current_tick]
+    while ticks[-1] < date_max:
         current_tick += interval
+        ticks.append(current_tick)
 
     return ticks
 

@@ -31,7 +31,10 @@ def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar
             ],
             x_values=x_values,
             y_values=y_value,
-            bar_heights=[y_axis.position.y + y_axis.length - y for y in y_axis.get_positions(y_value)],
+            bar_heights=[
+                y_axis.position.y + y_axis.length - y if y is not None else 0
+                for y in y_axis.get_positions(y_value)
+            ],
             bar_width=bar_width,
         )
         for index, name, y_value, in zip(range(no_series), series_names, y_values)
@@ -150,18 +153,21 @@ class VerticalChart(Chart):
             x_max=None,
             x_zero=False,
             x_max_ticks=12,
+            x_shift=False,
             x_label_format=default_format,
             # primary y-axis
             y_min=None,
             y_max=None,
             y_zero=False,
             y_max_ticks=12,
+            y_shift=False,
             y_label_format=default_format,
             # secondary y-axis
             sec_y_min=None,
             sec_y_max=None,
             sec_y_zero=False,
             sec_y_max_ticks=12,
+            sec_y_shift=False,
             sec_y_label_format=default_format,
             # canvas
             left_margin=100,
@@ -184,16 +190,19 @@ class VerticalChart(Chart):
         :param x_max: optional maximum x value, only used in numeric axis
         :param x_zero: optionally force 0 to be included on the x-axis
         :param x_max_ticks: optional maximum number of ticks on the x-axis
+        :param x_shift: optionally shift the x-axis - True: left side of graph touches the y-axis, value: shift graph left by that amount
         :param x_label_format: optional format of labels on the x-axis
         :param y_min: optional minimum value on the primary y-axis if it is numeric
         :param y_max: optional maximum value on the primary y-axis if is is numeric
         :param y_zero: optionally force 0 to be included on the primary y-axis
         :param y_max_ticks: optional maximum number of ticks on the primary y-axis
+        :param y_shift: optionally shift the y-axis - True: bottom side of graph touches the x-axis, value: shift graph down by that amount
         :param y_label_format: optional format of labels on the primary y-axis
         :param sec_y_min: optional minimum value on the secondary y-axis
         :param sec_y_max: optional maximum value on the secondary y-axis
         :param sec_y_zero: optionally force 0 to be included on the secondary y-axis
         :param sec_y_max_ticks: optional maximum number of ticks on the secondary y-axis
+        :param sec_y_shift: optionally shift the secondary y-axis - True: bottom side of graph touches the x-axis, value: shift graph down by that amount
         :param sec_y_label_format: optional format of labels on the secondary y-axis
         :param x_margin: optional margin for the x-axis
         :param y_margin: optional margin for the y-axis
@@ -217,6 +226,7 @@ class VerticalChart(Chart):
             min_value=y_min,
             max_value=y_max,
             include_zero=y_zero,
+            shift=y_shift,
         )
         self.x_axis = self.x_axis_type(
             x_position=left_margin,
@@ -228,6 +238,7 @@ class VerticalChart(Chart):
             min_value=x_min,
             max_value=x_max,
             include_zero=x_zero,
+            shift=x_shift,
         )
         series_names = y_names if y_names is not None else ['Series {0}'.format(k) for k in range(len(y_values))]
         self.series = self.series_constructor(x_values, y_values, self.x_axis, self.y_axis, series_names, bar_width, bar_gap)
@@ -245,6 +256,7 @@ class VerticalChart(Chart):
                 min_value=sec_y_min,
                 max_value=sec_y_max,
                 include_zero=sec_y_zero,
+                shift=sec_y_shift,
                 secondary=True,
             )
             self.series.update(self.series_constructor(x_values, sec_y_values, self.x_axis, self.sec_y_axis, sec_series_names, bar_width, bar_gap))
@@ -265,6 +277,8 @@ class VerticalChart(Chart):
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
         positions = self.x_axis.get_positions(self.x_axis.limits[1:])
         for p in positions:
+            if p is None:  # shifted out of the visible range
+                continue
             self.y_axis.grid_lines.append(
                 Line(
                     x_position=p,
@@ -290,6 +304,8 @@ class VerticalChart(Chart):
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
         positions = self.y_axis.get_positions(self.y_axis.limits[1:])
         for p in positions:
+            if p is None:  # shifted out of the visible range
+                continue
             self.x_axis.grid_lines.append(
                 Line(
                     x_position=self.y_axis.position.x,
@@ -320,7 +336,11 @@ class VerticalChart(Chart):
         series_list = [s for s in self.series] if series_list is None else series_list
         for s in self.series:
             if s in series_list:
-                hover_markers = [build_hover_marker(p, x, y, s) for p, x, y in self.series[s].pv_generator]
+                hover_markers = [
+                    build_hover_marker(p, x, y, s)
+                    for p, x, y in self.series[s].pv_generator
+                    if x is not None and y is not None and p.x is not None and p.y is not None
+                ]
                 self.series[s].add_custom_elements(hover_markers)
 
     def get_element_list(self):
