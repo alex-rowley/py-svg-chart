@@ -91,6 +91,58 @@ class TestNoSeriesConstructor(unittest.TestCase):
             )
 
     @patch("pysvgchart.charts.Series")
+    def test_unequal_values_1(self, mock_series):
+        mock_series.side_effect = lambda *args: args
+        # given
+        x_values = [1, 2, 3]
+        y_values = [
+            [0],
+        ]
+        x_axis = "x"
+        y_axis = "y"
+        series_names = []
+        bar_width = 1
+        bar_gap = 1
+        # when
+        # then
+        with self.assertRaises(ValueError):
+            no_series_constructor(
+                x_values,
+                y_values,
+                x_axis,
+                y_axis,
+                series_names,
+                bar_width,
+                bar_gap,
+            )
+
+    @patch("pysvgchart.charts.Series")
+    def test_unequal_values_2(self, mock_series):
+        mock_series.side_effect = lambda *args: args
+        # given
+        x_values = [1]
+        y_values = [
+            [0, 1, 2],
+        ]
+        x_axis = "x"
+        y_axis = "y"
+        series_names = []
+        bar_width = 1
+        bar_gap = 1
+        # when
+        # then
+        with self.assertRaises(ValueError):
+            no_series_constructor(
+                x_values,
+                y_values,
+                x_axis,
+                y_axis,
+                series_names,
+                bar_width,
+                bar_gap,
+            )
+
+    @patch("pysvgchart.charts.Series")
     def test_one_series(self, mock_series):
         mock_series.side_effect = lambda *args: args
         # given

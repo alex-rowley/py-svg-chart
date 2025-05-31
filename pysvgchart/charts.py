@@ -13,6 +13,8 @@ def no_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_
     _ignore = x_axis, y_axis, bar_width, bar_gap
     if len(y_values) != len(series_names):
         raise ValueError("y_values and series_names must have the same length")
+    if not all(len(y_value) == len(x_values) for y_value in y_values):
+        raise ValueError("y_values must all have the same length as x_values")
     return {
         name: Series(x_values[0], y_value[0])
         for name, y_value in zip(series_names, y_values)
@@ -23,6 +25,8 @@ def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names, ba
     _ignore = bar_width, bar_gap
     if len(y_values) != len(series_names):
         raise ValueError("y_values and series_names must have the same length")
+    if not all(len(y_value) == len(x_values) for y_value in y_values):
+        raise ValueError("y_values must all have the same length as x_values")
     return {
         name: LineSeries(
             points=[
@@ -39,6 +43,8 @@ def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names, ba
 def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap) -> dict[str, Series]:
     if len(y_values) != len(series_names):
         raise ValueError("y_values and series_names must have the same length")
+    if not all(len(y_value) == len(x_values) for y_value in y_values):
+        raise ValueError("y_values must all have the same length as x_values")
     no_series = len(series_names)
     x_start_offs = (bar_width + bar_gap) * (no_series - 1) / 2
     return {
@@ -63,6 +69,8 @@ def normalised_bar_series_constructor(x_values, y_values, x_axis, y_axis, series
     _ignore = bar_gap
     if len(y_values) != len(series_names):
         raise ValueError("y_values and series_names must have the same length")
+    if not all(len(y_value) == len(x_values) for y_value in y_values):
+        raise ValueError("y_values must all have the same length as x_values")
     rtn = dict()
     prev_cumulative_scaled_y_values = [0] * len(y_values[0])
     total_values = [sum(y) for y in zip(*y_values)]

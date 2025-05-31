@@ -116,6 +116,66 @@ class TestLineSeriesConstructor(unittest.TestCase):
 
     @patch("pysvgchart.charts.Point")
     @patch("pysvgchart.charts.LineSeries")
+    def test_unequal_values_1(self, mock_line_series, mock_point):
+        mock_line_series.side_effect = echo
+        mock_point.side_effect = echo
+        # given
+        x_values = [1, 2, 3]
+        y_values = [
+            [0],
+        ]
+        x_axis = MagicMock()
+        x_axis.get_positions.return_value = [10, 20, 30]
+        y_axis = MagicMock()
+        y_axis.get_positions.side_effect = lambda yyy: list(map(lambda v: v[0] + v[1], zip(yyy, [10, 20, 30])))
+        series_names = []
+        bar_width = 1
+        bar_gap = 1
+        # when
+        # then
+        with self.assertRaises(ValueError):
+            line_series_constructor(
+                x_values,
+                y_values,
+                x_axis,
+                y_axis,
+                series_names,
+                bar_width,
+                bar_gap,
+            )
+
+    @patch("pysvgchart.charts.Point")
+    @patch("pysvgchart.charts.LineSeries")
+    def test_unequal_values_2(self, mock_line_series, mock_point):
+        mock_line_series.side_effect = echo
+        mock_point.side_effect = echo
+        # given
+        x_values = [1]
+        y_values = [
+            [0, 1, 2],
+        ]
+        x_axis = MagicMock()
+        x_axis.get_positions.return_value = [10, 20, 30]
+        y_axis = MagicMock()
+        y_axis.get_positions.side_effect = lambda yyy: list(map(lambda v: v[0] + v[1], zip(yyy, [10, 20, 30])))
+        series_names = []
+        bar_width = 1
+        bar_gap = 1
+        # when
+        # then
+        with self.assertRaises(ValueError):
+            line_series_constructor(
+                x_values,
+                y_values,
+                x_axis,
+                y_axis,
+                series_names,
+                bar_width,
+                bar_gap,
+            )
+
+    @patch("pysvgchart.charts.Point")
+    @patch("pysvgchart.charts.LineSeries")
     def test_one_series(self, mock_line_series, mock_point):
         mock_line_series.side_effect = echo
         mock_point.side_effect = echo
