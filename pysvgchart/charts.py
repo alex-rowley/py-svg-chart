@@ -67,6 +67,8 @@ def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar
 
 def normalised_bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap) -> dict[str, Series]:
     _ignore = bar_gap
+    if len(y_values) < 1:
+        raise ValueError("y_values should not be empty")
     if len(y_values) != len(series_names):
         raise ValueError("y_values and series_names must have the same length")
     if not all(len(y_value) == len(x_values) for y_value in y_values):
@@ -76,7 +78,7 @@ def normalised_bar_series_constructor(x_values, y_values, x_axis, y_axis, series
     total_values = [sum(y) for y in zip(*y_values)]
     x_positions = x_axis.get_positions(x_values)
     for name, y_value in zip(series_names, y_values):
-        cumulative_scaled_y_values = [a + b / t for a, b, t in zip(prev_cumulative_scaled_y_values, y_value, total_values)]
+        cumulative_scaled_y_values = [a + b / t if t != 0 else a for a, b, t in zip(prev_cumulative_scaled_y_values, y_value, total_values)]
         prev_scaled_positions = y_axis.get_positions(prev_cumulative_scaled_y_values)
         scaled_positions = y_axis.get_positions(cumulative_scaled_y_values)
         rtn[name] = BarSeries(
