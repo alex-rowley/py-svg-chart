@@ -241,7 +241,8 @@ class VerticalChart(Chart):
         :param sec_y_max_ticks: optional maximum number of ticks on the secondary y-axis
         :param sec_y_shift: optionally shift the secondary y-axis - True: bottom side of graph touches the x-axis, value: shift graph down by that amount
         :param sec_y_label_format: optional format of labels on the secondary y-axis
-        :param x_margin: optional margin for the x-axis
+        :param left_margin: optional left margin for the x-axis
+        :param right_margin: optional right margin for the x-axis
         :param y_margin: optional margin for the y-axis
         :param height: optional height of the graph
         :param width: optional width of the graph
