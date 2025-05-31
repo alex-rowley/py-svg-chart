@@ -34,7 +34,7 @@ def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names, ba
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
-            y_values=y_value
+            y_values=y_value,
         )
         for name, y_value in zip(series_names, y_values)
     }
@@ -94,6 +94,10 @@ def normalised_bar_series_constructor(x_values, y_values, x_axis, y_axis, series
 
 def scatter_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap) -> dict[str, Series]:
     _ignore = bar_width, bar_gap
+    if len(y_values) != len(series_names):
+        raise ValueError("y_values and series_names must have the same length")
+    if not all(len(y_value) == len(x_values) for y_value in y_values):
+        raise ValueError("y_values must all have the same length as x_values")
     return {
         name: ScatterSeries(
             points=[
@@ -101,7 +105,7 @@ def scatter_series_constructor(x_values, y_values, x_axis, y_axis, series_names,
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
-            y_values=y_value
+            y_values=y_value,
         )
         for name, y_value in zip(series_names, y_values)
     }
