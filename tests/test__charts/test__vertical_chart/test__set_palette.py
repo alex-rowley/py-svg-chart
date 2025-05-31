@@ -14,9 +14,9 @@ class TestSetPalette(unittest.TestCase):
         self.instance = VerticalChart(
             x_values=[0,1,2,3,4,5],
             y_values=[
-                [0,1,2,3,4,5],
-                [1,2,3,4,5,6],
-                [3,4,5,6,7,8],
+                [0, 1, 2, 3, 4, 5],
+                [1, 2, 3, 4, 5, 6],
+                [3, 4, 5, 6, 7, 8],
             ],
             y_names=["A", "B", "C"],
         )

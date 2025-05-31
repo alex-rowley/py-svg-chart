@@ -11,14 +11,18 @@ from .styles import render_all_styles
 
 def no_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap) -> dict[str, Series]:
     _ignore = x_axis, y_axis, bar_width, bar_gap
+    if len(y_values) != len(series_names):
+        raise ValueError("y_values and series_names must have the same length")
     return {
-        name: Series(x_values[0], y_values[0])
-        for name in series_names
+        name: Series(x_values[0], y_value[0])
+        for name, y_value in zip(series_names, y_values)
     }
 
 
 def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap) -> dict[str, Series]:
     _ignore = bar_width, bar_gap
+    if len(y_values) != len(series_names):
+        raise ValueError("y_values and series_names must have the same length")
     return {
         name: LineSeries(
             points=[
@@ -33,6 +37,8 @@ def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names, ba
 
 
 def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap) -> dict[str, Series]:
+    if len(y_values) != len(series_names):
+        raise ValueError("y_values and series_names must have the same length")
     no_series = len(series_names)
     x_start_offs = (bar_width + bar_gap) * (no_series - 1) / 2
     return {
@@ -55,11 +61,13 @@ def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar
 
 def normalised_bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar_width, bar_gap) -> dict[str, Series]:
     _ignore = bar_gap
+    if len(y_values) != len(series_names):
+        raise ValueError("y_values and series_names must have the same length")
     rtn = dict()
     prev_cumulative_scaled_y_values = [0] * len(y_values[0])
     total_values = [sum(y) for y in zip(*y_values)]
     x_positions = x_axis.get_positions(x_values)
-    for y_value, name in zip(y_values, series_names):
+    for name, y_value in zip(series_names, y_values):
         cumulative_scaled_y_values = [a + b / t for a, b, t in zip(prev_cumulative_scaled_y_values, y_value, total_values)]
         prev_scaled_positions = y_axis.get_positions(prev_cumulative_scaled_y_values)
         scaled_positions = y_axis.get_positions(cumulative_scaled_y_values)
