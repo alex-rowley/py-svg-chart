@@ -111,6 +111,10 @@ def scatter_series_constructor(x_values, y_values, x_axis, y_axis, series_names,
     }
 
 
+def default_x_range_constructor(x_values) -> list:
+    return [v for v in x_values]
+
+
 def default_y_range_constructor(y_values) -> list:
     return [v for series in y_values for v in series]
 
@@ -172,8 +176,12 @@ class VerticalChart(Chart):
     default_minor_grid_styles = {'stroke': '#6e6e6e', 'stroke-width': '0.2'}
     colour_property = 'stroke'
 
-    # The defaults are for line class
+    # The defaults are for axis classes
     x_axis_type = Axis
+    y_axis_type = Axis
+
+    # The defaults are for line class
+    x_range_constructor = staticmethod(default_x_range_constructor)
     y_range_constructor = staticmethod(default_y_range_constructor)
     series_constructor = staticmethod(no_series_constructor)
 
@@ -252,7 +260,7 @@ class VerticalChart(Chart):
         self.x_axis = self.x_axis_type(
             x_position=left_margin,
             y_position=height - y_margin,
-            data_points=x_values,
+            data_points=self.x_range_constructor(x_values),
             axis_length=width - left_margin - right_margin,
             label_format=x_label_format,
             max_ticks=x_max_ticks,
@@ -261,7 +269,7 @@ class VerticalChart(Chart):
             include_zero=x_zero,
             shift=x_shift,
         )
-        self.y_axis = YAxis(
+        self.y_axis = self.y_axis_type(
             x_position=left_margin,
             y_position=y_margin,
             data_points=self.y_range_constructor(y_values),
@@ -288,7 +296,7 @@ class VerticalChart(Chart):
             self.sec_y_axis = None
         else:
             sec_series_names = self.generate_series_names("Secondary series", len(sec_y_values), sec_y_names)
-            self.sec_y_axis = YAxis(
+            self.sec_y_axis = self.y_axis_type(
                 x_position=width - right_margin,
                 y_position=y_margin,
                 data_points=default_y_range_constructor(sec_y_values),
@@ -420,16 +428,19 @@ class VerticalChart(Chart):
 
 class LineChart(VerticalChart):
     x_axis_type = XAxis
+    y_axis_type = YAxis
     series_constructor = staticmethod(line_series_constructor)
 
 
 class SimpleLineChart(LineChart):
     x_axis_type = SimpleXAxis
+    y_axis_type = YAxis
     series_constructor = staticmethod(line_series_constructor)
 
 
 class BarChart(LineChart):
     x_axis_type = SimpleXAxis
+    y_axis_type = YAxis
     series_constructor = staticmethod(bar_series_constructor)
     colour_property = 'fill'
 
@@ -439,6 +450,7 @@ class BarChart(LineChart):
 
 class NormalisedBarChart(LineChart):
     x_axis_type = SimpleXAxis
+    y_axis_type = YAxis
     series_constructor = staticmethod(normalised_bar_series_constructor)
     y_range_constructor = staticmethod(lambda y_values: [0, 1])
     colour_property = 'fill'
@@ -449,6 +461,7 @@ class NormalisedBarChart(LineChart):
 
 class ScatterChart(LineChart):
     x_axis_type = XAxis
+    y_axis_type = YAxis
     series_constructor = staticmethod(scatter_series_constructor)
     colour_property = 'fill'
 
