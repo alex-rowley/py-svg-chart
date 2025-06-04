@@ -1,8 +1,18 @@
 import unittest
-
+from random import choice
 
 from pysvgchart.charts import VerticalChart
 
+
+PREFIXES = (
+    "prefix",
+    "foo",
+    "bar",
+    "baz",
+    "Guido",
+    "serpent",
+    "Ni",
+)
 
 class TestGenerateSeriesNames(unittest.TestCase):
     """
@@ -14,99 +24,105 @@ class TestGenerateSeriesNames(unittest.TestCase):
 
     def test_nothing(self):
         # given
-        names = None
+        prefix = choice(PREFIXES)
         n = 0
+        names = None
         # when
-        actual = VerticalChart.generate_series_names(names=names, n=n)
+        actual = VerticalChart.generate_series_names(prefix=prefix, n=n, names=names)
         # then
         expect = []
-        self.assertEqual(expect, actual)
+        self.assertEqual(expect, actual, msg=f"failed for {prefix=}")
 
     def test_no_names(self):
         # given
-        names = None
+        prefix = choice(PREFIXES)
         n = 3
+        names = None
         # when
-        actual = VerticalChart.generate_series_names(names=names, n=n)
+        actual = VerticalChart.generate_series_names(prefix=prefix, n=n, names=names)
         # then
         expect = [
-            "Series 1",
-            "Series 2",
-            "Series 3",
+            f"{prefix} 1",
+            f"{prefix} 2",
+            f"{prefix} 3",
         ]
-        self.assertEqual(expect, actual)
+        self.assertEqual(expect, actual, msg=f"failed for {prefix=}")
 
     def test_all_names(self):
         # given
+        prefix = choice(PREFIXES)
+        n = 3
         names = [
             "foo",
             "bar",
             "baz",
         ]
-        n = 3
         # when
-        actual = VerticalChart.generate_series_names(names=names, n=n)
+        actual = VerticalChart.generate_series_names(prefix=prefix, n=n, names=names)
         # then
         expect = [
             "foo",
             "bar",
             "baz",
         ]
-        self.assertEqual(expect, actual)
+        self.assertEqual(expect, actual, msg=f"failed for {prefix=}")
 
     def test_too_few_names(self):
         # given
+        prefix = choice(PREFIXES)
+        n = 3
         names = [
             "foo",
             "bar",
         ]
-        n = 3
         # when
-        actual = VerticalChart.generate_series_names(names=names, n=n)
+        actual = VerticalChart.generate_series_names(prefix=prefix, n=n, names=names)
         # then
         expect = [
             "foo",
             "bar",
-            "Series 3",
+            f"{prefix} 3",
         ]
-        self.assertEqual(expect, actual)
+        self.assertEqual(expect, actual, msg=f"failed for {prefix=}")
 
     def test_too_many_names(self):
         # given
+        prefix = choice(PREFIXES)
+        n = 3
         names = [
             "foo",
             "bar",
             "baz",
             "oops",
         ]
-        n = 3
         # when
-        actual = VerticalChart.generate_series_names(names=names, n=n)
+        actual = VerticalChart.generate_series_names(prefix=prefix, n=n, names=names)
         # then
         expect = [
             "foo",
             "bar",
             "baz",
         ]
-        self.assertEqual(expect, actual)
+        self.assertEqual(expect, actual, msg=f"failed for {prefix=}")
 
     def test_gap_in_names(self):
         # given
+        prefix = choice(PREFIXES)
+        n = 3
         names = [
             "foo",
             None,
             "baz",
         ]
-        n = 3
         # when
-        actual = VerticalChart.generate_series_names(names=names, n=n)
+        actual = VerticalChart.generate_series_names(prefix=prefix, n=n, names=names)
         # then
         expect = [
             "foo",
-            "Series 2",
+            f"{prefix} 2",
             "baz",
         ]
-        self.assertEqual(expect, actual)
+        self.assertEqual(expect, actual, msg=f"failed for {prefix=}")
 
 
 if __name__ == "__main__":

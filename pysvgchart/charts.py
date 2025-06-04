@@ -273,7 +273,7 @@ class VerticalChart(Chart):
             include_zero=y_zero,
             shift=y_shift,
         )
-        series_names = self.generate_series_names(y_names, len(y_values))
+        series_names = self.generate_series_names("Series", len(y_values), y_names)
         self.series = self.series_constructor(
             x_values,
             y_values,
@@ -287,7 +287,7 @@ class VerticalChart(Chart):
         if sec_y_values is None:
             self.sec_y_axis = None
         else:
-            sec_series_names = self.generate_series_names(sec_y_names, len(sec_y_values))
+            sec_series_names = self.generate_series_names("Secondary series", len(sec_y_values), sec_y_names)
             self.sec_y_axis = YAxis(
                 x_position=width - right_margin,
                 y_position=y_margin,
@@ -316,12 +316,19 @@ class VerticalChart(Chart):
         self.set_palette(colours if colours else self.__colour_defaults__)
 
     @staticmethod
-    def generate_series_names(names: list[str] | tuple[str, ...] | None, n: int) -> list[str]:
+    def generate_series_names(
+        prefix: str,
+        n: int,
+        names: list[str | None] | tuple[str | None, ...] | None,
+    ) -> list[str]:
+        """
+        generate missing names for series
+        """
         return [
             real if real is not None else generated
             for real, generated in zip_longest(
                 names if names is not None else [],
-                [f"Series {k}" for k in range(1, n+1)]
+                [f"{prefix} {k}" for k in range(1, n+1)]
             )
         ][:n]
 
