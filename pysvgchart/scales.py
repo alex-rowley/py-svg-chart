@@ -25,8 +25,8 @@ class Scale(ABC):
     @abstractmethod
     def value_to_fraction(self, value) -> float:
         """
-        proportion of range where the value is positioned: [lo; hi] -> [0.0; 1.0]
-        NOTE outside [0.0; 1.0] means the value is outside the range.
+        proportion of the scale where the value is positioned: [lo; hi] -> [0.0; 1.0]
+        NOTE outside [0.0; 1.0] means the value is outside the scale.
         """
         ...
 
@@ -73,11 +73,17 @@ class MappingScale(Scale):
             for index, value in enumerate(ticks)
         }
 
+    def __str__(self):
+        return f"""[{", ".join(f"{tick}" for tick in self.ticks)}]"""
+
+    def __repr__(self):
+        return f"""<{self.__class__.__name__} [{", ".join(f"{tick}" for tick in self.ticks)}]>"""
+
     def get_lowest(self) -> None:
         return None
 
     def value_to_fraction(self, value) -> float:
-        return self.map.get(value)
+        return self.map.get(value, -1.0)
 
 
 def make_scale(

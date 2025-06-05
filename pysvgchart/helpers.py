@@ -163,15 +163,15 @@ def get_date_or_time_ticks(
 
 
 def get_ticks(
-        values,
-        max_ticks,
-        min_value=None,
-        max_value=None,
-        include_zero=False,
-        min_unique_values=2,
+    values,
+    max_ticks,
+    min_value=None,
+    max_value=None,
+    include_zero=False,
+    min_unique_values=2,
 ):
     """
-    compute ticks on scale for a series of numbers
+    compute ticks on scale for a series of values
 
     :param values: actual values
     :param max_ticks: maximum number of ticks
@@ -182,14 +182,14 @@ def get_ticks(
     """
     if values is None or not isinstance(values, collections.abc.Iterable) or len(set(values)) < min_unique_values:
         raise ValueError("Values must be a non-empty iterable with at least %d unique elements.", min_unique_values)
-    if all(isinstance(v, (dt.datetime, dt.date)) for v in values):
+    if all(isinstance(value, (dt.datetime, dt.date)) for value in values):
         return get_date_or_time_ticks(
             values,
             max_ticks,
             min_value=min_value,
             max_value=max_value,
         )
-    elif all(isinstance(v, (int, float)) for v in values):
+    elif all(isinstance(value, (int, float)) for value in values):
         return get_numeric_ticks(
             values,
             max_ticks,
