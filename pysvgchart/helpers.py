@@ -34,20 +34,20 @@ def collapse_element_list(*args):
     ]
 
 
-def get_numeric_limits(
-        values,
-        max_ticks,
-        min_value=None,
-        max_value=None,
-        include_zero=False,
+def get_numeric_ticks(
+    values,
+    max_ticks,
+    min_value=None,
+    max_value=None,
+    include_zero=False,
 ):
     """
-    compute numeric limits for a series of numbers
+    compute ticks for a series of numbers
     :param values: actual values
     :param max_ticks: maximum number of ticks
-    :param min_value: optional minimum value to include in limits
-    :param max_value: optional maximum value to include in limits
-    :param include_zero: whether to include zero in limits
+    :param min_value: optional minimum value to include in ticks
+    :param max_value: optional maximum value to include in ticks
+    :param include_zero: whether to include zero in ticks
     """
     value_min, value_max = min(values), max(values)
     if min_value is not None:
@@ -61,7 +61,7 @@ def get_numeric_limits(
             value_max = 0
 
     if value_max == value_min:
-        raise ValueError("All values are the same — cannot compute numeric limits.")
+        raise ValueError("All values are the same — cannot compute min/max.")
 
     raw_pad = (value_max - value_min) / max_ticks
     magnitude = 10 ** math.floor(math.log10(raw_pad))
@@ -81,18 +81,18 @@ def get_numeric_limits(
     return [round(y * pad, 10) for y in range(int(start), int(end + 1))]
 
 
-def get_date_or_time_limits(
-        dates,
-        max_ticks=10,
-        min_value=None,
-        max_value=None,
+def get_date_or_time_ticks(
+    dates,
+    max_ticks=10,
+    min_value=None,
+    max_value=None,
 ):
     """
-    compute date limits for a series of dates/datetimes
+    compute ticks for a series of dates/datetimes
     :param dates: actual dates/datetimes
     :param max_ticks: maximum number of ticks
-    :param min_value: optional minimum value to include in limits
-    :param max_value: optional maximum value to include in limits
+    :param min_value: optional minimum value to include in ticks
+    :param max_value: optional maximum value to include in ticks
     """
     date_min, date_max = min(dates), max(dates)
     if date_min >= date_max:
@@ -162,7 +162,7 @@ def get_date_or_time_limits(
     return ticks
 
 
-def get_limits(
+def get_ticks(
         values,
         max_ticks,
         min_value=None,
@@ -171,26 +171,26 @@ def get_limits(
         min_unique_values=2
 ):
     """
-    compute numeric limits for a series of numbers
+    compute ticks on scale for a series of numbers
 
     :param values: actual values
     :param max_ticks: maximum number of ticks
-    :param min_value: optional minimum value to include in limits
-    :param max_value: optional maximum value to include in limits
-    :param include_zero: whether to include zero in limits
+    :param min_value: optional minimum value to include in ticks
+    :param max_value: optional maximum value to include in ticks
+    :param include_zero: whether to include zero in ticks
     :param min_unique_values: minimum number of unique values required
     """
     if values is None or not isinstance(values, collections.abc.Iterable) or len(set(values)) < min_unique_values:
         raise ValueError("Values must be a non-empty iterable with at least %d unique elements.", min_unique_values)
     if all(isinstance(v, (dt.datetime, dt.date)) for v in values):
-        return get_date_or_time_limits(
+        return get_date_or_time_ticks(
             values,
             max_ticks,
             min_value=min_value,
             max_value=max_value,
         )
     elif all(isinstance(v, (int, float)) for v in values):
-        return get_numeric_limits(
+        return get_numeric_ticks(
             values,
             max_ticks,
             min_value=min_value,
@@ -201,7 +201,7 @@ def get_limits(
         raise TypeError("Invalid data types in values")
 
 
-def simple_limits(
+def simple_ticks(
         values,
         max_ticks,
         min_value=None,

@@ -3,7 +3,7 @@ from random import sample
 import unittest
 
 
-from pysvgchart.ranges import LinearRange, MappingRange
+from pysvgchart.scales import LinearScale, MappingScale
 
 
 class TestLinearRange(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestLinearRange(unittest.TestCase):
         # given
         values = sample(range(2, 10), k=8)
         # when
-        actual = LinearRange(values)
+        actual = LinearScale(values)
         # then
         msg = f"failed for {values=}"
         expect = 2
@@ -31,7 +31,7 @@ class TestLinearRange(unittest.TestCase):
         # given
         values = sample([x / 8 for x in range(2, 10)], k=8)
         # when
-        actual = LinearRange(values)
+        actual = LinearScale(values)
         # then
         msg = f"failed for {values=}"
         expect = 2 / 8
@@ -53,7 +53,7 @@ class TestLinearRange(unittest.TestCase):
             k=8,
         )
         # when
-        actual = LinearRange(values)
+        actual = LinearScale(values)
         # then
         msg = f"failed for {values=}"
         expect = datetime(1984, 2, 29, 2, 2, 2)
@@ -75,7 +75,7 @@ class TestLinearRange(unittest.TestCase):
             k=8,
         )
         # when
-        actual = LinearRange(values)
+        actual = LinearScale(values)
         # then
         msg = f"failed for {values=}"
         expect = date(1984, 2, 29)
@@ -107,7 +107,7 @@ class TestMappingRange(unittest.TestCase):
             "swallow",
         ]
         # when
-        actual = MappingRange(values)
+        actual = MappingScale(values)
         # then
         for index, value in enumerate(values):
             expect = (2 * index + 1) / 16

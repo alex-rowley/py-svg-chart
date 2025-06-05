@@ -28,7 +28,7 @@ class TestXAxisGetPositions(unittest.TestCase):
     def check_axis(self, x_axis, values):
         # given - x_axis and values
         # when
-        actual = x_axis.get_positions(x_axis.limits)
+        actual = x_axis.get_positions(x_axis.scale.ticks)
         # then
         expect = [x for x, _ in values]
         self.assertListEqual(expect, actual)

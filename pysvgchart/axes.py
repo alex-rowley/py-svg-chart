@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from .helpers import simple_limits, get_limits, collapse_element_list
-from .ranges import make_range
+from .helpers import simple_ticks, get_ticks, collapse_element_list
+from .scales import make_scale
 from .shapes import Shape, Text, Line
 
 
@@ -10,7 +10,7 @@ class Axis(Shape):
     axis of a graph
     """
     default_axis_styles = {'stroke': '#2e2e2c'}
-    limits_function = staticmethod(get_limits)
+    limits_function = staticmethod(get_ticks)
 
     def __init__(
             self,
@@ -31,7 +31,7 @@ class Axis(Shape):
         super().__init__(x_position, y_position)
         self.data_points = data_points
         self.length = axis_length
-        self.limits = self.limits_function(
+        self.scale = make_scale(
             values=data_points,
             max_ticks=max_ticks,
             min_value=min_value,
@@ -39,17 +39,16 @@ class Axis(Shape):
             include_zero=include_zero,
             min_unique_values=min_unique_values,
         )
-        self.range = make_range(self.limits)
         self.label_format = label_format
         self.axis_line = None
         self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
         _ = (axis_styles, tick_length)
         # if shift is True, use the gap that would be created between the graph and the axis
-        lo = self.range.get_lowest() if shift is True else None
+        lo = self.scale.get_lowest() if shift is True else None
         self.shift = (min(self.data_points) - lo) if lo is not None else shift
 
     def proportion_of_range(self, value):
-        return self.range.value_to_fraction(value - self.shift if self.shift else value)
+        return self.scale.value_to_fraction(value - self.shift if self.shift else value)
 
     def get_element_list(self):
         return collapse_element_list([self.axis_line], self.tick_lines, self.tick_texts, self.grid_lines)
@@ -96,9 +95,9 @@ class XAxis(Axis):
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=axis_length, height=0, styles=styles)
-        limit_positions = self.get_positions(self.limits)
+        limit_positions = self.get_positions(self.scale.ticks)
 
-        for m, p in zip(self.limits, limit_positions):
+        for m, p in zip(self.scale.ticks, limit_positions):
             if p is None:  # shifted out of the visible range
                 continue
             self.tick_lines.append(Line(x_position=p, width=0, y_position=self.position.y, height=tick_length, styles=styles))
@@ -155,9 +154,9 @@ class YAxis(Axis):
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=0, height=axis_length, styles=styles)
-        limit_positions = self.get_positions(self.limits)
+        limit_positions = self.get_positions(self.scale.ticks)
 
-        for m, p in zip(self.limits, limit_positions):
+        for m, p in zip(self.scale.ticks, limit_positions):
             if p is None:  # shifted out of the visible range
                 continue
             if secondary:
@@ -183,7 +182,7 @@ class SimpleXAxis(XAxis):
     x-axis of a graph with evenly spaced x values
     """
 
-    limits_function = staticmethod(simple_limits)
+    limits_function = staticmethod(simple_ticks)
 
     def get_positions(self, values):
         if values is None:

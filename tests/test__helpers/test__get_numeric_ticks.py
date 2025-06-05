@@ -1,12 +1,12 @@
 import unittest
 
 
-from pysvgchart.helpers import get_numeric_limits
+from pysvgchart.helpers import get_numeric_ticks
 
 
-class TestNumericLimits(unittest.TestCase):
+class TestNumericTicks(unittest.TestCase):
     """
-    test the get_numeric_limits() function
+    test the get_numeric_ticks() function
     """
 
     def setUp(self):
@@ -18,7 +18,7 @@ class TestNumericLimits(unittest.TestCase):
         max_ticks = 10
         # when        # then
         with self.assertRaises(ValueError):
-            get_numeric_limits(values, max_ticks)
+            get_numeric_ticks(values, max_ticks)
 
     def test_one_value(self):
         # given
@@ -28,7 +28,7 @@ class TestNumericLimits(unittest.TestCase):
         max_ticks = 10
         # when        # then
         with self.assertRaises(ValueError):
-            get_numeric_limits(values, max_ticks)
+            get_numeric_ticks(values, max_ticks)
 
     def test_two_same_values(self):
         # given
@@ -39,7 +39,7 @@ class TestNumericLimits(unittest.TestCase):
         max_ticks = 10
         # when        # then
         with self.assertRaises(ValueError):
-            get_numeric_limits(values, max_ticks)
+            get_numeric_ticks(values, max_ticks)
 
     def test_two_close_ints_few_ticks(self):
         # given
@@ -49,7 +49,7 @@ class TestNumericLimits(unittest.TestCase):
         ]
         max_ticks = 3
         # when
-        actual = get_numeric_limits(values, max_ticks)
+        actual = get_numeric_ticks(values, max_ticks)
         # then
         expect = [
             42,
@@ -67,7 +67,7 @@ class TestNumericLimits(unittest.TestCase):
         ]
         max_ticks = 10
         # when
-        actual = get_numeric_limits(values, max_ticks)
+        actual = get_numeric_ticks(values, max_ticks)
         # then
         expect = [
             42.0,
@@ -88,7 +88,7 @@ class TestNumericLimits(unittest.TestCase):
         ]
         max_ticks = 3
         # when
-        actual = get_numeric_limits(values, max_ticks)
+        actual = get_numeric_ticks(values, max_ticks)
         # then
         expect = [
             2.6,
@@ -106,7 +106,7 @@ class TestNumericLimits(unittest.TestCase):
         ]
         max_ticks = 10
         # when
-        actual = get_numeric_limits(values, max_ticks)
+        actual = get_numeric_ticks(values, max_ticks)
         # then
         expect = [
             2.70,
@@ -130,7 +130,7 @@ class TestNumericLimits(unittest.TestCase):
         ]
         max_ticks = 3
         # when
-        actual = get_numeric_limits(values, max_ticks)
+        actual = get_numeric_ticks(values, max_ticks)
         # then
         expect = [
             0,
@@ -147,7 +147,7 @@ class TestNumericLimits(unittest.TestCase):
         ]
         max_ticks = 10
         # when
-        actual = get_numeric_limits(values, max_ticks)
+        actual = get_numeric_ticks(values, max_ticks)
         # then
         expect = [
             0,
@@ -169,7 +169,7 @@ class TestNumericLimits(unittest.TestCase):
         ]
         max_ticks = 3
         # when
-        actual = get_numeric_limits(values, max_ticks)
+        actual = get_numeric_ticks(values, max_ticks)
         # then
         expect = [
             0,
@@ -186,7 +186,7 @@ class TestNumericLimits(unittest.TestCase):
         ]
         max_ticks = 10
         # when
-        actual = get_numeric_limits(values, max_ticks)
+        actual = get_numeric_ticks(values, max_ticks)
         # then
         expect = [
             0.0,

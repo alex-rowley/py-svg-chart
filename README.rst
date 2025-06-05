@@ -155,7 +155,7 @@ Here's a heavily customised line chart example
     line_end = line_chart.legend.lines[1].end
     pred_styles = {'fill': '#2D2D2D', 'stroke': '#2D2D2D', 'stroke-width': '3'}
     line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=pred_styles))
-    for limit, tick in zip(line_chart.x_axis.limits, line_chart.x_axis.tick_texts):
+    for limit, tick in zip(line_chart.x_axis.scale.ticks, line_chart.x_axis.tick_texts):
         if tick.content == 'Jan':
             line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
 

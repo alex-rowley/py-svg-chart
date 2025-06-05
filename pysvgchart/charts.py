@@ -354,7 +354,7 @@ class VerticalChart(Chart):
     def add_y_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
         major_style = major_grid_style.copy() if major_grid_style is not None else self.default_major_grid_styles.copy()
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
-        positions = self.x_axis.get_positions(self.x_axis.limits[1:])
+        positions = self.x_axis.get_positions(self.x_axis.scale.ticks[1:])
         for p in positions:
             if p is None:  # shifted out of the visible range
                 continue
@@ -367,7 +367,7 @@ class VerticalChart(Chart):
                     styles=major_style
                 )
             )
-            minor_step = self.x_axis.length / (len(self.x_axis.limits) - 1) / (minor_ticks + 1)
+            minor_step = self.x_axis.length / (len(self.x_axis.scale.ticks) - 1) / (minor_ticks + 1)
             for j in range(1, minor_ticks + 1):
                 minor_offset = p - j * minor_step
                 self.y_axis.grid_lines.append(Line(
@@ -381,7 +381,7 @@ class VerticalChart(Chart):
     def add_x_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
         major_style = major_grid_style.copy() if major_grid_style is not None else self.default_major_grid_styles.copy()
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
-        positions = self.y_axis.get_positions(self.y_axis.limits[1:])
+        positions = self.y_axis.get_positions(self.y_axis.scale.ticks[1:])
         for p in positions:
             if p is None:  # shifted out of the visible range
                 continue
@@ -394,7 +394,7 @@ class VerticalChart(Chart):
                     styles=major_style
                 )
             )
-            minor_step = self.y_axis.length / (len(self.y_axis.limits) - 1) / (minor_ticks + 1)
+            minor_step = self.y_axis.length / (len(self.y_axis.scale.ticks) - 1) / (minor_ticks + 1)
             for j in range(1, minor_ticks + 1):
                 minor_offset = p + j * minor_step
                 self.y_axis.grid_lines.append(Line(
