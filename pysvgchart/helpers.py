@@ -14,23 +14,23 @@ def default_format(value):
     return '{0:,}'.format(value) if not isinstance(value, str) else value
 
 
-def safe_get_element_list(built_in):
+def safe_get_element_list(elements):
     """
-    always return a list
+    elements may not exist and may lack the get_element_list() function
     """
-    if built_in is not None and hasattr(built_in, "get_element_list"):
-        yield from built_in.get_element_list()
+    if elements is not None and hasattr(elements, "get_element_list"):
+        yield from elements.get_element_list()
 
 
-def collapse_element_list(*args):
+def collapse_element_list(*list_of_list_of_elements) -> list:
     """
     flatten any number of lists of elements to a list of elements
     """
     return [
-        e
-        for built_ins in args
-        for built_in in (built_ins if isinstance(built_ins, (list, tuple, set)) else [])
-        for e in safe_get_element_list(built_in)
+        element
+        for list_of_elements in list_of_list_of_elements
+        for elements in (list_of_elements if isinstance(list_of_elements, (list, tuple, set)) else [])
+        for element in safe_get_element_list(elements)
     ]
 
 
@@ -168,7 +168,7 @@ def get_ticks(
         min_value=None,
         max_value=None,
         include_zero=False,
-        min_unique_values=2
+        min_unique_values=2,
 ):
     """
     compute ticks on scale for a series of numbers
@@ -198,15 +198,4 @@ def get_ticks(
             include_zero=include_zero,
         )
     else:
-        raise TypeError("Invalid data types in values")
-
-
-def simple_ticks(
-        values,
-        max_ticks,
-        min_value=None,
-        max_value=None,
-        include_zero=False,
-        min_unique_values=2,
-):
-    return values
+        return values

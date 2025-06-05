@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .helpers import simple_ticks, get_ticks, collapse_element_list
+from .helpers import collapse_element_list
 from .scales import make_scale
 from .shapes import Shape, Text, Line
 
@@ -10,7 +10,6 @@ class Axis(Shape):
     axis of a graph
     """
     default_axis_styles = {'stroke': '#2e2e2c'}
-    limits_function = staticmethod(get_ticks)
 
     def __init__(
             self,
@@ -95,9 +94,9 @@ class XAxis(Axis):
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=axis_length, height=0, styles=styles)
-        limit_positions = self.get_positions(self.scale.ticks)
+        tick_positions = self.get_positions(self.scale.ticks)
 
-        for m, p in zip(self.scale.ticks, limit_positions):
+        for m, p in zip(self.scale.ticks, tick_positions):
             if p is None:  # shifted out of the visible range
                 continue
             self.tick_lines.append(Line(x_position=p, width=0, y_position=self.position.y, height=tick_length, styles=styles))
@@ -154,9 +153,9 @@ class YAxis(Axis):
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=0, height=axis_length, styles=styles)
-        limit_positions = self.get_positions(self.scale.ticks)
+        tick_positions = self.get_positions(self.scale.ticks)
 
-        for m, p in zip(self.scale.ticks, limit_positions):
+        for m, p in zip(self.scale.ticks, tick_positions):
             if p is None:  # shifted out of the visible range
                 continue
             if secondary:
@@ -181,8 +180,6 @@ class SimpleXAxis(XAxis):
     """
     x-axis of a graph with evenly spaced x values
     """
-
-    limits_function = staticmethod(simple_ticks)
 
     def get_positions(self, values):
         if values is None:
