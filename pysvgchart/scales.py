@@ -50,7 +50,9 @@ class LinearScale(Scale):
         self.lo = min(ticks)
         self.hi = max(ticks)
         self.size = self.hi - self.lo
-        if isinstance(self.lo, date) and isinstance(shift, date):
+        if shift is False:
+            self.shift = None
+        elif isinstance(self.lo, date) and isinstance(shift, date):
             self.shift = (shift - self.lo) / self.size
         elif isinstance(self.lo, datetime) and isinstance(shift, datetime):
             self.shift = (shift - self.lo) / self.size
