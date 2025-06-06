@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import Iterable
 from datetime import datetime, date, timedelta
 from typing import Any
 
-from .helpers import get_ticks
+from .helpers import get_numeric_ticks, get_date_or_time_ticks
 
 
 class Scale(ABC):
@@ -92,20 +93,45 @@ def make_scale(
     min_value=None,
     max_value=None,
     include_zero=False,
-    min_unique_values=2
+    min_unique_values=2,
 ) -> Scale:
-    ticks = get_ticks(
-        values=values,
-        max_ticks=max_ticks,
-        min_value=min_value,
-        max_value=max_value,
-        include_zero=include_zero,
-        min_unique_values=min_unique_values,
-    )
-    if all(isinstance(tick, date) for tick in ticks):
+    """
+    make a scale for a series of values
+
+    :param values: actual values
+    :param max_ticks: maximum number of ticks on the scale
+    :param min_value: optional minimum value to include on the scale
+    :param max_value: optional maximum value to include on the scale
+    :param include_zero: whether to include zero on the scale
+    :param min_unique_values: minimum number of unique values required
+    """
+    if values is None or not isinstance(values, Iterable) or len(set(values)) < min_unique_values:
+        raise ValueError("Values must be a non-empty iterable with at least %d unique elements.", min_unique_values)
+    # value types for which there is a ticks creator
+    if all(isinstance(value, date) for value in values):
+        ticks = get_date_or_time_ticks(
+            values,
+            max_ticks,
+            min_value=min_value,
+            max_value=max_value,
+        )
         return LinearScale(ticks)
-    if all(isinstance(tick, datetime) for tick in ticks):
+    if all(isinstance(value, datetime) for value in values):
+        ticks = get_date_or_time_ticks(
+            values,
+            max_ticks,
+            min_value=min_value,
+            max_value=max_value,
+        )
         return LinearScale(ticks)
-    if all(isinstance(tick, float | int) for tick in ticks):
+    if all(isinstance(value, int | float) for value in values):
+        ticks = get_numeric_ticks(
+            values,
+            max_ticks,
+            min_value=min_value,
+            max_value=max_value,
+            include_zero=include_zero,
+        )
         return LinearScale(ticks)
-    return MappingScale(ticks)
+    # mixed value types or value type for which there's no ticks creator
+    return MappingScale(list(values))
