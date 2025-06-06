@@ -203,14 +203,18 @@ class TestLineSeriesConstructor(unittest.TestCase):
         )
         # then
         expect = [
-            call(10, 10),
-            call(20, 21),
-            call(30, 32),
+            call(x=10, y=10),
+            call(x=20, y=21),
+            call(x=30, y=32),
         ]
         self.assertListEqual(expect, mock_point.mock_calls)
         expect = [
             call(
-                points=[(10, 10), (20, 21), (30, 32)],
+                points=[
+                    {"x": 10, "y": 10},
+                    {"x": 20, "y": 21},
+                    {"x": 30, "y": 32},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[0, 1, 2],
             ),
@@ -218,9 +222,13 @@ class TestLineSeriesConstructor(unittest.TestCase):
         self.assertListEqual(expect, mock_line_series.mock_calls)
         expect = {
             "a": dict(
-                    points=[(10, 10), (20, 21), (30, 32)],
-                    x_values=[1, 2, 3],
-                    y_values=[0, 1, 2],
+                points=[
+                    {"x": 10, "y": 10},
+                    {"x": 20, "y": 21},
+                    {"x": 30, "y": 32},
+                ],
+                x_values=[1, 2, 3],
+                y_values=[0, 1, 2],
             ),
         }
         self.assertDictEqual(expect, actual)
@@ -257,35 +265,47 @@ class TestLineSeriesConstructor(unittest.TestCase):
         # then
         expect = [
             # series "a"
-            call(10, 10),
-            call(20, 21),
-            call(30, 32),
+            call(x=10, y=10),
+            call(x=20, y=21),
+            call(x=30, y=32),
             # series "b"
-            call(10, 11),
-            call(20, 22),
-            call(30, 33),
+            call(x=10, y=11),
+            call(x=20, y=22),
+            call(x=30, y=33),
             # series "c"
-            call(10, 13),
-            call(20, 24),
-            call(30, 35),
+            call(x=10, y=13),
+            call(x=20, y=24),
+            call(x=30, y=35),
         ]
         self.assertListEqual(expect, mock_point.mock_calls)
         expect = [
             # series "a"
             call(
-                points=[(10, 10), (20, 21), (30, 32)],
+                points=[
+                    {"x": 10, "y": 10},
+                    {"x": 20, "y": 21},
+                    {"x": 30, "y": 32},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[0, 1, 2],
             ),
             # series "b"
             call(
-                points=[(10, 11), (20, 22), (30, 33)],
+                points=[
+                    {"x": 10, "y": 11},
+                    {"x": 20, "y": 22},
+                    {"x": 30, "y": 33},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[1, 2, 3],
             ),
             # series "c"
             call(
-                points=[(10, 13), (20, 24), (30, 35)],
+                points=[
+                    {"x": 10, "y": 13},
+                    {"x": 20, "y": 24},
+                    {"x": 30, "y": 35},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[3, 4, 5],
             ),
@@ -293,17 +313,29 @@ class TestLineSeriesConstructor(unittest.TestCase):
         self.assertListEqual(expect, mock_line_series.mock_calls)
         expect = {
             "a": dict(
-                    points=[(10, 10), (20, 21), (30, 32)],
-                    x_values=[1, 2, 3],
-                    y_values=[0, 1, 2],
+                points=[
+                    {"x": 10, "y": 10},
+                    {"x": 20, "y": 21},
+                    {"x": 30, "y": 32},
+                ],
+                x_values=[1, 2, 3],
+                y_values=[0, 1, 2],
             ),
             "b": dict(
-                points=[(10, 11), (20, 22), (30, 33)],
+                points=[
+                    {"x": 10, "y": 11},
+                    {"x": 20, "y": 22},
+                    {"x": 30, "y": 33},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[1, 2, 3],
             ),
             "c": dict(
-                points=[(10, 13), (20, 24), (30, 35)],
+                points=[
+                    {"x": 10, "y": 13},
+                    {"x": 20, "y": 24},
+                    {"x": 30, "y": 35},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[3, 4, 5],
             ),

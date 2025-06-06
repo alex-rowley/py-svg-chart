@@ -1,7 +1,20 @@
 import unittest
 
 
+from pysvgchart.axes import Axis
 from pysvgchart.charts import VerticalChart
+
+
+# subclasses to fulfill abstract class requirements
+
+class AxisSubClass(Axis):
+    def get_positions(self, values, include_axis=True) -> list[int | float | None]:
+        return []
+
+
+class VerticalChartSubClass(VerticalChart):
+    x_axis_type = AxisSubClass
+    y_axis_type = AxisSubClass
 
 
 class TestSetPalette(unittest.TestCase):
@@ -11,7 +24,7 @@ class TestSetPalette(unittest.TestCase):
 
     def setUp(self) -> None:
         self.maxDiff = None
-        self.instance = VerticalChart(
+        self.instance = VerticalChartSubClass(
             x_values=[0,1,2,3,4,5],
             y_values=[
                 [0, 1, 2, 3, 4, 5],

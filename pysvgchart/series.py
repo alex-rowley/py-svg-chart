@@ -13,6 +13,9 @@ class Series(Shape):
     def add_custom_elements(self, custom_elements):
         self.custom_elements.extend(custom_elements)
 
+    def get_element_list(self) -> list:
+        return []
+
 
 class DonutSegment(Series):
     path_template = (
@@ -77,7 +80,7 @@ class DonutSegment(Series):
     def large_arc_flag(self):
         return 1 if (self.end_theta - self.start_theta) > 180 else 0
 
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         return [
             self.path_template.format(
                 outer_begin_x=self.outer_begin_x,
@@ -121,7 +124,7 @@ class LineSeries(Series):
             for p1, p2 in zip(self.points, self.points[1:])
         ) if len(self.points) > 1 else 0
 
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         path = ' '.join(['{0} {1} {2}'.format("L" if i else "M", p.x, p.y) for i, p in enumerate(self.points)])
         return [self.path_begin_template.format(path=path, attributes=self.attributes)] + collapse_element_list(self.custom_elements)
 
@@ -142,7 +145,7 @@ class BarSeries(Series):
     def pv_generator(self):
         return zip(self.points, self.x_values, self.y_values)
 
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         bars = [self.bar_template.format(x=p.x - self.bar_width / 2, y=p.y, w=self.bar_width, h=h, attributes=self.attributes) for p, h in zip(self.points, self.bar_heights)]
         return bars + collapse_element_list(self.custom_elements)
 
@@ -169,5 +172,5 @@ class ScatterSeries(Series):
     def pv_generator(self):
         return zip(self.points, self.x_values, self.y_values)
 
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         return collapse_element_list([self.shape_template(p.x, p.y, self.styles) for p in self.points]) + collapse_element_list(self.custom_elements)

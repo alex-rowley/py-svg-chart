@@ -215,14 +215,18 @@ class TestBarSeriesConstructor(unittest.TestCase):
         )
         # then
         expect = [
-            call(10, 10),
-            call(20, 21),
-            call(30, 32),
+            call(x=10.0, y=10),
+            call(x=20.0, y=21),
+            call(x=30.0, y=32),
         ]
         self.assertListEqual(expect, mock_point.mock_calls)
         expect = [
             call(
-                points=[(10.0, 10), (20.0, 21), (30.0, 32)],
+                points=[
+                    {"x": 10.0, "y": 10},
+                    {"x": 20.0, "y": 21},
+                    {"x": 30.0, "y": 32},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[0, 1, 2],
                 bar_heights=[1090, 1079, 1068],  # 1100 - point.y
@@ -232,11 +236,15 @@ class TestBarSeriesConstructor(unittest.TestCase):
         self.assertListEqual(expect, mock_bar_series.mock_calls)
         expect = {
             "a": dict(
-                    points=[(10.0, 10), (20.0, 21), (30.0, 32)],
-                    x_values=[1, 2, 3],
-                    y_values=[0, 1, 2],
-                    bar_heights=[1090, 1079, 1068],
-                    bar_width=1,
+                points=[
+                    {"x": 10.0, "y": 10},
+                    {"x": 20.0, "y": 21},
+                    {"x": 30.0, "y": 32},
+                ],
+                x_values=[1, 2, 3],
+                y_values=[0, 1, 2],
+                bar_heights=[1090, 1079, 1068],
+                bar_width=1,
             ),
         }
         self.assertDictEqual(expect, actual)
@@ -275,23 +283,27 @@ class TestBarSeriesConstructor(unittest.TestCase):
         # then
         expect = [
             # series "a"
-            call(8.0, 10),
-            call(18.0, 21),
-            call(28.0, 32),
+            call(x=8.0, y=10),
+            call(x=18.0, y=21),
+            call(x=28.0, y=32),
             # series "b"
-            call(10.0, 11),
-            call(20.0, 22),
-            call(30.0, 33),
+            call(x=10.0, y=11),
+            call(x=20.0, y=22),
+            call(x=30.0, y=33),
             # series "c"
-            call(12.0, 13),
-            call(22.0, 24),
-            call(32.0, 35),
+            call(x=12.0, y=13),
+            call(x=22.0, y=24),
+            call(x=32.0, y=35),
         ]
         self.assertListEqual(expect, mock_point.mock_calls)
         expect = [
             # series "a"
             call(
-                points=[(8.0, 10), (18.0, 21), (28.0, 32)],
+                points=[
+                    {"x": 8.0, "y": 10},
+                    {"x": 18.0, "y": 21},
+                    {"x": 28.0, "y": 32},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[0, 1, 2],
                 bar_heights=[1090, 1079, 1068],  # 1100 - point.y
@@ -299,7 +311,11 @@ class TestBarSeriesConstructor(unittest.TestCase):
             ),
             # series "b"
             call(
-                points=[(10.0, 11), (20.0, 22), (30.0, 33)],
+                points=[
+                    {"x": 10.0, "y": 11},
+                    {"x": 20.0, "y": 22},
+                    {"x": 30.0, "y": 33},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[1, 2, 3],
                 bar_heights=[1089, 1078, 1067],  # 1100 - point.y
@@ -307,7 +323,11 @@ class TestBarSeriesConstructor(unittest.TestCase):
             ),
             # series "c"
             call(
-                points=[(12.0, 13), (22.0, 24), (32.0, 35)],
+                points=[
+                    {"x": 12.0, "y": 13},
+                    {"x": 22.0, "y": 24},
+                    {"x": 32.0, "y": 35},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[3, 4, 5],
                 bar_heights=[1087, 1076, 1065],  # 1100 - point.y
@@ -317,21 +337,33 @@ class TestBarSeriesConstructor(unittest.TestCase):
         self.assertListEqual(expect, mock_bar_series.mock_calls)
         expect = {
             "a": dict(
-                points=[(8.0, 10), (18.0, 21), (28.0, 32)],
+                points=[
+                    {"x": 8.0, "y": 10},
+                    {"x": 18.0, "y": 21},
+                    {"x": 28.0, "y": 32},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[0, 1, 2],
                 bar_heights=[1090, 1079, 1068],
                 bar_width=1,
             ),
             "b": dict(
-                points=[(10.0, 11), (20.0, 22), (30.0, 33)],
+                points=[
+                    {"x": 10.0, "y": 11},
+                    {"x": 20.0, "y": 22},
+                    {"x": 30.0, "y": 33},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[1, 2, 3],
                 bar_heights=[1089, 1078, 1067],
                 bar_width=1,
             ),
             "c": dict(
-                points=[(12.0, 13), (22.0, 24), (32.0, 35)],
+                points=[
+                    {"x": 12.0, "y": 13},
+                    {"x": 22.0, "y": 24},
+                    {"x": 32.0, "y": 35},
+                ],
                 x_values=[1, 2, 3],
                 y_values=[3, 4, 5],
                 bar_heights=[1087, 1076, 1065],

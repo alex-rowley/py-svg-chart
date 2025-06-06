@@ -33,7 +33,7 @@ class Element(ABC):
         self.classes.extend(classes)
 
     @abstractmethod
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         ...
 
 
@@ -72,7 +72,7 @@ class Line(Shape):
     def start(self):
         return self.position
 
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         return [self.line_template.format(x1=self.start.x, y1=self.start.y, x2=self.end.x, y2=self.end.y, attributes=self.attributes)]
 
 
@@ -89,7 +89,7 @@ class Circle(Shape):
     def __repr__(self):
         return f"<{self.__class__.__name__} c={self.position} r={self.radius}>"
 
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         return [self.circle_template.format(x=self.position.x, y=self.position.y, r=self.radius, attributes=self.attributes)]
 
 
@@ -114,7 +114,7 @@ class Rect(Shape):
     def __repr__(self):
         return f"<{self.__class__.__name__} pos={self.position} w={self.width} h={self.height}>"
 
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         return [self.rect_template.format(
             x=self.position.x,
             y=self.position.y,
@@ -138,7 +138,7 @@ class Text(Shape):
     def __repr__(self):
         return f"<{self.__class__.__name__} pos={self.position} content={self.content} styles={self.styles}>"
 
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         return [self.text_template.format(x=self.position.x, y=self.position.y, content=self.content, attributes=self.attributes)]
 
 
@@ -158,5 +158,5 @@ class Group(Element):
     def add_children(self, children):
         self.children.extend(children)
 
-    def get_element_list(self):
+    def get_element_list(self) -> list:
         return [self.group_template.format(attributes=self.attributes)] + collapse_element_list(self.children) + ['</g>']
