@@ -53,9 +53,16 @@ class Line(Shape):
     """
     line_template = '<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" {attributes}/>'
 
-    def __init__(self, x, y, width, height, styles=None, classes=None):
+    def __init__(self, x, y, *, width=None, height=None, x2=None, y2=None, styles=None, classes=None):
+        if width is None and height is None and x2 is not None and y2 is not None:
+            pass
+        elif width is not None and height is not None and x2 is None and y2 is None:
+            x2 = x + width
+            y2 = y + height
+        else:
+            raise ValueError("use either width and height, or x2 and y2")
         super().__init__(x, y, styles, classes)
-        self.end = Point(x + width, y + height)
+        self.end = Point(x2, y2)
         self.styles = dict() if styles is None else styles
 
     def __repr__(self):
@@ -92,7 +99,14 @@ class Rect(Shape):
     """
     rect_template = '<rect x="{x}" y="{y}" width="{width}" height="{height}" {attributes}/>'
 
-    def __init__(self, x, y, width, height, styles=None, classes=None):
+    def __init__(self, x, y, *, width=None, height=None, x2=None, y2=None, styles=None, classes=None):
+        if width is not None and height is not None and x2 is None and y2 is None:
+            pass
+        elif width is None and height is None and x2 is not None and y2 is not None:
+            width = max(x, x2) - min(x, x2)
+            height = max(y, y2) - min(y, y2)
+        else:
+            raise ValueError("use either width and height, or x2 and y2")
         super().__init__(x, y, styles, classes)
         self.width = width
         self.height = height

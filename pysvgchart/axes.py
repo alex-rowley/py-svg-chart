@@ -1,5 +1,6 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+from typing import Any
 
 from .helpers import collapse_element_list
 from .scales import make_scale
@@ -49,8 +50,11 @@ class Axis(Shape):
         return collapse_element_list([self.axis_line], self.tick_lines, self.tick_texts, self.grid_lines)
 
     @abstractmethod
-    def get_positions(self, _values):
+    def get_positions(self, values, include_axis=True) -> list[int | float | None]:
         ...
+
+    def get_ticks_with_positions(self) -> list[tuple[Any, int | float | None]]:
+        return list(zip(self.scale.ticks, self.get_positions(self.scale.ticks)))
 
 
 class XAxis(Axis):
@@ -91,21 +95,25 @@ class XAxis(Axis):
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x=self.position.x, y=self.position.y, width=axis_length, height=0, styles=styles)
-        tick_positions = self.get_positions(self.scale.ticks)
 
-        for m, p in zip(self.scale.ticks, tick_positions):
-            if p is None:  # shifted out of the visible range
+        for tick, pos in self.get_ticks_with_positions():
+            if pos is None:  # shifted out of the visible range
                 continue
-            self.tick_lines.append(Line(x=p, width=0, y=self.position.y, height=tick_length, styles=styles))
-            self.tick_texts.append(Text(x=p, y=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+            self.tick_lines.append(Line(x=pos, width=0, y=self.position.y, height=tick_length, styles=styles))
+            self.tick_texts.append(Text(x=pos, y=self.position.y + 2 * tick_length, content=label_format(tick), styles=self.default_tick_text_styles.copy()))
 
-    def get_positions(self, values):
+    def get_positions(self, values, include_axis=True) -> list[int | float | None]:
         proportions_of_range = [
             self.scale.value_to_fraction(value)
             for value in values
         ]
+        in_range = (
+            (lambda prop: 0.0 <= prop <= 1.0)
+            if include_axis
+            else (lambda prop: 0.0 < prop <= 1.0)
+        )
         return [
-            self.position.x + prop * self.length if 0.0 <= prop <= 1.0 else None
+            self.position.x + prop * self.length if in_range(prop) else None
             for prop in proportions_of_range
         ]
 
@@ -150,24 +158,33 @@ class YAxis(Axis):
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x=self.position.x, y=self.position.y, width=0, height=axis_length, styles=styles)
-        tick_positions = self.get_positions(self.scale.ticks)
 
-        for m, p in zip(self.scale.ticks, tick_positions):
-            if p is None:  # shifted out of the visible range
+        if secondary:
+            tick_pos_offset = 0
+            tick_text_offset = 2 * tick_length
+            tick_text_styles = self.default_sec_tick_text_styles.copy()
+        else:
+            tick_pos_offset = -tick_length
+            tick_text_offset = -2 * tick_length
+            tick_text_styles = self.default_tick_text_styles.copy()
+
+        for tick, pos in self.get_ticks_with_positions():
+            if pos is None:  # shifted out of the visible range
                 continue
-            if secondary:
-                self.tick_lines.append(Line(x=self.position.x, width=tick_length, y=p, height=0, styles=styles))
-                self.tick_texts.append(Text(x=self.position.x + 2 * tick_length, y=p, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
-            else:
-                self.tick_lines.append(Line(x=self.position.x - tick_length, width=tick_length, y=p, height=0, styles=styles))
-                self.tick_texts.append(Text(x=self.position.x - 2 * tick_length, y=p, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+            self.tick_lines.append(Line(x=self.position.x + tick_pos_offset, y=pos, width=tick_length, height=0, styles=styles))
+            self.tick_texts.append(Text(x=self.position.x + tick_text_offset, y=pos, content=label_format(tick), styles=tick_text_styles))
 
-    def get_positions(self, values):
+    def get_positions(self, values, include_axis=True) -> list[int | float | None]:
         proportions_of_range = [
             1 - self.scale.value_to_fraction(value)
             for value in values
         ]
+        in_range = (
+            (lambda prop: 0.0 <= prop <= 1.0)
+            if include_axis
+            else (lambda prop: 0.0 <= prop < 1.0)
+        )
         return [
-            self.position.y + prop * self.length if 0.0 <= prop <= 1.0 else None
+            self.position.y + prop * self.length if in_range(prop) else None
             for prop in proportions_of_range
         ]

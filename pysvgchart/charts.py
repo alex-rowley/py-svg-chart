@@ -46,11 +46,12 @@ def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar
     if not all(len(y_value) == len(x_values) for y_value in y_values):
         raise ValueError("y_values must all have the same length as x_values")
     no_series = len(series_names)
-    x_start_offs = (bar_width + bar_gap) * (no_series - 1) / 2
+    bar_span = bar_width + bar_gap
+    bar_shift = bar_span * (no_series - 1) / 2
     return {
         name: BarSeries(
             points=[
-                Point(x=x - x_start_offs + (bar_width + bar_gap) * index, y=y)
+                Point(x=x + bar_nr * bar_span - bar_shift, y=y)
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
@@ -61,7 +62,7 @@ def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar
             ],
             bar_width=bar_width,
         )
-        for index, name, y_value, in zip(range(no_series), series_names, y_values)
+        for bar_nr, name, y_value, in zip(range(no_series), series_names, y_values)
     }
 
 
@@ -354,55 +355,37 @@ class VerticalChart(Chart):
     def add_y_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
         major_style = major_grid_style.copy() if major_grid_style is not None else self.default_major_grid_styles.copy()
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
-        positions = self.x_axis.get_positions(self.x_axis.scale.ticks[1:])
-        for p in positions:
-            if p is None:  # shifted out of the visible range
+        positions = self.x_axis.get_positions(self.x_axis.scale.ticks, include_axis=False)
+        for pos in positions:
+            if pos is None:  # shifted out of the visible range
                 continue
-            self.y_axis.grid_lines.append(
-                Line(
-                    x=p,
-                    y=self.x_axis.position.y - self.y_axis.length,
-                    width=0,
-                    height=self.y_axis.length,
-                    styles=major_style
+            minor_unit = self.x_axis.length / (len(self.x_axis.scale.ticks) - 1) / (minor_ticks + 1)
+            for grid_line_nr in range(minor_ticks + 1):  # 0: major, others: minor
+                self.y_axis.grid_lines.append(
+                    Line(
+                        x=pos - grid_line_nr * minor_unit,
+                        y=self.x_axis.position.y - self.y_axis.length,
+                        width=0,
+                        height=self.y_axis.length,
+                        styles=major_style if grid_line_nr == 0 else minor_style,
+                    )
                 )
-            )
-            minor_step = self.x_axis.length / (len(self.x_axis.scale.ticks) - 1) / (minor_ticks + 1)
-            for j in range(1, minor_ticks + 1):
-                minor_offset = p - j * minor_step
-                self.y_axis.grid_lines.append(Line(
-                    x=minor_offset,
-                    y=self.x_axis.position.y - self.y_axis.length,
-                    width=0,
-                    height=self.y_axis.length,
-                    styles=minor_style
-                ))
 
     def add_x_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
         major_style = major_grid_style.copy() if major_grid_style is not None else self.default_major_grid_styles.copy()
         minor_style = minor_grid_style.copy() if minor_grid_style is not None else self.default_minor_grid_styles.copy()
-        positions = self.y_axis.get_positions(self.y_axis.scale.ticks[1:])
-        for p in positions:
-            if p is None:  # shifted out of the visible range
+        positions = self.y_axis.get_positions(self.y_axis.scale.ticks, include_axis=False)
+        for pos in positions:
+            if pos is None:  # shifted out of the visible range
                 continue
-            self.x_axis.grid_lines.append(
-                Line(
-                    x=self.y_axis.position.x,
-                    y=p,
-                    width=self.x_axis.length,
-                    height=0,
-                    styles=major_style
-                )
-            )
-            minor_step = self.y_axis.length / (len(self.y_axis.scale.ticks) - 1) / (minor_ticks + 1)
-            for j in range(1, minor_ticks + 1):
-                minor_offset = p + j * minor_step
+            minor_unit = self.y_axis.length / (len(self.y_axis.scale.ticks) - 1) / (minor_ticks + 1)
+            for grid_line_nr in range(minor_ticks + 1):  # 0: major, others: minor
                 self.y_axis.grid_lines.append(Line(
                     x=self.y_axis.position.x,
-                    y=minor_offset,
+                    y=pos + grid_line_nr * minor_unit,
                     width=self.x_axis.length,
                     height=0,
-                    styles=minor_style
+                    styles=major_style if grid_line_nr == 0 else minor_style,
                 ))
 
     def add_hover_modifier(self, modifier, radius, series_list=None):

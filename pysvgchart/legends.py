@@ -19,7 +19,7 @@ class LineLegend(Shape):
         self.lines, self.texts = [], []
         x_pos, y_pos = self.position.x, self.position.y
         for index, series in enumerate(self.series):
-            self.lines.append(Line(x_pos, y_pos, line_length, 0, styles=self.series[series].styles))
+            self.lines.append(Line(x_pos, y_pos, width=line_length, height=0, styles=self.series[series].styles))
             self.texts.append(Text(x_pos + line_length + line_text_gap, y_pos, content=series, styles=self.default_line_legend_text_styles))
             x_pos += element_x
             y_pos += element_y
@@ -46,7 +46,7 @@ class BarLegend(Shape):
         self.lines, self.texts = [], []
         x_pos, y_pos = self.position.x, self.position.y
         for index, series in enumerate(self.series):
-            self.lines.append(Rect(x_pos, y_pos - bar_height / 2, bar_width, bar_height, styles=self.series[series].styles))
+            self.lines.append(Rect(x_pos, y_pos - bar_height / 2, width=bar_width, height=bar_height, styles=self.series[series].styles))
             self.texts.append(Text(x_pos + bar_width + bar_text_gap, y_pos, content=series, styles=self.default_line_legend_text_styles))
             x_pos += element_x
             y_pos += element_y
