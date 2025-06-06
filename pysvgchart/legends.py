@@ -34,8 +34,8 @@ class BarLegend(Shape):
 
     def __init__(
         self,
-        x_position,
-        y_position,
+        x,
+        y,
         series,
         element_x,
         element_y,
@@ -43,7 +43,7 @@ class BarLegend(Shape):
         bar_height,
         bar_text_gap
     ):
-        super().__init__(x_position, y_position)
+        super().__init__(x, y)
         self.series = series
         self.lines, self.texts = [], []
         x_pos, y_pos = self.position.x, self.position.y
@@ -60,15 +60,16 @@ class BarLegend(Shape):
 class ScatterLegend(Shape):
     default_scatter_legend_text_styles = {'alignment-baseline': 'middle'}
 
-    def __init__(self,
-                 x_position,
-                 y_position,
-                 series,
-                 element_x,
-                 element_y,
-                 shape_text_gap,
-                 ):
-        super().__init__(x_position, y_position)
+    def __init__(
+        self,
+        x,
+        y,
+        series,
+        element_x,
+        element_y,
+        shape_text_gap,
+    ):
+        super().__init__(x, y)
         self.series = series
         self.legends, self.texts = [], []
         x_pos, y_pos = self.position.x, self.position.y
