@@ -7,7 +7,7 @@ from .helpers import collapse_element_list
 class Series(Shape):
 
     def __init__(self, x_position, y_position, styles=None, classes=None):
-        super().__init__(x_position=x_position, y_position=y_position, styles=styles, classes=classes)
+        super().__init__(x=x_position, y=y_position, styles=styles, classes=classes)
         self.custom_elements = []
 
     def add_custom_elements(self, custom_elements):

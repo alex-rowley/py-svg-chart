@@ -37,7 +37,7 @@ class LinearScale(Scale):
     hi: date | datetime | float | int
     size: float | int | timedelta
 
-    def __init__(self, ticks):
+    def __init__(self, ticks, shift=False):
         if all(isinstance(tick, date) for tick in ticks):
             pass
         elif all(isinstance(tick, datetime) for tick in ticks):
@@ -50,18 +50,27 @@ class LinearScale(Scale):
         self.lo = min(ticks)
         self.hi = max(ticks)
         self.size = self.hi - self.lo
+        if isinstance(self.lo, date) and isinstance(shift, date):
+            self.shift = (shift - self.lo) / self.size
+        elif isinstance(self.lo, datetime) and isinstance(shift, datetime):
+            self.shift = (shift - self.lo) / self.size
+        elif isinstance(self.lo, float | int) and isinstance(shift, float | int):
+            self.shift = (shift - self.lo) / self.size
+        else:
+            self.shift = None
 
     def __str__(self):
-        return f"[{self.lo}...{self.hi}]"
+        return f"[{self.lo}...{self.hi}] {self.shift if self.shift else '(no shift)'}"
 
     def __repr__(self):
-        return f"<{self.__class__.__name__} lo={self.lo} hi={self.hi} size={self.size}>"
+        return f"<{self.__class__.__name__} lo={self.lo} hi={self.hi} size={self.size} shift={self.shift}>"
 
     def get_lowest(self) -> date | datetime | float | int:
         return self.lo
 
     def value_to_fraction(self, value: date | datetime | float | int) -> float:
-        return (value - self.lo) / self.size
+        fraction = (value - self.lo) / self.size
+        return fraction - self.shift if self.shift else fraction
 
 
 class MappingScale(Scale):
@@ -93,6 +102,7 @@ def make_scale(
     min_value=None,
     max_value=None,
     include_zero=False,
+    shift=False,
     min_unique_values=2,
 ) -> Scale:
     """
@@ -103,6 +113,7 @@ def make_scale(
     :param min_value: optional minimum value to include on the scale
     :param max_value: optional maximum value to include on the scale
     :param include_zero: whether to include zero on the scale
+    :param shift: optional shift for the scale
     :param min_unique_values: minimum number of unique values required
     """
     if values is None or not isinstance(values, Iterable) or len(set(values)) < min_unique_values:
@@ -115,7 +126,7 @@ def make_scale(
             min_value=min_value,
             max_value=max_value,
         )
-        return LinearScale(ticks)
+        return LinearScale(ticks, shift=min(values) if shift is True else shift)
     if all(isinstance(value, datetime) for value in values):
         ticks = get_date_or_time_ticks(
             values,
@@ -123,7 +134,7 @@ def make_scale(
             min_value=min_value,
             max_value=max_value,
         )
-        return LinearScale(ticks)
+        return LinearScale(ticks, shift=min(values) if shift is True else shift)
     if all(isinstance(value, int | float) for value in values):
         ticks = get_numeric_ticks(
             values,
@@ -132,6 +143,6 @@ def make_scale(
             max_value=max_value,
             include_zero=include_zero,
         )
-        return LinearScale(ticks)
+        return LinearScale(ticks, shift=min(values) if shift is True else shift)
     # mixed value types or value type for which there's no ticks creator
     return MappingScale(list(values))

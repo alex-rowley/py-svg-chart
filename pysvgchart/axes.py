@@ -1,4 +1,5 @@
 from __future__ import annotations
+from abc import ABC, abstractmethod
 
 from .helpers import collapse_element_list
 from .scales import make_scale
@@ -36,24 +37,20 @@ class Axis(Shape):
             min_value=min_value,
             max_value=max_value,
             include_zero=include_zero,
+            shift=shift,
             min_unique_values=min_unique_values,
         )
         self.label_format = label_format
         self.axis_line = None
         self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
         _ = (axis_styles, tick_length)
-        # if shift is True, use the gap that would be created between the graph and the axis
-        lo = self.scale.get_lowest() if shift is True else None
-        self.shift = (min(self.data_points) - lo) if lo is not None else shift
-
-    def proportion_of_range(self, value):
-        return self.scale.value_to_fraction(value - self.shift if self.shift else value)
 
     def get_element_list(self):
         return collapse_element_list([self.axis_line], self.tick_lines, self.tick_texts, self.grid_lines)
 
-    def get_positions(self, values):
-        return []
+    @abstractmethod
+    def get_positions(self, _values):
+        ...
 
 
 class XAxis(Axis):
@@ -93,18 +90,18 @@ class XAxis(Axis):
             min_unique_values=2,  # at least two unique values needed on the x-axis to create a meaningful graph
         )
         styles = axis_styles or self.default_axis_styles.copy()
-        self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=axis_length, height=0, styles=styles)
+        self.axis_line = Line(x=self.position.x, y=self.position.y, width=axis_length, height=0, styles=styles)
         tick_positions = self.get_positions(self.scale.ticks)
 
         for m, p in zip(self.scale.ticks, tick_positions):
             if p is None:  # shifted out of the visible range
                 continue
-            self.tick_lines.append(Line(x_position=p, width=0, y_position=self.position.y, height=tick_length, styles=styles))
-            self.tick_texts.append(Text(x_position=p, y_position=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+            self.tick_lines.append(Line(x=p, width=0, y=self.position.y, height=tick_length, styles=styles))
+            self.tick_texts.append(Text(x=p, y=self.position.y + 2 * tick_length, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
         proportions_of_range = [
-            self.proportion_of_range(value)
+            self.scale.value_to_fraction(value)
             for value in values
         ]
         return [
@@ -152,40 +149,25 @@ class YAxis(Axis):
             min_unique_values=1,  # one unique value is sufficient for the y-axis
         )
         styles = axis_styles or self.default_axis_styles.copy()
-        self.axis_line = Line(x_position=self.position.x, y_position=self.position.y, width=0, height=axis_length, styles=styles)
+        self.axis_line = Line(x=self.position.x, y=self.position.y, width=0, height=axis_length, styles=styles)
         tick_positions = self.get_positions(self.scale.ticks)
 
         for m, p in zip(self.scale.ticks, tick_positions):
             if p is None:  # shifted out of the visible range
                 continue
             if secondary:
-                self.tick_lines.append(Line(x_position=self.position.x, width=tick_length, y_position=p, height=0, styles=styles))
-                self.tick_texts.append(Text(x_position=self.position.x + 2 * tick_length, y_position=p, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
+                self.tick_lines.append(Line(x=self.position.x, width=tick_length, y=p, height=0, styles=styles))
+                self.tick_texts.append(Text(x=self.position.x + 2 * tick_length, y=p, content=label_format(m), styles=self.default_sec_tick_text_styles.copy()))
             else:
-                self.tick_lines.append(Line(x_position=self.position.x - tick_length, width=tick_length, y_position=p, height=0, styles=styles))
-                self.tick_texts.append(Text(x_position=self.position.x - 2 * tick_length, y_position=p, content=label_format(m), styles=self.default_tick_text_styles.copy()))
+                self.tick_lines.append(Line(x=self.position.x - tick_length, width=tick_length, y=p, height=0, styles=styles))
+                self.tick_texts.append(Text(x=self.position.x - 2 * tick_length, y=p, content=label_format(m), styles=self.default_tick_text_styles.copy()))
 
     def get_positions(self, values):
         proportions_of_range = [
-            1 - self.proportion_of_range(value)
+            1 - self.scale.value_to_fraction(value)
             for value in values
         ]
         return [
             self.position.y + prop * self.length if 0.0 <= prop <= 1.0 else None
             for prop in proportions_of_range
-        ]
-
-
-class SimpleXAxis(XAxis):
-    """
-    x-axis of a graph with evenly spaced x values
-    """
-
-    def get_positions(self, values):
-        if values is None:
-            return None
-
-        return [
-            self.position.x + (index + 1 / 2) * self.length / len(values)
-            for index in range(len(values))
         ]

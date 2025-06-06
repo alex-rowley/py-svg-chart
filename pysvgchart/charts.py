@@ -3,7 +3,7 @@ from itertools import zip_longest, cycle
 
 from .helpers import collapse_element_list, default_format
 from .series import DonutSegment, LineSeries, BarSeries, ScatterSeries, Series
-from .axes import Axis, XAxis, YAxis, SimpleXAxis
+from .axes import Axis, XAxis, YAxis
 from .shapes import Point, Line, Group, Circle
 from .legends import LineLegend, BarLegend, ScatterLegend
 from .styles import render_all_styles
@@ -30,7 +30,7 @@ def line_series_constructor(x_values, y_values, x_axis, y_axis, series_names, ba
     return {
         name: LineSeries(
             points=[
-                Point(x, y)
+                Point(x=x, y=y)
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
@@ -50,7 +50,7 @@ def bar_series_constructor(x_values, y_values, x_axis, y_axis, series_names, bar
     return {
         name: BarSeries(
             points=[
-                Point(x - x_start_offs + (bar_width + bar_gap) * index, y)
+                Point(x=x - x_start_offs + (bar_width + bar_gap) * index, y=y)
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
@@ -82,7 +82,7 @@ def normalised_bar_series_constructor(x_values, y_values, x_axis, y_axis, series
         prev_scaled_positions = y_axis.get_positions(prev_cumulative_scaled_y_values)
         scaled_positions = y_axis.get_positions(cumulative_scaled_y_values)
         rtn[name] = BarSeries(
-            points=[Point(x, y) for x, y in zip(x_positions, scaled_positions)],
+            points=[Point(x=x, y=y) for x, y in zip(x_positions, scaled_positions)],
             x_values=x_values,
             y_values=y_value,
             bar_heights=[b - a for a, b in zip(scaled_positions, prev_scaled_positions)],
@@ -101,7 +101,7 @@ def scatter_series_constructor(x_values, y_values, x_axis, y_axis, series_names,
     return {
         name: ScatterSeries(
             points=[
-                Point(x, y)
+                Point(x=x, y=y)
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
@@ -360,8 +360,8 @@ class VerticalChart(Chart):
                 continue
             self.y_axis.grid_lines.append(
                 Line(
-                    x_position=p,
-                    y_position=self.x_axis.position.y - self.y_axis.length,
+                    x=p,
+                    y=self.x_axis.position.y - self.y_axis.length,
                     width=0,
                     height=self.y_axis.length,
                     styles=major_style
@@ -371,8 +371,8 @@ class VerticalChart(Chart):
             for j in range(1, minor_ticks + 1):
                 minor_offset = p - j * minor_step
                 self.y_axis.grid_lines.append(Line(
-                    x_position=minor_offset,
-                    y_position=self.x_axis.position.y - self.y_axis.length,
+                    x=minor_offset,
+                    y=self.x_axis.position.y - self.y_axis.length,
                     width=0,
                     height=self.y_axis.length,
                     styles=minor_style
@@ -387,8 +387,8 @@ class VerticalChart(Chart):
                 continue
             self.x_axis.grid_lines.append(
                 Line(
-                    x_position=self.y_axis.position.x,
-                    y_position=p,
+                    x=self.y_axis.position.x,
+                    y=p,
                     width=self.x_axis.length,
                     height=0,
                     styles=major_style
@@ -398,8 +398,8 @@ class VerticalChart(Chart):
             for j in range(1, minor_ticks + 1):
                 minor_offset = p + j * minor_step
                 self.y_axis.grid_lines.append(Line(
-                    x_position=self.y_axis.position.x,
-                    y_position=minor_offset,
+                    x=self.y_axis.position.x,
+                    y=minor_offset,
                     width=self.x_axis.length,
                     height=0,
                     styles=minor_style
@@ -408,7 +408,7 @@ class VerticalChart(Chart):
     def add_hover_modifier(self, modifier, radius, series_list=None):
         def build_hover_marker(point, x_value, y_value, series_name):
             series_styles = self.series[series_name].styles
-            circle = Circle(point.x, y_position=point.y, radius=radius, styles={'style': 'opacity:0;'})
+            circle = Circle(point.x, y=point.y, radius=radius, styles={'style': 'opacity:0;'})
             mod = modifier(point, x_value=x_value, y_value=y_value, series_name=series_name, styles=series_styles)
             return Group(children=[circle] + mod, classes=['psc-hover-group'])
 
@@ -433,13 +433,13 @@ class LineChart(VerticalChart):
 
 
 class SimpleLineChart(LineChart):
-    x_axis_type = SimpleXAxis
+    x_axis_type = XAxis
     y_axis_type = YAxis
     series_constructor = staticmethod(line_series_constructor)
 
 
 class BarChart(LineChart):
-    x_axis_type = SimpleXAxis
+    x_axis_type = XAxis
     y_axis_type = YAxis
     series_constructor = staticmethod(bar_series_constructor)
     colour_property = 'fill'
@@ -449,7 +449,7 @@ class BarChart(LineChart):
 
 
 class NormalisedBarChart(LineChart):
-    x_axis_type = SimpleXAxis
+    x_axis_type = XAxis
     y_axis_type = YAxis
     series_constructor = staticmethod(normalised_bar_series_constructor)
     y_range_constructor = staticmethod(lambda y_values: [0, 1])
