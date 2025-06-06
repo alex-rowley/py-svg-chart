@@ -3,7 +3,6 @@ import unittest
 
 
 from pysvgchart.axes import XAxis
-from pysvgchart.shapes import Line, Text
 
 
 class TestXAxisGetPositions(unittest.TestCase):
