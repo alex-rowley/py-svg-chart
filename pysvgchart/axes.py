@@ -120,7 +120,7 @@ class XAxis(Axis):
 
 class YAxis(Axis):
     """
-    x-axis of a graph
+    y-axis of a graph
     """
     default_tick_text_styles = {'text-anchor': 'end', 'dominant-baseline': 'middle'}
     default_sec_tick_text_styles = {'text-anchor': 'start', 'dominant-baseline': 'middle'}

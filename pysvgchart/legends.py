@@ -5,16 +5,17 @@ from .helpers import collapse_element_list
 class LineLegend(Shape):
     default_line_legend_text_styles = {'alignment-baseline': 'middle'}
 
-    def __init__(self,
-                 x_position,
-                 y_position,
-                 series,
-                 element_x,
-                 element_y,
-                 line_length,
-                 line_text_gap,
-                 ):
-        super().__init__(x_position, y_position)
+    def __init__(
+        self,
+         x,
+         y,
+         series,
+         element_x,
+         element_y,
+         line_length,
+         line_text_gap,
+     ):
+        super().__init__(x, y)
         self.series = series
         self.lines, self.texts = [], []
         x_pos, y_pos = self.position.x, self.position.y
@@ -31,16 +32,17 @@ class LineLegend(Shape):
 class BarLegend(Shape):
     default_line_legend_text_styles = {'alignment-baseline': 'middle'}
 
-    def __init__(self,
-                 x_position,
-                 y_position,
-                 series,
-                 element_x,
-                 element_y,
-                 bar_width,
-                 bar_height,
-                 bar_text_gap
-                 ):
+    def __init__(
+        self,
+        x_position,
+        y_position,
+        series,
+        element_x,
+        element_y,
+        bar_width,
+        bar_height,
+        bar_text_gap
+    ):
         super().__init__(x_position, y_position)
         self.series = series
         self.lines, self.texts = [], []
