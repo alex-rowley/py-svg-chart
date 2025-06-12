@@ -13,9 +13,10 @@ default_styles = {
 
 def render_style_dict(style_dict: dict) -> str:
     indent = " " * 4
+    nl = "\n"
     return f"""
 {{
-{indent}{f"\n{indent}".join(f"{param}: {value};" for param, value in style_dict.items())}
+{indent}{f"{nl}{indent}".join(f"{param}: {value};" for param, value in style_dict.items())}
 }}
     """.strip()
 
