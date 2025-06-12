@@ -9,6 +9,7 @@ class Point:
     """
     point in 2D space
     """
+
     x: float | int
     y: float | int
 
@@ -17,6 +18,7 @@ class Element(ABC):
     """
     abstract base class for all visual elements
     """
+
     __default_classes__ = []
     __default_styles__ = dict()
 
@@ -26,15 +28,21 @@ class Element(ABC):
 
     @property
     def attributes(self):
-        attributes = {**self.styles, 'class': ' '.join(self.classes)} if len(self.classes) > 0 else self.styles
+        attributes = (
+            {
+                **self.styles,
+                "class": " ".join(self.classes),
+            }
+            if len(self.classes) > 0
+            else self.styles
+        )
         return " ".join([a + '="' + attributes[a] + '"' for a in attributes])
 
     def add_classes(self, classes):
         self.classes.extend(classes)
 
     @abstractmethod
-    def get_element_list(self) -> list:
-        ...
+    def get_element_list(self) -> list: ...
 
 
 class Shape(Element):
@@ -51,9 +59,21 @@ class Line(Shape):
     """
     straight line between two points
     """
+
     line_template = '<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" {attributes}/>'
 
-    def __init__(self, x, y, *, width=None, height=None, x2=None, y2=None, styles=None, classes=None):
+    def __init__(
+        self,
+        x,
+        y,
+        *,
+        width=None,
+        height=None,
+        x2=None,
+        y2=None,
+        styles=None,
+        classes=None,
+    ):
         if width is None and height is None and x2 is not None and y2 is not None:
             pass
         elif width is not None and height is not None and x2 is None and y2 is None:
@@ -73,13 +93,22 @@ class Line(Shape):
         return self.position
 
     def get_element_list(self) -> list:
-        return [self.line_template.format(x1=self.start.x, y1=self.start.y, x2=self.end.x, y2=self.end.y, attributes=self.attributes)]
+        return [
+            self.line_template.format(
+                x1=self.start.x,
+                y1=self.start.y,
+                x2=self.end.x,
+                y2=self.end.y,
+                attributes=self.attributes,
+            ),
+        ]
 
 
 class Circle(Shape):
     """
     circle around a center point
     """
+
     circle_template = '<circle cx="{x}" cy="{y}" r="{r}" {attributes}/>'
 
     def __init__(self, x, y, radius, styles=None, classes=None):
@@ -90,16 +119,35 @@ class Circle(Shape):
         return f"<{self.__class__.__name__} c={self.position} r={self.radius}>"
 
     def get_element_list(self) -> list:
-        return [self.circle_template.format(x=self.position.x, y=self.position.y, r=self.radius, attributes=self.attributes)]
+        return [
+            self.circle_template.format(
+                x=self.position.x,
+                y=self.position.y,
+                r=self.radius,
+                attributes=self.attributes,
+            ),
+        ]
 
 
 class Rect(Shape):
     """
     rectangle at a position with dimensions
     """
+
     rect_template = '<rect x="{x}" y="{y}" width="{width}" height="{height}" {attributes}/>'
 
-    def __init__(self, x, y, *, width=None, height=None, x2=None, y2=None, styles=None, classes=None):
+    def __init__(
+        self,
+        x,
+        y,
+        *,
+        width=None,
+        height=None,
+        x2=None,
+        y2=None,
+        styles=None,
+        classes=None,
+    ):
         if width is not None and height is not None and x2 is None and y2 is None:
             pass
         elif width is None and height is None and x2 is not None and y2 is not None:
@@ -115,19 +163,22 @@ class Rect(Shape):
         return f"<{self.__class__.__name__} pos={self.position} w={self.width} h={self.height}>"
 
     def get_element_list(self) -> list:
-        return [self.rect_template.format(
-            x=self.position.x,
-            y=self.position.y,
-            width=self.width,
-            height=self.height,
-            attributes=self.attributes
-        )]
+        return [
+            self.rect_template.format(
+                x=self.position.x,
+                y=self.position.y,
+                width=self.width,
+                height=self.height,
+                attributes=self.attributes,
+            ),
+        ]
 
 
 class Text(Shape):
     """
     text at a position
     """
+
     text_template = '<text x="{x}" y="{y}" {attributes}>{content}</text>'
 
     def __init__(self, x, y, content, styles=None, classes=None):
@@ -139,14 +190,22 @@ class Text(Shape):
         return f"<{self.__class__.__name__} pos={self.position} content={self.content} styles={self.styles}>"
 
     def get_element_list(self) -> list:
-        return [self.text_template.format(x=self.position.x, y=self.position.y, content=self.content, attributes=self.attributes)]
+        return [
+            self.text_template.format(
+                x=self.position.x,
+                y=self.position.y,
+                content=self.content,
+                attributes=self.attributes,
+            ),
+        ]
 
 
 class Group(Element):
     """
     a group of visual elements
     """
-    group_template = '<g {attributes}>'
+
+    group_template = "<g {attributes}>"
 
     def __init__(self, styles=None, classes=None, children=None):
         super().__init__(styles, classes)
@@ -159,4 +218,8 @@ class Group(Element):
         self.children.extend(children)
 
     def get_element_list(self) -> list:
-        return [self.group_template.format(attributes=self.attributes)] + collapse_element_list(self.children) + ['</g>']
+        return (
+            [self.group_template.format(attributes=self.attributes)]
+            + collapse_element_list(self.children)
+            + ["</g>"]
+        )

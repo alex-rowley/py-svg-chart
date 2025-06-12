@@ -11,25 +11,26 @@ class Axis(Shape):
     """
     axis of a graph
     """
-    default_axis_styles = {'stroke': '#2e2e2c'}
+
+    default_axis_styles = {"stroke": "#2e2e2c"}
 
     def __init__(
-            self,
-            x_position,
-            y_position,
-            data_points,
-            axis_length,
-            label_format,
-            max_ticks=10,
-            axis_styles=None,
-            tick_length=5,
-            min_value=None,
-            max_value=None,
-            include_zero=False,
-            shift=False,
-            min_unique_values=2,
-            scale_maker=make_scale,
-            secondary=False,
+        self,
+        x_position,
+        y_position,
+        data_points,
+        axis_length,
+        label_format,
+        max_ticks=10,
+        axis_styles=None,
+        tick_length=5,
+        min_value=None,
+        max_value=None,
+        include_zero=False,
+        shift=False,
+        min_unique_values=2,
+        scale_maker=make_scale,
+        secondary=False,
     ):
         _ignore = secondary, axis_styles, tick_length
         super().__init__(x_position, y_position)
@@ -49,11 +50,15 @@ class Axis(Shape):
         self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
 
     def get_element_list(self):
-        return collapse_element_list([self.axis_line], self.tick_lines, self.tick_texts, self.grid_lines)
+        return collapse_element_list(
+            [self.axis_line],
+            self.tick_lines,
+            self.tick_texts,
+            self.grid_lines,
+        )
 
     @abstractmethod
-    def get_positions(self, values, include_axis=True) -> list[int | float | None]:
-        ...
+    def get_positions(self, values, include_axis=True) -> list[int | float | None]: ...
 
     def get_ticks_with_positions(self) -> list[tuple[Any, int | float | None]]:
         return list(zip(self.scale.ticks, self.get_positions(self.scale.ticks)))
@@ -63,23 +68,24 @@ class XAxis(Axis):
     """
     x-axis of a graph
     """
-    default_tick_text_styles = {'text-anchor': 'middle', 'dominant-baseline': 'hanging'}
+
+    default_tick_text_styles = {"text-anchor": "middle", "dominant-baseline": "hanging"}
 
     def __init__(
-            self,
-            x_position,
-            y_position,
-            data_points,
-            axis_length,
-            label_format,
-            max_ticks=10,
-            axis_styles=None,
-            tick_length=5,
-            min_value=None,
-            max_value=None,
-            include_zero=False,
-            shift=False,
-            scale_maker=make_scale,
+        self,
+        x_position,
+        y_position,
+        data_points,
+        axis_length,
+        label_format,
+        max_ticks=10,
+        axis_styles=None,
+        tick_length=5,
+        min_value=None,
+        max_value=None,
+        include_zero=False,
+        shift=False,
+        scale_maker=make_scale,
     ):
         super().__init__(
             x_position=x_position,
@@ -98,23 +104,33 @@ class XAxis(Axis):
             scale_maker=scale_maker,
         )
         styles = axis_styles or self.default_axis_styles.copy()
-        self.axis_line = Line(x=self.position.x, y=self.position.y, width=axis_length, height=0, styles=styles)
+        self.axis_line = Line(
+            x=self.position.x,
+            y=self.position.y,
+            width=axis_length,
+            height=0,
+            styles=styles,
+        )
 
         for tick, pos in self.get_ticks_with_positions():
             if pos is None:  # shifted out of the visible range
                 continue
-            self.tick_lines.append(Line(x=pos, width=0, y=self.position.y, height=tick_length, styles=styles))
-            self.tick_texts.append(Text(x=pos, y=self.position.y + 2 * tick_length, content=label_format(tick), styles=self.default_tick_text_styles.copy()))
+            self.tick_lines.append(
+                Line(x=pos, width=0, y=self.position.y, height=tick_length, styles=styles),
+            )
+            self.tick_texts.append(
+                Text(
+                    x=pos,
+                    y=self.position.y + 2 * tick_length,
+                    content=label_format(tick),
+                    styles=self.default_tick_text_styles.copy(),
+                ),
+            )
 
     def get_positions(self, values, include_axis=True) -> list[int | float | None]:
-        proportions_of_range = [
-            self.scale.value_to_fraction(value)
-            for value in values
-        ]
+        proportions_of_range = [self.scale.value_to_fraction(value) for value in values]
         in_range = (
-            (lambda prop: 0.0 <= prop <= 1.0)
-            if include_axis
-            else (lambda prop: 0.0 < prop <= 1.0)
+            (lambda prop: 0.0 <= prop <= 1.0) if include_axis else (lambda prop: 0.0 < prop <= 1.0)
         )
         return [
             self.position.x + prop * self.length if in_range(prop) else None
@@ -126,25 +142,26 @@ class YAxis(Axis):
     """
     y-axis of a graph
     """
-    default_tick_text_styles = {'text-anchor': 'end', 'dominant-baseline': 'middle'}
-    default_sec_tick_text_styles = {'text-anchor': 'start', 'dominant-baseline': 'middle'}
+
+    default_tick_text_styles = {"text-anchor": "end", "dominant-baseline": "middle"}
+    default_sec_tick_text_styles = {"text-anchor": "start", "dominant-baseline": "middle"}
 
     def __init__(
-            self,
-            x_position,
-            y_position,
-            data_points,
-            axis_length,
-            label_format,
-            max_ticks=10,
-            axis_styles=None,
-            tick_length=5,
-            min_value=None,
-            max_value=None,
-            include_zero=False,
-            shift=False,
-            scale_maker=make_scale,
-            secondary=False,
+        self,
+        x_position,
+        y_position,
+        data_points,
+        axis_length,
+        label_format,
+        max_ticks=10,
+        axis_styles=None,
+        tick_length=5,
+        min_value=None,
+        max_value=None,
+        include_zero=False,
+        shift=False,
+        scale_maker=make_scale,
+        secondary=False,
     ):
         super().__init__(
             x_position=x_position,
@@ -164,7 +181,13 @@ class YAxis(Axis):
             scale_maker=scale_maker,
         )
         styles = axis_styles or self.default_axis_styles.copy()
-        self.axis_line = Line(x=self.position.x, y=self.position.y, width=0, height=axis_length, styles=styles)
+        self.axis_line = Line(
+            x=self.position.x,
+            y=self.position.y,
+            width=0,
+            height=axis_length,
+            styles=styles,
+        )
 
         if secondary:
             tick_pos_offset = 0
@@ -178,18 +201,28 @@ class YAxis(Axis):
         for tick, pos in self.get_ticks_with_positions():
             if pos is None:  # shifted out of the visible range
                 continue
-            self.tick_lines.append(Line(x=self.position.x + tick_pos_offset, y=pos, width=tick_length, height=0, styles=styles))
-            self.tick_texts.append(Text(x=self.position.x + tick_text_offset, y=pos, content=label_format(tick), styles=tick_text_styles))
+            self.tick_lines.append(
+                Line(
+                    x=self.position.x + tick_pos_offset,
+                    y=pos,
+                    width=tick_length,
+                    height=0,
+                    styles=styles,
+                ),
+            )
+            self.tick_texts.append(
+                Text(
+                    x=self.position.x + tick_text_offset,
+                    y=pos,
+                    content=label_format(tick),
+                    styles=tick_text_styles,
+                ),
+            )
 
     def get_positions(self, values, include_axis=True) -> list[int | float | None]:
-        proportions_of_range = [
-            1 - self.scale.value_to_fraction(value)
-            for value in values
-        ]
+        proportions_of_range = [1 - self.scale.value_to_fraction(value) for value in values]
         in_range = (
-            (lambda prop: 0.0 <= prop <= 1.0)
-            if include_axis
-            else (lambda prop: 0.0 <= prop < 1.0)
+            (lambda prop: 0.0 <= prop <= 1.0) if include_axis else (lambda prop: 0.0 <= prop < 1.0)
         )
         return [
             self.position.y + prop * self.length if in_range(prop) else None

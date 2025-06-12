@@ -11,7 +11,7 @@ def default_format(value):
     """
     format a number
     """
-    return '{0:,}'.format(value) if not isinstance(value, str) else value
+    return "{0:,}".format(value) if not isinstance(value, str) else value
 
 
 def safe_get_element_list(elements):
@@ -29,7 +29,9 @@ def collapse_element_list(*list_of_list_of_elements) -> list:
     return [
         element
         for list_of_elements in list_of_list_of_elements
-        for elements in (list_of_elements if isinstance(list_of_elements, (list, tuple, set)) else [])
+        for elements in (
+            list_of_elements if isinstance(list_of_elements, (list, tuple, set)) else []
+        )
         for element in safe_get_element_list(elements)
     ]
 
@@ -150,9 +152,7 @@ def get_date_or_time_ticks(
         return ticks
 
     current_tick = (
-        date_min.replace(second=0, microsecond=0)
-        if isinstance(date_min, dt.datetime)
-        else date_min
+        date_min.replace(second=0, microsecond=0) if isinstance(date_min, dt.datetime) else date_min
     )
     ticks = [current_tick]
     while ticks[-1] < date_max:

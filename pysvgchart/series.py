@@ -5,6 +5,9 @@ from .helpers import collapse_element_list
 
 
 class Series(Shape):
+    """
+    base class for series
+    """
 
     def __init__(self, x_position, y_position, styles=None, classes=None):
         super().__init__(x=x_position, y=y_position, styles=styles, classes=classes)
@@ -18,6 +21,10 @@ class Series(Shape):
 
 
 class DonutSegment(Series):
+    """
+    donut chart segment
+    """
+
     path_template = (
         '<path d="M {outer_begin_x},{outer_begin_y} '
         'A {radius_outer} {radius_outer} 0 {large_arc_flag} 1 {outer_end_x} {outer_end_y} '
@@ -26,7 +33,18 @@ class DonutSegment(Series):
         'Z" fill="{colour}" {attributes}></path>'
     )
 
-    def __init__(self, colour, start_theta, end_theta, radius_inner, radius_outer, centre_x, centre_y, styles=None, classes=None):
+    def __init__(
+        self,
+        colour,
+        start_theta,
+        end_theta,
+        radius_inner,
+        radius_outer,
+        centre_x,
+        centre_y,
+        styles=None,
+        classes=None,
+    ):
         super().__init__(x_position=centre_x, y_position=centre_y, styles=styles, classes=classes)
         self.start_theta = start_theta
         self.end_theta = end_theta
@@ -95,7 +113,7 @@ class DonutSegment(Series):
                 inner_begin_x=self.inner_begin_x,
                 inner_begin_y=self.inner_begin_y,
                 colour=self.colour,
-                attributes=self.attributes
+                attributes=self.attributes,
             )
         ] + collapse_element_list(self.custom_elements)
 
@@ -104,11 +122,17 @@ class LineSeries(Series):
     """
     line series given as a number of (x, y)-points
     """
-    __default_styles__ = {'stroke-width': '2'}
+
+    __default_styles__ = {"stroke-width": "2"}
     path_begin_template = '<path d="{path}" fill="none" {attributes}/>'
 
     def __init__(self, points, x_values, y_values, styles=None, classes=None):
-        super().__init__(x_position=points[0].x, y_position=points[0].y, styles=styles, classes=classes)
+        super().__init__(
+            x_position=points[0].x,
+            y_position=points[0].y,
+            styles=styles,
+            classes=classes,
+        )
         self.points = points
         self.x_values = x_values
         self.y_values = y_values
@@ -119,22 +143,48 @@ class LineSeries(Series):
 
     @property
     def path_length(self):
-        return sum(
-            math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
-            for p1, p2 in zip(self.points, self.points[1:])
-        ) if len(self.points) > 1 else 0
+        return (
+            sum(
+                math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
+                for p1, p2 in zip(self.points, self.points[1:])
+            )
+            if len(self.points) > 1
+            else 0
+        )
 
     def get_element_list(self) -> list:
-        path = ' '.join(['{0} {1} {2}'.format("L" if i else "M", p.x, p.y) for i, p in enumerate(self.points)])
-        return [self.path_begin_template.format(path=path, attributes=self.attributes)] + collapse_element_list(self.custom_elements)
+        path = " ".join(
+            [f"L {p.x} {p.y}" if i else f"M {p.x} {p.y}" for i, p in enumerate(self.points)]
+        )
+        return [
+            self.path_begin_template.format(path=path, attributes=self.attributes)
+        ] + collapse_element_list(self.custom_elements)
 
 
 class BarSeries(Series):
-    bar_template = '<rect x="{x}" y="{y}" width="{w}" height="{h}" {attributes}/>'
-    __default_styles__ = {'stroke': 'none'}
+    """
+    series for bar charts
+    """
 
-    def __init__(self, points, x_values, y_values, bar_width, bar_heights, styles=None, classes=None):
-        super().__init__(x_position=points[0].x, y_position=points[0].y, styles=styles, classes=classes)
+    bar_template = '<rect x="{x}" y="{y}" width="{w}" height="{h}" {attributes}/>'
+    __default_styles__ = {"stroke": "none"}
+
+    def __init__(
+        self,
+        points,
+        x_values,
+        y_values,
+        bar_width,
+        bar_heights,
+        styles=None,
+        classes=None,
+    ):
+        super().__init__(
+            x_position=points[0].x,
+            y_position=points[0].y,
+            styles=styles,
+            classes=classes,
+        )
         self.points = points
         self.x_values = x_values
         self.y_values = y_values
@@ -146,7 +196,16 @@ class BarSeries(Series):
         return zip(self.points, self.x_values, self.y_values)
 
     def get_element_list(self) -> list:
-        bars = [self.bar_template.format(x=p.x - self.bar_width / 2, y=p.y, w=self.bar_width, h=h, attributes=self.attributes) for p, h in zip(self.points, self.bar_heights)]
+        bars = [
+            self.bar_template.format(
+                x=p.x - self.bar_width / 2,
+                y=p.y,
+                w=self.bar_width,
+                h=h,
+                attributes=self.attributes,
+            )
+            for p, h in zip(self.points, self.bar_heights)
+        ]
         return bars + collapse_element_list(self.custom_elements)
 
 
@@ -158,19 +217,29 @@ class ScatterSeries(Series):
     """
     scatter series given as a number of (x, y)-points
     """
+
     __default_styles__ = {}
     __default_shape_template__ = staticmethod(default_scatter_shape_template)
 
     def __init__(self, points, x_values, y_values, shape_template=None, styles=None, classes=None):
-        super().__init__(x_position=points[0].x, y_position=points[0].y, styles=styles, classes=classes)
+        super().__init__(
+            x_position=points[0].x,
+            y_position=points[0].y,
+            styles=styles,
+            classes=classes,
+        )
         self.points = points
         self.x_values = x_values
         self.y_values = y_values
-        self.shape_template = self.__default_shape_template__ if shape_template is None else shape_template
+        self.shape_template = (
+            self.__default_shape_template__ if shape_template is None else shape_template
+        )
 
     @property
     def pv_generator(self):
         return zip(self.points, self.x_values, self.y_values)
 
     def get_element_list(self) -> list:
-        return collapse_element_list([self.shape_template(p.x, p.y, self.styles) for p in self.points]) + collapse_element_list(self.custom_elements)
+        return collapse_element_list(
+            [self.shape_template(p.x, p.y, self.styles) for p in self.points]
+        ) + collapse_element_list(self.custom_elements)

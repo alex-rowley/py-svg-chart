@@ -76,14 +76,14 @@ class LinearScale(Scale):
 
 
 class MappingScale(Scale):
+    """
+    scale for non-numeric/non-linear values
+    """
 
     def __init__(self, ticks: list) -> None:
         super().__init__(ticks)
         value_width = 1.0 / len(ticks)
-        self.map = {
-            value: (index + 0.5) * value_width
-            for index, value in enumerate(ticks)
-        }
+        self.map = {value: (index + 0.5) * value_width for index, value in enumerate(ticks)}
 
     def __str__(self):
         return f"""[{", ".join(f"{tick}" for tick in self.ticks)}]"""
@@ -119,7 +119,10 @@ def make_scale(
     :param min_unique_values: minimum number of unique values required
     """
     if values is None or not isinstance(values, Iterable) or len(set(values)) < min_unique_values:
-        raise ValueError("Values must be a non-empty iterable with at least %d unique elements.", min_unique_values)
+        raise ValueError(
+            "Values must be a non-empty iterable with at least %d unique elements.",
+            min_unique_values,
+        )
     # value types for which there is a ticks creator
     if all(isinstance(value, date) for value in values):
         ticks = get_date_or_time_ticks(
