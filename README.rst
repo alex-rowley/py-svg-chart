@@ -74,8 +74,8 @@ effects. These effects can be added to any base elements but I thought you'd mos
     def hover_modifier(position, name, value, chart_total):
         text_styles = {'alignment-baseline': 'middle', 'text-anchor': 'middle'}
         return [
-            psc.Text(x_position=position.x, y_position=position.y-10, content=name, styles=text_styles),
-            psc.Text(x_position=position.x, y_position=position.y+10, content="{:.2%}".format(value/chart_total), styles=text_styles)
+            psc.Text(x=position.x, y=position.y-10, content=name, styles=text_styles),
+            psc.Text(x=position.x, y=position.y+10, content="{:.2%}".format(value/chart_total), styles=text_styles)
         ]
 
     values = [11.3, 20, 30, 40]
@@ -144,30 +144,29 @@ Here's a heavily customised line chart example
     line_chart = psc.SimpleLineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200)
     line_chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
     line_chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
-    line_chart.add_legend(x_position=700, element_x=200, line_length=35, line_text_gap=20)
+    line_chart.add_legend(x=700, element_x=200, line_length=35, line_text_gap=20)
     line_chart.add_y_grid(minor_ticks=0, major_grid_style={'stroke': '#E9E9DE'})
     line_chart.x_axis.tick_lines, line_chart.y_axis.tick_lines = [], []
     line_chart.x_axis.axis_line = None
     line_chart.y_axis.axis_line.styles['stroke'] = '#E9E9DE'
     line_end = line_chart.legend.lines[0].end
     act_styles = {'fill': '#FFFFFF', 'stroke': '#DB7D33', 'stroke-width': '3'}
-    line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=act_styles))
+    line_chart.add_custom_element(psc.Circle(x=line_end.x, y=line_end.y, radius=4, styles=act_styles))
     line_end = line_chart.legend.lines[1].end
     pred_styles = {'fill': '#2D2D2D', 'stroke': '#2D2D2D', 'stroke-width': '3'}
-    line_chart.add_custom_element(psc.Circle(x_position=line_end.x, y_position=line_end.y, radius=4, styles=pred_styles))
-    for limit, tick in zip(line_chart.x_axis.limits, line_chart.x_axis.tick_texts):
+    line_chart.add_custom_element(psc.Circle(x=line_end.x, y=line_end.y, radius=4, styles=pred_styles))
+    for limit, tick in zip(line_chart.x_axis.scale.ticks, line_chart.x_axis.tick_texts):
         if tick.content == 'Jan':
-            line_chart.add_custom_element(psc.Text(x_position=tick.position.x, y_position=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
+            line_chart.add_custom_element(psc.Text(x=tick.position.x, y=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
 
-    def hover_modifier(position, x_value, y_value, series_name):
+    def hover_modifier(position, x_value, y_value, series_name, styles):
         text_styles = {'alignment-baseline': 'middle', 'text-anchor': 'middle'}
         params = {'styles': text_styles, 'classes': ['psc-hover-data']}
-        marker_styles = {'Actual sales': act_styles, 'Predicted sales': pred_styles}
         return [
-            psc.Circle(x_position=position.x, y_position=position.y, radius=3, classes=['psc-hover-data'], styles=marker_styles[series_name]),
-            psc.Text(x_position=position.x, y_position=position.y - 10, content=str(x_value), **params),
-            psc.Text(x_position=position.x, y_position=position.y - 30, content="{:,.0f}".format(y_value), **params),
-            psc.Text(x_position=position.x, y_position=position.y - 50, content=series_name, **params)
+            psc.Circle(x=position.x, y=position.y, radius=3, classes=['psc-hover-data'], styles=styles),
+            psc.Text(x=position.x, y=position.y - 10, content=str(x_value), **params),
+            psc.Text(x=position.x, y=position.y - 30, content="{:,.0f}".format(y_value), **params),
+            psc.Text(x=position.x, y=position.y - 50, content=series_name, **params)
         ]
 
     line_chart.add_hover_modifier(hover_modifier, radius=5)
