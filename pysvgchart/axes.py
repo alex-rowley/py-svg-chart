@@ -28,11 +28,14 @@ class Axis(Shape):
             include_zero=False,
             shift=False,
             min_unique_values=2,
+            scale_maker=make_scale,
+            secondary=False,
     ):
+        _ignore = secondary, axis_styles, tick_length
         super().__init__(x_position, y_position)
         self.data_points = data_points
         self.length = axis_length
-        self.scale = make_scale(
+        self.scale = scale_maker(
             values=data_points,
             max_ticks=max_ticks,
             min_value=min_value,
@@ -44,7 +47,6 @@ class Axis(Shape):
         self.label_format = label_format
         self.axis_line = None
         self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
-        _ = (axis_styles, tick_length)
 
     def get_element_list(self):
         return collapse_element_list([self.axis_line], self.tick_lines, self.tick_texts, self.grid_lines)
@@ -77,6 +79,7 @@ class XAxis(Axis):
             max_value=None,
             include_zero=False,
             shift=False,
+            scale_maker=make_scale,
     ):
         super().__init__(
             x_position=x_position,
@@ -92,6 +95,7 @@ class XAxis(Axis):
             include_zero=include_zero,
             shift=shift,
             min_unique_values=2,  # at least two unique values needed on the x-axis to create a meaningful graph
+            scale_maker=scale_maker,
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x=self.position.x, y=self.position.y, width=axis_length, height=0, styles=styles)
@@ -139,6 +143,7 @@ class YAxis(Axis):
             max_value=None,
             include_zero=False,
             shift=False,
+            scale_maker=make_scale,
             secondary=False,
     ):
         super().__init__(
@@ -154,7 +159,9 @@ class YAxis(Axis):
             max_value=max_value,
             include_zero=include_zero,
             shift=shift,
+            secondary=secondary,
             min_unique_values=1,  # one unique value is sufficient for the y-axis
+            scale_maker=scale_maker,
         )
         styles = axis_styles or self.default_axis_styles.copy()
         self.axis_line = Line(x=self.position.x, y=self.position.y, width=0, height=axis_length, styles=styles)

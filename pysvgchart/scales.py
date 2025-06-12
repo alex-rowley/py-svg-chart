@@ -148,3 +148,27 @@ def make_scale(
         return LinearScale(ticks, shift=min(values) if shift is True else shift)
     # mixed value types or value type for which there's no ticks creator
     return MappingScale(list(values))
+
+
+def make_categories_scale(
+    values,
+    max_ticks,
+    min_value=None,
+    max_value=None,
+    include_zero=False,
+    shift=False,
+    min_unique_values=2,
+) -> Scale:
+    """
+    make a categories scale for a series of values
+
+    :param values: actual values
+    :param max_ticks: maximum number of ticks on the scale
+    :param min_value: optional minimum value to include on the scale
+    :param max_value: optional maximum value to include on the scale
+    :param include_zero: whether to include zero on the scale
+    :param shift: optional shift for the scale
+    :param min_unique_values: minimum number of unique values required
+    """
+    _ignore = max_ticks, min_value, max_value, include_zero, shift, min_unique_values
+    return MappingScale(list(values))

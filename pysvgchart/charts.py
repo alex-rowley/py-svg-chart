@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
 from itertools import zip_longest, cycle
 
-from .helpers import collapse_element_list, default_format
-from .series import DonutSegment, LineSeries, BarSeries, ScatterSeries, Series
 from .axes import Axis, XAxis, YAxis
-from .shapes import Point, Line, Group, Circle
+from .helpers import collapse_element_list, default_format
 from .legends import LineLegend, BarLegend, ScatterLegend
+from .scales import make_scale, make_categories_scale
+from .series import DonutSegment, LineSeries, BarSeries, ScatterSeries, Series
+from .shapes import Point, Line, Group, Circle
 from .styles import render_all_styles
 
 
@@ -180,6 +181,8 @@ class VerticalChart(Chart):
     # The defaults are for axis classes
     x_axis_type = Axis
     y_axis_type = Axis
+    x_axis_scale_maker = staticmethod(make_scale)
+    y_axis_scale_maker = staticmethod(make_scale)
 
     # The defaults are for line class
     x_range_constructor = staticmethod(default_x_range_constructor)
@@ -269,6 +272,7 @@ class VerticalChart(Chart):
             max_value=x_max,
             include_zero=x_zero,
             shift=x_shift,
+            scale_maker=self.x_axis_scale_maker,
         )
         self.y_axis = self.y_axis_type(
             x_position=left_margin,
@@ -281,6 +285,8 @@ class VerticalChart(Chart):
             max_value=y_max,
             include_zero=y_zero,
             shift=y_shift,
+            scale_maker=self.y_axis_scale_maker,
+            secondary=False,
         )
         series_names = self.generate_series_names("Series", len(y_values), y_names)
         self.series = self.series_constructor(
@@ -308,6 +314,7 @@ class VerticalChart(Chart):
                 max_value=sec_y_max,
                 include_zero=sec_y_zero,
                 shift=sec_y_shift,
+                scale_maker=self.y_axis_scale_maker,
                 secondary=True,
             )
             self.series.update(
@@ -424,6 +431,8 @@ class SimpleLineChart(LineChart):
 class BarChart(LineChart):
     x_axis_type = XAxis
     y_axis_type = YAxis
+    x_axis_scale_maker = staticmethod(make_categories_scale)
+    y_axis_scale_maker = staticmethod(make_scale)
     series_constructor = staticmethod(bar_series_constructor)
     colour_property = 'fill'
 
@@ -434,6 +443,8 @@ class BarChart(LineChart):
 class NormalisedBarChart(LineChart):
     x_axis_type = XAxis
     y_axis_type = YAxis
+    x_axis_scale_maker = staticmethod(make_categories_scale)
+    y_axis_scale_maker = staticmethod(make_scale)
     series_constructor = staticmethod(normalised_bar_series_constructor)
     y_range_constructor = staticmethod(lambda y_values: [0, 1])
     colour_property = 'fill'
