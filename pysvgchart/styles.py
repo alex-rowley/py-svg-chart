@@ -1,4 +1,3 @@
-from pygments import style
 
 hover_style_name = "psc-hover-data"
 

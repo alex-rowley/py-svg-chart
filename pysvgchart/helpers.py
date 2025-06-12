@@ -1,6 +1,5 @@
 import math
 import datetime as dt
-import collections.abc
 
 
 def noop(*args, **kwargs):
