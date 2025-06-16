@@ -2,7 +2,7 @@
 
 __author__ = "Alex Rowley"
 __email__ = ""
-__version__ = "0.3.2"
+__version__ = "0.4.0"
 
 from .charts import (
     LineChart,
