@@ -3,12 +3,11 @@ import unittest
 
 
 from pysvgchart.axes import XAxis
-from pysvgchart.shapes import Line, Text
 
 
 class TestXAxisGetPositions(unittest.TestCase):
     """
-    test the get_positions() function of the XAxis class
+    test the get_positions() and get_ticks_positions() functions of the XAxis class
     """
 
     def setUp(self):
@@ -25,10 +24,10 @@ class TestXAxisGetPositions(unittest.TestCase):
             max_ticks=max_ticks,
         )
 
-    def check_axis(self, x_axis, values):
+    def check_axis(self, x_axis, values, ticks):
         # given - x_axis and values
         # when
-        actual = x_axis.get_positions(x_axis.limits)
+        actual = [x for _, x in x_axis.get_ticks_with_positions()]  # discard ticks, keep position
         # then
         expect = [x for x, _ in values]
         self.assertListEqual(expect, actual)
@@ -42,6 +41,8 @@ class TestXAxisGetPositions(unittest.TestCase):
             for x, t in values
         ]
         self.assertListEqual(expect, [x.get_element_list() for x in x_axis.tick_texts])
+        expect = [t for t in ticks]
+        self.assertListEqual(expect, x_axis.get_ticks_with_positions())
 
     def test_two_dates_about_a_month(self):
         """
@@ -60,9 +61,15 @@ class TestXAxisGetPositions(unittest.TestCase):
             (66.66666666666666, "2000-01-03"),
             (100.0, "2000-01-04"),
         )
+        ticks = (
+            (date(2000, 1, 1), 0.0),
+            (date(2000, 1, 2), 33.33333333333333),
+            (date(2000, 1, 3), 66.66666666666666),
+            (date(2000, 1, 4), 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_datetimes_about_a_month(self):
         """
@@ -82,9 +89,16 @@ class TestXAxisGetPositions(unittest.TestCase):
             (75.0, "2000-01-04 11:11:00"),
             (100.0, "2000-01-05 11:11:00"),
         )
+        ticks = (
+            (datetime(2000, 1, 1, 11, 11, 0), 0.0),
+            (datetime(2000, 1, 2, 11, 11, 0), 25.0),
+            (datetime(2000, 1, 3, 11, 11, 0), 50.0),
+            (datetime(2000, 1, 4, 11, 11, 0), 75.0),
+            (datetime(2000, 1, 5, 11, 11, 0), 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_dates_decades_apart(self):
         """
@@ -111,9 +125,23 @@ class TestXAxisGetPositions(unittest.TestCase):
             (90.91361712720936, "2010-08-01"),
             (100.0, "2011-08-01"),
         )
+        ticks = (
+            (date(2000, 8, 1), 0.0),
+            (date(2001, 8, 1), 9.08638287279064),
+            (date(2002, 8, 1), 18.17276574558128),
+            (date(2003, 8, 1), 27.25914861837192),
+            (date(2004, 8, 1), 36.37042569081404),
+            (date(2005, 8, 1), 45.45680856360468),
+            (date(2006, 8, 1), 54.54319143639532),
+            (date(2007, 8, 1), 63.629574309185955),
+            (date(2008, 8, 1), 72.74085138162808),
+            (date(2009, 8, 1), 81.82723425441873),
+            (date(2010, 8, 1), 90.91361712720936),
+            (date(2011, 8, 1), 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_datetimes_decades_apart(self):
         """
@@ -140,9 +168,23 @@ class TestXAxisGetPositions(unittest.TestCase):
             (90.91361712720936, "2010-08-01 00:00:00"),
             (100.0, "2011-08-01 00:00:00"),
         )
+        ticks = (
+            (datetime(2000, 8, 1, 0, 0, 0), 0.0),
+            (datetime(2001, 8, 1, 0, 0, 0), 9.08638287279064),
+            (datetime(2002, 8, 1, 0, 0, 0), 18.17276574558128),
+            (datetime(2003, 8, 1, 0, 0, 0), 27.25914861837192),
+            (datetime(2004, 8, 1, 0, 0, 0), 36.37042569081404),
+            (datetime(2005, 8, 1, 0, 0, 0), 45.45680856360468),
+            (datetime(2006, 8, 1, 0, 0, 0), 54.54319143639532),
+            (datetime(2007, 8, 1, 0, 0, 0), 63.629574309185955),
+            (datetime(2008, 8, 1, 0, 0, 0), 72.74085138162808),
+            (datetime(2009, 8, 1, 0, 0, 0), 81.82723425441873),
+            (datetime(2010, 8, 1, 0, 0, 0), 90.91361712720936),
+            (datetime(2011, 8, 1, 0, 0, 0), 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_close_ints_few_ticks(self):
         # given
@@ -159,9 +201,15 @@ class TestXAxisGetPositions(unittest.TestCase):
             (66.66666666666666, "46"),
             (100.0, "48"),
         )
+        ticks = (
+            (42, 0.0),
+            (44, 33.33333333333333),
+            (46, 66.66666666666666),
+            (48, 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_close_ints_more_ticks(self):
         # given
@@ -181,9 +229,18 @@ class TestXAxisGetPositions(unittest.TestCase):
             (83.33333333333334, "47.0"),
             (100.0, "48.0"),
         )
+        ticks = (
+            (42.0, 0.0),
+            (43.0, 16.666666666666664),
+            (44.0, 33.33333333333333),
+            (45.0, 50.0),
+            (46.0, 66.66666666666666),
+            (47.0, 83.33333333333334),
+            (48.0, 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_close_floats_few_ticks(self):
         # given
@@ -200,9 +257,15 @@ class TestXAxisGetPositions(unittest.TestCase):
             (66.66666666666664, "3.0"),
             (100.0, "3.2"),
         )
+        ticks = (
+            (2.6, 0.0),
+            (2.8, 33.33333333333328),
+            (3.0, 66.66666666666664),
+            (3.2, 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_close_floats_more_ticks(self):
         # given
@@ -225,9 +288,21 @@ class TestXAxisGetPositions(unittest.TestCase):
             (88.88888888888891, "3.1"),
             (100.0, "3.15"),
         )
+        ticks = (
+            (2.7, 0.0),
+            (2.75, 11.111111111111079),
+            (2.8, 22.222222222222157),
+            (2.85, 33.33333333333333),
+            (2.9, 44.444444444444414),
+            (2.95, 55.55555555555559),
+            (3.0, 66.66666666666666),
+            (3.05, 77.77777777777774),
+            (3.1, 88.88888888888891),
+            (3.15, 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_far_ints_few_ticks(self):
         # given
@@ -243,9 +318,14 @@ class TestXAxisGetPositions(unittest.TestCase):
             (50.0, "500"),
             (100.0, "1000"),
         )
+        ticks = (
+            (0, 0.0),
+            (500, 50.0),
+            (1000, 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_far_ints_more_ticks(self):
         # given
@@ -266,9 +346,19 @@ class TestXAxisGetPositions(unittest.TestCase):
             (85.71428571428571, "600"),
             (100.0, "700"),
         )
+        ticks = (
+            (0, 0.0),
+            (100, 14.285714285714285),
+            (200, 28.57142857142857),
+            (300, 42.857142857142854),
+            (400, 57.14285714285714),
+            (500, 71.42857142857143),
+            (600, 85.71428571428571),
+            (700, 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_far_floats_few_ticks(self):
         # given
@@ -284,9 +374,14 @@ class TestXAxisGetPositions(unittest.TestCase):
             (50.0, "5000"),
             (100.0, "10000"),
         )
+        ticks = (
+            (0, 0.0),
+            (5000, 50.0),
+            (10000, 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
     def test_two_far_floats_more_ticks(self):
         # given
@@ -307,9 +402,19 @@ class TestXAxisGetPositions(unittest.TestCase):
             (85.71428571428571, "6000"),
             (100.0, "7000"),
         )
+        ticks = (
+            (0, 0.0),
+            (1000, 14.285714285714285),
+            (2000, 28.57142857142857),
+            (3000, 42.857142857142854),
+            (4000, 57.14285714285714),
+            (5000, 71.42857142857143),
+            (6000, 85.71428571428571),
+            (7000, 100.0),
+        )
         # when
         # then
-        self.check_axis(x_axis, values)
+        self.check_axis(x_axis, values, ticks)
 
 
 if __name__ == '__main__':

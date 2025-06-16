@@ -2,12 +2,12 @@ from datetime import datetime, date
 import unittest
 
 
-from pysvgchart.helpers import get_date_or_time_limits
+from pysvgchart.helpers import get_date_or_time_ticks
 
 
-class TestGetDateOrTimeLimits(unittest.TestCase):
+class TestGetDateOrTimeTicks(unittest.TestCase):
     """
-    test the get_date_or_time_limits() function
+    test the get_date_or_time_ticks() function
     """
 
     def setUp(self):
@@ -22,7 +22,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
         # when
         # then
         with self.assertRaises(ValueError):
-            get_date_or_time_limits(dates)
+            get_date_or_time_ticks(dates)
 
     def test_one_date(self):
         """
@@ -35,7 +35,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
         # when
         # then
         with self.assertRaises(ValueError):
-            get_date_or_time_limits(dates)
+            get_date_or_time_ticks(dates)
 
     def test_two_same_dates(self):
         """
@@ -49,7 +49,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
         # when
         # then
         with self.assertRaises(ValueError):
-            get_date_or_time_limits(dates)
+            get_date_or_time_ticks(dates)
 
     def test_two_datetimes_less_than_5_minutes(self):
         """
@@ -61,7 +61,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2000, 1, 1, 11, 14, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 1, 1, 11, 11, 0),
@@ -89,7 +89,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2000, 1, 1, 11, 42, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 1, 1, 11, 11, 0),
@@ -117,7 +117,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2000, 1, 1, 14, 14, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 1, 1, 11, 11, 0),
@@ -138,7 +138,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             date(2000, 1, 4),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             date(2000, 1, 1),
@@ -158,7 +158,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2000, 1, 4, 14, 14, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 1, 1, 11, 11, 0),
@@ -179,7 +179,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             date(2000, 1, 31),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             date(2000, 1, 1),
@@ -206,7 +206,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2000, 1, 31, 14, 14, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 1, 1, 0, 0, 0),
@@ -224,7 +224,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             date(2001, 1, 24),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             date(2000, 12, 1),
@@ -243,7 +243,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2001, 1, 24, 14, 14, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 12, 1, 0, 0, 0),
@@ -262,7 +262,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             date(2001, 1, 24),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             date(2000, 11, 1),
@@ -282,7 +282,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2001, 2, 24, 14, 14, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 12, 1, 0, 0, 0),
@@ -302,7 +302,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             date(2001, 2, 24),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             date(2000, 10, 1),
@@ -324,7 +324,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2001, 2, 24, 14, 14, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 10, 1, 0, 0, 0),
@@ -346,7 +346,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             date(2001, 4, 24),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             date(2000, 8, 1),
@@ -372,7 +372,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2001, 4, 24, 14, 14, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 8, 1, 0, 0, 0),
@@ -398,7 +398,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             date(2011, 4, 24),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             date(2000, 8, 1),
@@ -426,7 +426,7 @@ class TestGetDateOrTimeLimits(unittest.TestCase):
             datetime(2011, 4, 24, 14, 14, 14),
         ]
         # when
-        actual = get_date_or_time_limits(dates)
+        actual = get_date_or_time_ticks(dates)
         # then
         expect = [
             datetime(2000, 8, 1, 0, 0, 0),
