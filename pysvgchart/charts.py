@@ -701,95 +701,37 @@ class DonutChart(Chart):
 
 class LogarithmicChart(LineChart):
 
-    def __init__(
-        self,
-        # chart data
-        x_values,
-        y_values,
-        y_names=None,
-        # x-axis
-        x_min=None,
-        x_max=None,
-        x_zero=False,
-        x_max_ticks=12,
-        x_shift=False,
-        x_label_format=default_format,
-        x_log=False,
-        # primary y-axis
-        y_min=None,
-        y_max=None,
-        y_zero=False,
-        y_max_ticks=12,
-        y_shift=False,
-        y_label_format=default_format,
-        y_log=False,
-        # canvas
-        left_margin=100,
-        right_margin=100,
-        y_margin=100,
-        height=600,
-        width=800,
-        bar_width=40,
-        bar_gap=2,
-        colours: list[str] | tuple[str, ...] | None = None,
-    ):
+    def __init__(self, *args, **kwargs):
         """
-        create a simple line chart
-        :param x_values: the list of x values shared by all lines
-        :param y_values: a list line values for the primary y-axis, each a list itself
-        :param y_names: optional list of names of the lines of the primary y-axis
-        :param x_min: optional minimum x value, only used in numeric axis
-        :param x_max: optional maximum x value, only used in numeric axis
-        :param x_zero: optionally force 0 to be included on the x-axis
-        :param x_max_ticks: optional maximum number of ticks on the x-axis
-        :param x_shift: optionally shift the x-axis - True: left side of graph touches the y-axis, value: shift graph left by that amount
-        :param x_label_format: optional format of labels on the x-axis
+        create a line chart with a logarithmic scale
         :param x_log: optionally enable logarithmic scale
-        :param y_min: optional minimum value on the primary y-axis if it is numeric
-        :param y_max: optional maximum value on the primary y-axis if is is numeric
-        :param y_zero: optionally force 0 to be included on the primary y-axis
-        :param y_max_ticks: optional maximum number of ticks on the primary y-axis
-        :param y_shift: optionally shift the y-axis - True: bottom side of graph touches the x-axis, value: shift graph down by that amount
-        :param y_label_format: optional format of labels on the primary y-axis
         :param y_log: optionally enable logarithmic scale
-        :param left_margin: optional left margin for the x-axis
-        :param right_margin: optional right margin for the x-axis
-        :param y_margin: optional margin for the y-axis
-        :param height: optional height of the graph
-        :param width: optional width of the graph
-        :param colours: optional list of colours for the series
         """
+        x_log = kwargs.pop("x_log", False)
+        y_log = kwargs.pop("y_log", False)
         if not x_log and not y_log:
             raise ValueError("use another chart class if you don't want to use a logarithmic scale")
         if x_log:
             self.x_axis_scale_maker = staticmethod(make_logarithmic_scale)
         if y_log:
             self.y_axis_scale_maker = staticmethod(make_logarithmic_scale)
-        super().__init__(
-            x_values,
-            y_values,
-            y_names=y_names,
-            # x-axis
-            x_min=x_min,
-            x_max=x_max,
-            x_zero=x_zero,
-            x_max_ticks=x_max_ticks,
-            x_shift=x_shift,
-            x_label_format=x_label_format,
-            # primary y-axis
-            y_min=y_min,
-            y_max=y_max,
-            y_zero=y_zero,
-            y_max_ticks=y_max_ticks,
-            y_shift=y_shift,
-            y_label_format=y_label_format,
-            # canvas
-            left_margin=left_margin,
-            right_margin=right_margin,
-            y_margin=y_margin,
-            height=height,
-            width=width,
-            bar_width=bar_width,
-            bar_gap=bar_gap,
-            colours=colours,
-        )
+        super().__init__(*args, **kwargs)
+
+
+class LogarithmicScatterChart(ScatterChart):
+
+    def __init__(self, *args, **kwargs):
+        """
+        create a scatter chart with a logarithmic scale
+        :param x_log: optionally enable logarithmic scale
+        :param y_log: optionally enable logarithmic scale
+        """
+        x_log = kwargs.pop("x_log", False)
+        y_log = kwargs.pop("y_log", False)
+        if not x_log and not y_log:
+            raise ValueError("use another chart class if you don't want to use a logarithmic scale")
+        if x_log:
+            self.x_axis_scale_maker = staticmethod(make_logarithmic_scale)
+        if y_log:
+            self.y_axis_scale_maker = staticmethod(make_logarithmic_scale)
+        super().__init__(*args, **kwargs)

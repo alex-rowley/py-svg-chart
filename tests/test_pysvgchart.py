@@ -300,3 +300,27 @@ def test_scatter_chart_without_shift():
 def test_scatter_chart_xy_shift():
     chart = scatter_chart(x_shift=True, y_shift=True)
     write_out(chart.render(), name="scatter-xy-shift.svg")
+
+
+def logarithmic_scatter_chart(x_log=False, y_log=False):
+    init_scatter_chart_data()
+    x_values = SCATTER_CHART_DATA["x_values"]
+    y_values = SCATTER_CHART_DATA["y_values"]
+    chart = psc.LogarithmicScatterChart(x_values=x_values, y_values=y_values, y_names=["A", "B"], x_log=x_log, y_log=y_log)
+    chart.add_legend()
+    return chart
+
+
+def test_scatter_chart_x_log():
+    chart = logarithmic_scatter_chart(x_log=True, y_log=False)
+    write_out(chart.render(), name="scatter-x-log.svg")
+
+
+def test_scatter_chart_y_log():
+    chart = logarithmic_scatter_chart(x_log=False, y_log=True)
+    write_out(chart.render(), name="scatter-y-log.svg")
+
+
+def test_scatter_chart_xy_log():
+    chart = logarithmic_scatter_chart(x_log=True, y_log=True)
+    write_out(chart.render(), name="scatter-xy-log.svg")

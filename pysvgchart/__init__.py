@@ -9,6 +9,7 @@ from .charts import (
     DonutChart,
     LineChart,
     LogarithmicChart,
+    LogarithmicScatterChart,
     NormalisedBarChart,
     ScatterChart,
     SimpleLineChart,
