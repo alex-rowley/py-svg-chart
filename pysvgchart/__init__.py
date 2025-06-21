@@ -5,19 +5,19 @@ __email__ = ""
 __version__ = "0.4.0"
 
 from .charts import (
-    LineChart,
-    SimpleLineChart,
-    DonutChart,
     BarChart,
+    DonutChart,
+    LineChart,
     NormalisedBarChart,
     ScatterChart,
+    SimpleLineChart,
 )
 from .shapes import (
-    Text,
-    Line,
     Circle,
+    Line,
+    Text,
 )
 from .styles import (
-    render_all_styles,
     hover_style_name,
+    render_all_styles,
 )
