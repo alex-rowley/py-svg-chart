@@ -5,7 +5,13 @@ from collections.abc import Iterable
 from datetime import datetime, date, timedelta
 from typing import Any
 
-from .helpers import get_numeric_ticks, get_date_or_time_ticks
+import math
+
+from .helpers import (
+    get_date_or_time_ticks,
+    get_logarithmic_ticks,
+    get_numeric_ticks,
+)
 
 
 class Scale(ABC):
@@ -72,6 +78,42 @@ class LinearScale(Scale):
 
     def value_to_fraction(self, value: date | datetime | float | int) -> float:
         fraction = (value - self.lo) / self.size
+        return fraction - self.shift if self.shift else fraction
+
+
+class LogarithmicScale(Scale):
+    log_lo: float | int
+    log_hi: float | int
+    size: float | int
+
+    def __init__(self, ticks, shift=False):
+        if all(isinstance(tick, float | int) for tick in ticks):
+            pass
+        else:
+            raise TypeError("LinearRange only supports date, datetime, float/int values")
+        super().__init__(ticks)
+        self.log_lo = math.log10(min(ticks))
+        self.log_hi = math.log10(max(ticks))
+        self.size = self.log_hi - self.log_lo
+        if shift is False:
+            self.shift = None
+        elif isinstance(self.log_lo, float | int) and isinstance(shift, float | int):
+            self.shift = (math.log10(shift) - self.log_lo) / self.size
+        else:
+            self.shift = None
+
+    def __str__(self):
+        return f"[{self.log_lo}...{self.log_hi}] {self.shift if self.shift else '(no shift)'}"
+
+    def __repr__(self):
+        return f"<{self.__class__.__name__} log_lo={self.log_lo} log_hi={self.log_hi} size={self.size} shift={self.shift}>"
+
+    def get_lowest(self) -> date | datetime | float | int:
+        return self.log_lo
+
+    def value_to_fraction(self, value: date | datetime | float | int) -> float:
+        fraction = (math.log10(value) - self.log_lo) / self.size
+        print(f"DBG {value=} {math.log10(value)=} {fraction=}")
         return fraction - self.shift if self.shift else fraction
 
 
@@ -174,4 +216,31 @@ def make_categories_scale(
     :param min_unique_values: minimum number of unique values required
     """
     _ignore = max_ticks, min_value, max_value, include_zero, shift, min_unique_values
+    return MappingScale(list(values))
+
+
+def make_logarithmic_scale(
+    values,
+    max_ticks,
+    min_value=None,
+    max_value=None,
+    include_zero=False,
+    shift=False,
+    min_unique_values=2,
+) -> Scale:
+    if values is None or not isinstance(values, Iterable) or len(set(values)) < min_unique_values:
+        raise ValueError(
+            "Values must be a non-empty iterable with at least %d unique elements.",
+            min_unique_values,
+        )
+    if all(isinstance(value, int | float) for value in values):
+        ticks = get_logarithmic_ticks(
+            values,
+            max_ticks,
+            min_value=min_value,
+            max_value=max_value,
+            include_zero=include_zero,
+        )
+        return LogarithmicScale(ticks, shift=min(values) if shift is True else shift)
+    # mixed value types or value type for which there's no ticks creator
     return MappingScale(list(values))
