@@ -41,7 +41,7 @@ def get_numeric_ticks(
     min_value=None,
     max_value=None,
     include_zero=False,
-):
+) -> list[float | int]:
     """
     compute ticks for a series of numbers
     :param values: actual values
@@ -82,12 +82,52 @@ def get_numeric_ticks(
     return [round(y * pad, 10) for y in range(int(start), int(end + 1))]
 
 
+def get_logarithmic_ticks(
+    values,
+    max_ticks,
+    min_value=None,
+    max_value=None,
+    include_zero=False,
+) -> list[float | int]:
+    """
+    compute logarithmic ticks for a series of numbers
+    :param values: actual values
+    :param max_ticks: maximum number of ticks
+    :param min_value: optional minimum value to include in ticks
+    :param max_value: optional maximum value to include in ticks
+    :param include_zero: whether to include zero in ticks
+    """
+    value_min, value_max = min(values), max(values)
+    if min_value is not None:
+        value_min = min(value_min, min_value)
+    if max_value is not None:
+        value_max = max(value_max, max_value)
+    if include_zero:
+        if value_min > 0:
+            value_min = 0
+        if value_max < 0:
+            value_max = 0
+
+    if value_max == value_min:
+        raise ValueError("All values are the same — cannot compute min/max.")
+
+    start = math.floor(math.log10(value_min))
+    end = math.ceil(math.log10(value_max)) + 1  # optimization, as we only need end+1
+    step = 1
+    while (end - start) // step > max_ticks:
+        step *= 2
+    if 10 ** ((end - start) // step) < value_max:
+        end += 1
+        step += 1
+    return [10 ** y for y in range(int(start), int(end), int(step))]
+
+
 def get_date_or_time_ticks(
     dates,
     max_ticks=10,
     min_value=None,
     max_value=None,
-):
+) -> list[dt.date | dt.datetime]:
     """
     compute ticks for a series of dates/datetimes
     :param dates: actual dates/datetimes
