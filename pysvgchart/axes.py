@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import abstractmethod
-from typing import Any
+from typing import Any, Callable
 
 from .helpers import collapse_element_list
 from .scales import make_linear_scale
@@ -21,9 +21,9 @@ class Axis(Shape):
         y_position: number,
         data_points,
         axis_length: number,
-        label_format: str,
+        label_format: Callable,
         max_ticks: int = 10,
-        axis_styles: dict[str, str] | None = None,
+        axis_styles: dict[str, dict[str, str]] | None = None,
         tick_length: int = 5,
         min_value=None,
         max_value=None,
@@ -48,7 +48,9 @@ class Axis(Shape):
         )
         self.label_format = label_format
         self.axis_line = None
-        self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
+        self.tick_lines: list[Line] = []
+        self.tick_texts: list[Text] = []
+        self.grid_lines: list[Line] = []
 
     def get_element_list(self):
         return collapse_element_list(

@@ -20,8 +20,8 @@ class Element(ABC):
     abstract base class for all visual elements
     """
 
-    __default_classes__ = []
-    __default_styles__ = dict()
+    __default_classes__: list[str] = []
+    __default_styles__: dict[str, str] = {}
 
     def __init__(
         self,

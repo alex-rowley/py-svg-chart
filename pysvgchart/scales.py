@@ -68,15 +68,15 @@ class MappedLinearScale(Scale):
         super().__init__(ticks)
         self.lo = self.map_value(min(ticks))
         self.hi = self.map_value(max(ticks))
-        self.size = self.hi - self.lo
+        self.size = self.hi - self.lo  # type: ignore[operator]
         if shift is False:
             self.shift = None
         elif isinstance(self.lo, date) and isinstance(shift, date):
-            self.shift = (self.map_value(shift) - self.lo) / self.size
+            self.shift = (self.map_value(shift) - self.lo) / self.size  # type: ignore[operator]
         elif isinstance(self.lo, datetime) and isinstance(shift, datetime):
-            self.shift = (self.map_value(shift) - self.lo) / self.size
+            self.shift = (self.map_value(shift) - self.lo) / self.size  # type: ignore[operator]
         elif isinstance(self.lo, number) and isinstance(shift, number):
-            self.shift = (self.map_value(shift) - self.lo) / self.size
+            self.shift = (self.map_value(shift) - self.lo) / self.size  # type: ignore[operator]
         else:
             self.shift = None
 
@@ -90,8 +90,8 @@ class MappedLinearScale(Scale):
         return self.lo
 
     def value_to_fraction(self, value: date | datetime | number) -> float:
-        fraction = (self.map_value(value) - self.lo) / self.size
-        return fraction - self.shift if self.shift else fraction
+        fraction = (self.map_value(value) - self.lo) / self.size  # type: ignore[operator]
+        return fraction - self.shift if self.shift else fraction  # type: ignore[operator, return-value]
 
     @staticmethod
     @abstractmethod
@@ -126,7 +126,7 @@ class LogarithmicScale(MappedLinearScale):
         super().__init__(ticks, shift)
 
     @staticmethod
-    def map_value(value: number) -> number:
+    def map_value(value: number) -> number:  # type: ignore[override]
         """
         values unchanged in mapping
         """
@@ -241,28 +241,29 @@ def make_linear_scale(
             min_unique_values,
         )
     # value types for which there is a ticks creator
+    ticks : dates_sequence | datetimes_sequence | numbers_sequence
     if all(isinstance(value, date) for value in values):
         ticks = get_date_or_time_ticks(
-            values,
+            values,  # type: ignore[arg-type]
             max_ticks,
-            min_value=min_value,
-            max_value=max_value,
+            min_value=min_value,  # type: ignore[arg-type]
+            max_value=max_value,  # type: ignore[arg-type]
         )
         return LinearScale(ticks, shift=min(values) if shift is True else shift)
     if all(isinstance(value, datetime) for value in values):
         ticks = get_date_or_time_ticks(
-            values,
+            values,  # type: ignore[arg-type]
             max_ticks,
-            min_value=min_value,
-            max_value=max_value,
+            min_value=min_value,  # type: ignore[arg-type]
+            max_value=max_value,  # type: ignore[arg-type]
         )
         return LinearScale(ticks, shift=min(values) if shift is True else shift)
     if all(isinstance(value, int | float) for value in values):
         ticks = get_numeric_ticks(
-            values,
+            values,  # type: ignore[arg-type]
             max_ticks,
-            min_value=min_value,
-            max_value=max_value,
+            min_value=min_value,  # type: ignore[arg-type]
+            max_value=max_value,  # type: ignore[arg-type]
             include_zero=include_zero,
         )
         return LinearScale(ticks, shift=min(values) if shift is True else shift)

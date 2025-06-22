@@ -5,7 +5,7 @@ from typing import Any
 
 from .axes import Axis, XAxis, YAxis
 from .helpers import collapse_element_list, default_format
-from .legends import LineLegend, BarLegend, ScatterLegend
+from .legends import Legend, LineLegend, BarLegend, ScatterLegend
 from .scales import make_categories_scale, make_logarithmic_scale, make_linear_scale
 from .series import DonutSegment, LineSeries, BarSeries, ScatterSeries, Series
 from .shapes import Point, Line, Group, Circle
@@ -47,7 +47,7 @@ def line_series_constructor(
     return {
         name: LineSeries(
             points=[
-                Point(x=x, y=y)
+                Point(x=x, y=y)  # type: ignore[arg-type]
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
@@ -76,7 +76,7 @@ def bar_series_constructor(
     return {
         name: BarSeries(
             points=[
-                Point(x=x + bar_nr * bar_span - bar_shift, y=y)
+                Point(x=x + bar_nr * bar_span - bar_shift, y=y)  # type: ignore[arg-type, operator]
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
@@ -107,7 +107,7 @@ def normalised_bar_series_constructor(
         raise ValueError("y_values and series_names must have the same length")
     if not all(len(y_value) == len(x_values) for y_value in y_values):
         raise ValueError("y_values must all have the same length as x_values")
-    rtn = dict()
+    rtn: dict[str, Series] = {}
     prev_cumulative_scaled_y_values = [0] * len(y_values[0])
     total_values = [sum(y) for y in zip(*y_values)]
     x_positions = x_axis.get_positions(x_values)
@@ -119,10 +119,10 @@ def normalised_bar_series_constructor(
         prev_scaled_positions = y_axis.get_positions(prev_cumulative_scaled_y_values)
         scaled_positions = y_axis.get_positions(cumulative_scaled_y_values)
         rtn[name] = BarSeries(
-            points=[Point(x=x, y=y) for x, y in zip(x_positions, scaled_positions)],
+            points=[Point(x=x, y=y) for x, y in zip(x_positions, scaled_positions)],  # type: ignore[arg-type]
             x_values=x_values,
             y_values=y_value,
-            bar_heights=[b - a for a, b in zip(scaled_positions, prev_scaled_positions)],
+            bar_heights=[b - a for a, b in zip(scaled_positions, prev_scaled_positions)],  # type: ignore[operator]
             bar_width=bar_width,
         )
         prev_cumulative_scaled_y_values = cumulative_scaled_y_values
@@ -146,7 +146,7 @@ def scatter_series_constructor(
     return {
         name: ScatterSeries(
             points=[
-                Point(x=x, y=y)
+                Point(x=x, y=y)  # type: ignore[arg-type]
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
@@ -176,8 +176,8 @@ class Chart(ABC):
     def __init__(self, height: number, width: number) -> None:
         self.height = height
         self.width = width
-        self.custom_elements = []
-        self.series = []
+        self.custom_elements: list[str] = []
+        self.series: dict[str, Series] = {}
 
     @abstractmethod
     def get_element_list(self): ...
@@ -186,7 +186,7 @@ class Chart(ABC):
         self.custom_elements.append(custom_element)
 
     def modify_series(self, modifier: Callable) -> None:
-        self.series = [modifier(s) for s in self.series]
+        self.series = {name: modifier(series) for name, series in self.series.items()}
 
     def render(self) -> str:
         return "\n".join(
@@ -199,7 +199,7 @@ class Chart(ABC):
 
     def render_with_all_styles(
         self,
-        styles: dict[str, str] | None = None,
+        styles: dict[str, dict[str, str]] | None = None,
         include_default: bool = True,
     ) -> str:
         """
@@ -207,6 +207,14 @@ class Chart(ABC):
         :param include_default: also use the default styles (to enable things like hover text)
         :return:
         """
+        if styles is None:
+            return "\n".join(
+                [
+                    self.svg_begin_template.format(height=self.height, width=self.width),
+                    *self.get_element_list(),
+                    "</svg>",
+                ]
+            )
         return "\n".join(
             [
                 self.svg_begin_template.format(height=self.height, width=self.width),
@@ -222,7 +230,7 @@ class Chart(ABC):
     def generate_series_names(
         prefix: str,
         n: int,
-        names: list[str | None] | tuple[str | None, ...] | None,
+        names: list[str] | tuple[str, ...] | None,
     ) -> list[str]:
         """
         generate missing names for series
@@ -274,21 +282,21 @@ class VerticalChart(Chart):
         x_zero: bool = False,
         x_max_ticks: int = 12,
         x_shift: bool = False,
-        x_label_format: str = default_format,
+        x_label_format: Callable = default_format,
         # primary y-axis
         y_min: Any = None,
         y_max: Any = None,
         y_zero: bool = False,
         y_max_ticks: int = 12,
         y_shift: bool = False,
-        y_label_format: str = default_format,
+        y_label_format: Callable = default_format,
         # secondary y-axis
         sec_y_min: Any = None,
         sec_y_max: Any = None,
         sec_y_zero: bool = False,
         sec_y_max_ticks: int = 12,
         sec_y_shift: bool = False,
-        sec_y_label_format: str = default_format,
+        sec_y_label_format: Callable = default_format,
         # canvas
         left_margin: number = 100,
         right_margin: number = 100,
@@ -332,7 +340,7 @@ class VerticalChart(Chart):
         :param colours: optional list of colours for the series
         """
         super().__init__(height, width)
-        self.x_axis = self.x_axis_type(
+        self.x_axis = self.x_axis_type(  # type: ignore[abstract]
             x_position=left_margin,
             y_position=height - y_margin,
             data_points=self.x_range_constructor(x_values),
@@ -345,7 +353,7 @@ class VerticalChart(Chart):
             shift=x_shift,
             scale_maker=self.x_axis_scale_maker,
         )
-        self.y_axis = self.y_axis_type(
+        self.y_axis = self.y_axis_type(  # type: ignore[abstract]
             x_position=left_margin,
             y_position=y_margin,
             data_points=self.y_range_constructor(y_values),
@@ -378,7 +386,7 @@ class VerticalChart(Chart):
                 len(sec_y_values),
                 sec_y_names,
             )
-            self.sec_y_axis = self.y_axis_type(
+            self.sec_y_axis = self.y_axis_type(  # type: ignore[abstract]
                 x_position=width - right_margin,
                 y_position=y_margin,
                 data_points=default_y_range_constructor(sec_y_values),
@@ -403,7 +411,7 @@ class VerticalChart(Chart):
                     bar_gap,
                 )
             )
-        self.legend = None
+        self.legend: Legend | None = None
         self.set_palette(colours if colours else self.__colour_defaults__)
 
     def set_palette(self, colours: list[str] | tuple[str, ...]) -> None:
@@ -544,8 +552,8 @@ class VerticalChart(Chart):
 
 
 class LineChart(VerticalChart):
-    x_axis_type = XAxis
-    y_axis_type = YAxis
+    x_axis_type = XAxis  # type: ignore[assignment]
+    y_axis_type = YAxis  # type: ignore[assignment]
     series_constructor = staticmethod(line_series_constructor)
 
     def __init__(self, *args, **kwargs):
@@ -577,7 +585,7 @@ class BarChart(LineChart):
     series_constructor = staticmethod(bar_series_constructor)
     colour_property = "fill"
 
-    def add_legend(
+    def add_legend(  # type: ignore[override]
         self,
         x_position: number = 730,
         y_position: number = 200,
@@ -609,7 +617,7 @@ class NormalisedBarChart(LineChart):
     y_range_constructor = staticmethod(lambda y_values: [0, 1])
     colour_property = "fill"
 
-    def add_legend(
+    def add_legend(  # type: ignore[override]
         self,
         x_position: number = 730,
         y_position: number = 200,
@@ -638,7 +646,7 @@ class ScatterChart(LineChart):
     series_constructor = staticmethod(scatter_series_constructor)
     colour_property = "fill"
 
-    def add_legend(
+    def add_legend(  # type: ignore[override]
         self,
         x_position: number = 730,
         y_position: number = 200,
@@ -689,11 +697,11 @@ class DonutChart(Chart):
         :param rotation: rotation offset
         """
         super().__init__(height, width)
-        self.series = dict()
+        self.series: dict[str, Any] = dict()
         self.values = values
         series_names = self.generate_series_names("Series", len(values), labels)
         # compute start and end angles for the value segments
-        accumulated_values = [0]
+        accumulated_values: list[number] = [0]
         for value in values:
             accumulated_values.append(value + accumulated_values[-1])
         total_value = accumulated_values[-1]

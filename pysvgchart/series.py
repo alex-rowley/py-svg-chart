@@ -13,6 +13,10 @@ class Series(Shape):
         super().__init__(x=x_position, y=y_position, styles=styles, classes=classes)
         self.custom_elements = []
 
+    @property
+    def pv_generator(self):
+        return []
+
     def add_custom_elements(self, custom_elements):
         self.custom_elements.extend(custom_elements)
 
@@ -220,7 +224,7 @@ class ScatterSeries(Series):
     scatter series given as a number of (x, y)-points
     """
 
-    __default_styles__ = {}
+    __default_styles__: dict[str, str] = {}
     __default_shape_template__ = staticmethod(default_scatter_shape_template)
 
     def __init__(self, points, x_values, y_values, shape_template=None, styles=None, classes=None):
