@@ -24,11 +24,17 @@ def render_style_dict(style_dict: dict) -> str:
     """.strip()
 
 
-def optionally_merge_styles_to_default(styles, include_default):
+def optionally_merge_styles_to_default(
+    styles: dict[str, str] | None = None,
+    include_default: bool = True,
+):
     return {**styles, **default_styles} if include_default else styles
 
 
-def render_all_styles(styles=None, include_default=True):
+def render_all_styles(
+    styles: dict[str, str] | None = None,
+    include_default: bool = True,
+):
     rendered_styles = (
         default_styles.copy()
         if styles is None

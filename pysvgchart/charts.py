@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
+from collections.abc import Callable
 from itertools import zip_longest, cycle
+from typing import Any
 
 from .axes import Axis, XAxis, YAxis
 from .helpers import collapse_element_list, default_format
@@ -7,17 +9,18 @@ from .legends import LineLegend, BarLegend, ScatterLegend
 from .scales import make_categories_scale, make_logarithmic_scale, make_linear_scale
 from .series import DonutSegment, LineSeries, BarSeries, ScatterSeries, Series
 from .shapes import Point, Line, Group, Circle
+from .shared import number, numbers_sequence
 from .styles import render_all_styles
 
 
 def no_series_constructor(
-    x_values,
-    y_values,
-    x_axis,
-    y_axis,
-    series_names,
-    bar_width,
-    bar_gap,
+    x_values: list | tuple,
+    y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+    x_axis: Axis,
+    y_axis: Axis,
+    series_names: list[str],
+    bar_width: number,
+    bar_gap: number,
 ) -> dict[str, Series]:
     _ignore = x_axis, y_axis, bar_width, bar_gap
     if len(y_values) != len(series_names):
@@ -28,13 +31,13 @@ def no_series_constructor(
 
 
 def line_series_constructor(
-    x_values,
-    y_values,
-    x_axis,
-    y_axis,
-    series_names,
-    bar_width,
-    bar_gap,
+    x_values: list | tuple,
+    y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+    x_axis: Axis,
+    y_axis: Axis,
+    series_names: list[str],
+    bar_width: number,
+    bar_gap: number,
 ) -> dict[str, Series]:
     _ignore = bar_width, bar_gap
     if len(y_values) != len(series_names):
@@ -55,13 +58,13 @@ def line_series_constructor(
 
 
 def bar_series_constructor(
-    x_values,
-    y_values,
-    x_axis,
-    y_axis,
-    series_names,
-    bar_width,
-    bar_gap,
+    x_values: list | tuple,
+    y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+    x_axis: Axis,
+    y_axis: Axis,
+    series_names: list[str],
+    bar_width: number,
+    bar_gap: number,
 ) -> dict[str, Series]:
     if len(y_values) != len(series_names):
         raise ValueError("y_values and series_names must have the same length")
@@ -89,13 +92,13 @@ def bar_series_constructor(
 
 
 def normalised_bar_series_constructor(
-    x_values,
-    y_values,
-    x_axis,
-    y_axis,
-    series_names,
-    bar_width,
-    bar_gap,
+    x_values: list | tuple,
+    y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+    x_axis: Axis,
+    y_axis: Axis,
+    series_names: list[str],
+    bar_width: number,
+    bar_gap: number,
 ) -> dict[str, Series]:
     _ignore = bar_gap
     if len(y_values) < 1:
@@ -127,13 +130,13 @@ def normalised_bar_series_constructor(
 
 
 def scatter_series_constructor(
-    x_values,
-    y_values,
-    x_axis,
-    y_axis,
-    series_names,
-    bar_width,
-    bar_gap,
+    x_values: list | tuple,
+    y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+    x_axis: Axis,
+    y_axis: Axis,
+    series_names: list[str],
+    bar_width: number,
+    bar_gap: number,
 ) -> dict[str, Series]:
     _ignore = bar_width, bar_gap
     if len(y_values) != len(series_names):
@@ -153,11 +156,13 @@ def scatter_series_constructor(
     }
 
 
-def default_x_range_constructor(x_values) -> list:
+def default_x_range_constructor(x_values: list | tuple) -> list:
     return [v for v in x_values]
 
 
-def default_y_range_constructor(y_values) -> list:
+def default_y_range_constructor(
+    y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+) -> list:
     return [v for series in y_values for v in series]
 
 
@@ -168,7 +173,7 @@ class Chart(ABC):
 
     svg_begin_template = '<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">'
 
-    def __init__(self, height, width):
+    def __init__(self, height: number, width: number) -> None:
         self.height = height
         self.width = width
         self.custom_elements = []
@@ -177,13 +182,13 @@ class Chart(ABC):
     @abstractmethod
     def get_element_list(self): ...
 
-    def add_custom_element(self, custom_element):
+    def add_custom_element(self, custom_element) -> None:
         self.custom_elements.append(custom_element)
 
-    def modify_series(self, modifier):
+    def modify_series(self, modifier: Callable) -> None:
         self.series = [modifier(s) for s in self.series]
 
-    def render(self):
+    def render(self) -> str:
         return "\n".join(
             [
                 self.svg_begin_template.format(height=self.height, width=self.width),
@@ -192,7 +197,11 @@ class Chart(ABC):
             ]
         )
 
-    def render_with_all_styles(self, styles=None, include_default=True):
+    def render_with_all_styles(
+        self,
+        styles: dict[str, str] | None = None,
+        include_default: bool = True,
+    ) -> str:
         """
         :param styles: list of styles to use
         :param include_default: also use the default styles (to enable things like hover text)
@@ -254,40 +263,40 @@ class VerticalChart(Chart):
     def __init__(
         self,
         # chart data
-        x_values,
-        y_values,
-        sec_y_values=None,
-        y_names=None,
-        sec_y_names=None,
+        x_values: list | tuple,
+        y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+        sec_y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...] | None = None,
+        y_names: list[str] | None = None,
+        sec_y_names: list[str] | None = None,
         # x-axis
-        x_min=None,
-        x_max=None,
-        x_zero=False,
-        x_max_ticks=12,
-        x_shift=False,
-        x_label_format=default_format,
+        x_min: Any = None,
+        x_max: Any = None,
+        x_zero: bool = False,
+        x_max_ticks: int = 12,
+        x_shift: bool = False,
+        x_label_format: str = default_format,
         # primary y-axis
-        y_min=None,
-        y_max=None,
-        y_zero=False,
-        y_max_ticks=12,
-        y_shift=False,
-        y_label_format=default_format,
+        y_min: Any = None,
+        y_max: Any = None,
+        y_zero: bool = False,
+        y_max_ticks: int = 12,
+        y_shift: bool = False,
+        y_label_format: str = default_format,
         # secondary y-axis
-        sec_y_min=None,
-        sec_y_max=None,
-        sec_y_zero=False,
-        sec_y_max_ticks=12,
-        sec_y_shift=False,
-        sec_y_label_format=default_format,
+        sec_y_min: Any = None,
+        sec_y_max: Any = None,
+        sec_y_zero: bool = False,
+        sec_y_max_ticks: int = 12,
+        sec_y_shift: bool = False,
+        sec_y_label_format: str = default_format,
         # canvas
-        left_margin=100,
-        right_margin=100,
-        y_margin=100,
-        height=600,
-        width=800,
-        bar_width=40,
-        bar_gap=2,
+        left_margin: number = 100,
+        right_margin: number = 100,
+        y_margin: number = 100,
+        height: number = 600,
+        width: number = 800,
+        bar_width: number = 40,
+        bar_gap: number = 2,
         colours: list[str] | tuple[str, ...] | None = None,
     ):
         """
@@ -403,12 +412,12 @@ class VerticalChart(Chart):
 
     def add_legend(
         self,
-        x_position=730,
-        y_position=200,
-        element_x=0,
-        element_y=20,
-        line_length=20,
-        line_text_gap=5,
+        x_position: number = 730,
+        y_position: number = 200,
+        element_x: number = 0,
+        element_y: number = 20,
+        line_length: number = 20,
+        line_text_gap: number = 5,
         **kwargs,
     ):
         self.legend = LineLegend(
@@ -423,15 +432,20 @@ class VerticalChart(Chart):
 
     def add_grids(
         self,
-        minor_x_ticks=0,
-        minor_y_ticks=0,
-        major_grid_style=None,
-        minor_grid_style=None,
+        minor_x_ticks: int = 0,
+        minor_y_ticks: int = 0,
+        major_grid_style: dict[str, str] | None = None,
+        minor_grid_style: dict[str, str] | None = None,
     ):
         self.add_y_grid(minor_y_ticks, major_grid_style, minor_grid_style)
         self.add_x_grid(minor_x_ticks, major_grid_style, minor_grid_style)
 
-    def add_y_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
+    def add_y_grid(
+        self,
+        minor_ticks: int = 0,
+        major_grid_style: dict[str, str] | None = None,
+        minor_grid_style: dict[str, str] | None = None,
+    ):
         major_style = (
             major_grid_style.copy()
             if major_grid_style is not None
@@ -458,7 +472,12 @@ class VerticalChart(Chart):
                     )
                 )
 
-    def add_x_grid(self, minor_ticks=0, major_grid_style=None, minor_grid_style=None):
+    def add_x_grid(
+        self,
+        minor_ticks: int = 0,
+        major_grid_style: dict[str, str] | None = None,
+        minor_grid_style: dict[str, str] | None = None,
+    ):
         major_style = (
             major_grid_style.copy()
             if major_grid_style is not None
@@ -485,7 +504,12 @@ class VerticalChart(Chart):
                     )
                 )
 
-    def add_hover_modifier(self, modifier, radius, series_list=None):
+    def add_hover_modifier(
+        self,
+        modifier: Callable,
+        radius: number,
+        series_list: list[str] | tuple[str, ...] | None = None,
+    ):
         def build_hover_marker(point, x_value, y_value, series_name):
             series_styles = self.series[series_name].styles
             circle = Circle(point.x, y=point.y, radius=radius, styles={"style": "opacity:0;"})
@@ -508,7 +532,7 @@ class VerticalChart(Chart):
                 ]
                 self.series[s].add_custom_elements(hover_markers)
 
-    def get_element_list(self):
+    def get_element_list(self) -> list[str]:
         return collapse_element_list(
             [self.x_axis],
             [self.y_axis],
@@ -555,13 +579,13 @@ class BarChart(LineChart):
 
     def add_legend(
         self,
-        x_position=730,
-        y_position=200,
-        element_x=0,
-        element_y=20,
-        bar_width=30,
-        bar_height=5,
-        bar_text_gap=5,
+        x_position: number = 730,
+        y_position: number = 200,
+        element_x: number = 0,
+        element_y: number = 20,
+        bar_width: number = 30,
+        bar_height: number = 5,
+        bar_text_gap: number = 5,
         **kwargs,
     ):
         self.legend = BarLegend(
@@ -587,13 +611,13 @@ class NormalisedBarChart(LineChart):
 
     def add_legend(
         self,
-        x_position=730,
-        y_position=200,
-        element_x=0,
-        element_y=20,
-        bar_width=30,
-        bar_height=5,
-        bar_text_gap=5,
+        x_position: number = 730,
+        y_position: number = 200,
+        element_x: number = 0,
+        element_y: number = 20,
+        bar_width: number = 30,
+        bar_height: number = 5,
+        bar_text_gap: number = 5,
         **kwargs,
     ):
         self.legend = BarLegend(
@@ -616,11 +640,11 @@ class ScatterChart(LineChart):
 
     def add_legend(
         self,
-        x_position=730,
-        y_position=200,
-        element_x=0,
-        element_y=20,
-        shape_text_gap=5,
+        x_position: number = 730,
+        y_position: number = 200,
+        element_x: number = 0,
+        element_y: number = 20,
+        shape_text_gap: number = 5,
         **kwargs,
     ):
         self.legend = ScatterLegend(
@@ -642,15 +666,15 @@ class DonutChart(Chart):
 
     def __init__(
         self,
-        values,
-        labels=None,
-        height=200,
-        width=200,
-        centre_x=100,
-        centre_y=100,
-        radius_inner=55,
-        radius_outer=100,
-        rotation=270,
+        values: numbers_sequence,
+        labels: list[str] | tuple[str, ...] | None = None,
+        height: number = 200,
+        width: number = 200,
+        centre_x: number = 100,
+        centre_y: number = 100,
+        radius_inner: number = 55,
+        radius_outer: number = 100,
+        rotation: number = 70,
     ):
         """
         create a donut chart
@@ -694,7 +718,7 @@ class DonutChart(Chart):
                 centre_y,
             )
 
-    def add_hover_modifier(self, modifier):
+    def add_hover_modifier(self, modifier: Callable):
         names = list(self.series)
         segments = [self.series[name] for name in names]
         chart_total = sum(self.values)
@@ -709,5 +733,5 @@ class DonutChart(Chart):
         for s in self.series:
             self.series[s].add_classes(["psc-hover-group"])
 
-    def get_element_list(self):
+    def get_element_list(self) -> list[str]:
         return collapse_element_list([self.series[s] for s in self.series], self.custom_elements)

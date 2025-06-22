@@ -5,6 +5,7 @@ from typing import Any
 from .helpers import collapse_element_list
 from .scales import make_linear_scale
 from .shapes import Shape, Text, Line
+from .shared import number
 
 
 class Axis(Shape):
@@ -16,21 +17,21 @@ class Axis(Shape):
 
     def __init__(
         self,
-        x_position,
-        y_position,
+        x_position: number,
+        y_position: number,
         data_points,
-        axis_length,
-        label_format,
-        max_ticks=10,
-        axis_styles=None,
-        tick_length=5,
+        axis_length: number,
+        label_format: str,
+        max_ticks: int = 10,
+        axis_styles: dict[str, str] | None = None,
+        tick_length: int = 5,
         min_value=None,
         max_value=None,
-        include_zero=False,
-        shift=False,
-        min_unique_values=2,
+        include_zero: bool = False,
+        shift: bool = False,
+        min_unique_values: int = 2,
         scale_maker=make_linear_scale,
-        secondary=False,
+        secondary: bool = False,
     ):
         _ignore = secondary, axis_styles, tick_length
         super().__init__(x_position, y_position)

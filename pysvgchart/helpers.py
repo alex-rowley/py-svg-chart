@@ -10,11 +10,11 @@ from .shared import (
 )
 
 
-def noop(*args, **kwargs):
+def noop(*args, **kwargs) -> None:
     pass
 
 
-def default_format(value):
+def default_format(value) -> str:
     """
     format a number
     """
@@ -29,7 +29,7 @@ def safe_get_element_list(elements):
         yield from elements.get_element_list()
 
 
-def collapse_element_list(*list_of_list_of_elements) -> list:
+def collapse_element_list(*list_of_list_of_elements) -> list[str]:
     """
     flatten any number of lists of elements to a list of elements
     """
