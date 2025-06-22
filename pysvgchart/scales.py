@@ -51,7 +51,7 @@ class LinearScale(Scale):
         elif all(isinstance(tick, float | int) for tick in ticks):
             pass
         else:
-            raise TypeError("LinearRange only supports date, datetime, float/int values")
+            raise TypeError("LinearScale only supports date, datetime, float/int values")
         super().__init__(ticks)
         self.lo = min(ticks)
         self.hi = max(ticks)
@@ -90,7 +90,7 @@ class LogarithmicScale(Scale):
         if all(isinstance(tick, float | int) for tick in ticks):
             pass
         else:
-            raise TypeError("LinearRange only supports date, datetime, float/int values")
+            raise TypeError("LogarithmicScale only supports float/int values")
         super().__init__(ticks)
         self.log_lo = math.log10(min(ticks))
         self.log_hi = math.log10(max(ticks))
@@ -113,13 +113,12 @@ class LogarithmicScale(Scale):
 
     def value_to_fraction(self, value: date | datetime | float | int) -> float:
         fraction = (math.log10(value) - self.log_lo) / self.size
-        print(f"DBG {value=} {math.log10(value)=} {fraction=}")
         return fraction - self.shift if self.shift else fraction
 
 
 class MappingScale(Scale):
     """
-    scale for non-numeric/non-linear values
+    scale for non-numeric values
     """
 
     def __init__(self, ticks: list) -> None:
