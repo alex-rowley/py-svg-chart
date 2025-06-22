@@ -43,7 +43,7 @@ class LinearScale(Scale):
     hi: date | datetime | float | int
     size: float | int | timedelta
 
-    def __init__(self, ticks, shift=False):
+    def __init__(self, ticks, shift: bool | date | datetime | float | int = False):
         if all(isinstance(tick, date) for tick in ticks):
             pass
         elif all(isinstance(tick, datetime) for tick in ticks):
@@ -81,12 +81,9 @@ class LinearScale(Scale):
         return fraction - self.shift if self.shift else fraction
 
 
-class LogarithmicScale(Scale):
-    log_lo: float | int
-    log_hi: float | int
-    size: float | int
+class LogarithmicScale(LinearScale):
 
-    def __init__(self, ticks, shift=False):
+    def __init__(self, ticks, shift: bool | float | int = False):
         if all(isinstance(tick, float | int) for tick in ticks):
             pass
         else:
