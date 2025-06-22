@@ -39,6 +39,9 @@ class Scale(ABC):
 
 
 class LinearScale(Scale):
+    """
+    linear scale
+    """
     lo: date | datetime | float | int
     hi: date | datetime | float | int
     size: float | int | timedelta
@@ -82,35 +85,25 @@ class LinearScale(Scale):
 
 
 class LogarithmicScale(LinearScale):
+    """
+    logarithmic scale - a patched-up linear scale
+    """
 
     def __init__(self, ticks, shift: bool | float | int = False):
         if all(isinstance(tick, float | int) for tick in ticks):
             pass
         else:
             raise TypeError("LogarithmicScale only supports float/int values")
-        super().__init__(ticks)
-        self.log_lo = math.log10(min(ticks))
-        self.log_hi = math.log10(max(ticks))
-        self.size = self.log_hi - self.log_lo
-        if shift is False:
-            self.shift = None
-        elif isinstance(self.log_lo, float | int) and isinstance(shift, float | int):
-            self.shift = (math.log10(shift) - self.log_lo) / self.size
-        else:
-            self.shift = None
-
-    def __str__(self):
-        return f"[{self.log_lo}...{self.log_hi}] {self.shift if self.shift else '(no shift)'}"
-
-    def __repr__(self):
-        return f"<{self.__class__.__name__} log_lo={self.log_lo} log_hi={self.log_hi} size={self.size} shift={self.shift}>"
-
-    def get_lowest(self) -> date | datetime | float | int:
-        return self.log_lo
+        super().__init__(ticks, shift)
+        # replace linear scaling parameters by their logarithmic counterparts
+        self.lo = math.log10(self.lo)
+        self.hi = math.log10(self.hi)
+        self.size = self.hi - self.lo
+        if isinstance(self.shift, float | int):
+            self.shift = (math.log10(shift) - self.lo) / self.size
 
     def value_to_fraction(self, value: date | datetime | float | int) -> float:
-        fraction = (math.log10(value) - self.log_lo) / self.size
-        return fraction - self.shift if self.shift else fraction
+        return super().value_to_fraction(math.log10(value))
 
 
 class MappingScale(Scale):

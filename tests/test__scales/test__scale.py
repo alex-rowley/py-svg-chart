@@ -101,9 +101,9 @@ class TestLogarithmicScale(unittest.TestCase):
         actual = LogarithmicScale(values)
         # then
         expect = 0.0
-        self.assertEqual(expect, actual.log_lo)
+        self.assertEqual(expect, actual.lo)
         expect = 2.0
-        self.assertEqual(expect, actual.log_hi)
+        self.assertEqual(expect, actual.hi)
         expect = 2.0
         self.assertEqual(expect, actual.size)
         expect = 0.5
@@ -116,9 +116,9 @@ class TestLogarithmicScale(unittest.TestCase):
         actual = LogarithmicScale(values)
         # then
         expect = 1.0
-        self.assertEqual(expect, actual.log_lo)
+        self.assertEqual(expect, actual.lo)
         expect = 9.0
-        self.assertEqual(expect, actual.log_hi)
+        self.assertEqual(expect, actual.hi)
         expect = 8.0
         self.assertEqual(expect, actual.size)
         expect = 0.25
@@ -135,9 +135,9 @@ class TestLogarithmicScale(unittest.TestCase):
         actual = LogarithmicScale(values)
         # then
         expect = -1.0
-        self.assertEqual(expect, actual.log_lo)
+        self.assertEqual(expect, actual.lo)
         expect = 1.0
-        self.assertEqual(expect, actual.log_hi)
+        self.assertEqual(expect, actual.hi)
         expect = 2.0
         self.assertEqual(expect, actual.size)
         expect = 0.5
@@ -150,9 +150,9 @@ class TestLogarithmicScale(unittest.TestCase):
         actual = LogarithmicScale(values)
         # then
         expect = -3.0
-        self.assertEqual(expect, actual.log_lo)
+        self.assertEqual(expect, actual.lo)
         expect = 3.0
-        self.assertEqual(expect, actual.log_hi)
+        self.assertEqual(expect, actual.hi)
         expect = 6.0
         self.assertEqual(expect, actual.size)
         expect = 0.3333333333
