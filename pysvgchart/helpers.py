@@ -119,7 +119,7 @@ def get_logarithmic_ticks(
     if 10 ** ((end - start) // step) < value_max:
         end += 1
         step += 1
-    return [10 ** y for y in range(int(start), int(end), int(step))]
+    return [10**y for y in range(int(start), int(end), int(step))]
 
 
 def get_date_or_time_ticks(

@@ -40,8 +40,9 @@ class Scale(ABC):
 
 class LinearScale(Scale):
     """
-    linear scale
+    linear scale - evenly spaced between lo and hi
     """
+
     lo: date | datetime | float | int
     hi: date | datetime | float | int
     size: float | int | timedelta

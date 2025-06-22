@@ -1,3 +1,6 @@
+"""
+styles - constants and functions for CSS styles
+"""
 
 hover_style_name = "psc-hover-data"
 
