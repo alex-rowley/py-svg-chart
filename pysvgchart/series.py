@@ -25,6 +25,7 @@ class DonutSegment(Series):
     donut chart segment
     """
 
+    # fmt: off
     path_template = (
         '<path d="M {outer_begin_x},{outer_begin_y} '
         'A {radius_outer} {radius_outer} 0 {large_arc_flag} 1 {outer_end_x} {outer_end_y} '
@@ -32,6 +33,7 @@ class DonutSegment(Series):
         'A {radius_inner} {radius_inner} 0 {large_arc_flag} 0 {inner_end_x} {inner_end_y} '
         'Z" fill="{colour}" {attributes}></path>'
     )
+    # fmt: on
 
     def __init__(
         self,

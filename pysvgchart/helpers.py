@@ -2,6 +2,14 @@ import math
 import datetime as dt
 
 
+from .shared import (
+    dates_sequence,
+    datetimes_sequence,
+    number,
+    numbers_sequence,
+)
+
+
 def noop(*args, **kwargs):
     pass
 
@@ -36,12 +44,12 @@ def collapse_element_list(*list_of_list_of_elements) -> list:
 
 
 def get_numeric_ticks(
-    values,
-    max_ticks,
-    min_value=None,
-    max_value=None,
-    include_zero=False,
-) -> list[float | int]:
+    values: numbers_sequence,
+    max_ticks: int,
+    min_value: number | None = None,
+    max_value: number | None = None,
+    include_zero: bool = False,
+) -> numbers_sequence:
     """
     compute ticks for a series of numbers
     :param values: actual values
@@ -83,12 +91,12 @@ def get_numeric_ticks(
 
 
 def get_logarithmic_ticks(
-    values,
-    max_ticks,
-    min_value=None,
-    max_value=None,
-    include_zero=False,
-) -> list[float | int]:
+    values: numbers_sequence,
+    max_ticks: int,
+    min_value: number | None = None,
+    max_value: number | None = None,
+    include_zero: bool = False,
+) -> numbers_sequence:
     """
     compute logarithmic ticks for a series of numbers
     :param values: actual values
@@ -123,11 +131,11 @@ def get_logarithmic_ticks(
 
 
 def get_date_or_time_ticks(
-    dates,
-    max_ticks=10,
-    min_value=None,
-    max_value=None,
-) -> list[dt.date | dt.datetime]:
+    dates: dates_sequence | datetimes_sequence,
+    max_ticks: int = 10,
+    min_value: dt.date | dt.datetime | None = None,
+    max_value: dt.date | dt.datetime | None = None,
+) -> dates_sequence | datetimes_sequence:
     """
     compute ticks for a series of dates/datetimes
     :param dates: actual dates/datetimes

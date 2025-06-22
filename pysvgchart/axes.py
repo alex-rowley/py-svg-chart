@@ -3,7 +3,7 @@ from abc import abstractmethod
 from typing import Any
 
 from .helpers import collapse_element_list
-from .scales import make_scale
+from .scales import make_linear_scale
 from .shapes import Shape, Text, Line
 
 
@@ -29,7 +29,7 @@ class Axis(Shape):
         include_zero=False,
         shift=False,
         min_unique_values=2,
-        scale_maker=make_scale,
+        scale_maker=make_linear_scale,
         secondary=False,
     ):
         _ignore = secondary, axis_styles, tick_length
@@ -85,7 +85,7 @@ class XAxis(Axis):
         max_value=None,
         include_zero=False,
         shift=False,
-        scale_maker=make_scale,
+        scale_maker=make_linear_scale,
     ):
         super().__init__(
             x_position=x_position,
@@ -160,7 +160,7 @@ class YAxis(Axis):
         max_value=None,
         include_zero=False,
         shift=False,
-        scale_maker=make_scale,
+        scale_maker=make_linear_scale,
         secondary=False,
     ):
         super().__init__(

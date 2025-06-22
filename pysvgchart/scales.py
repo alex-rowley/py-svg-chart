@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from collections.abc import Iterable
 from datetime import datetime, date, timedelta
 from typing import Any
 
@@ -11,6 +10,12 @@ from .helpers import (
     get_date_or_time_ticks,
     get_logarithmic_ticks,
     get_numeric_ticks,
+)
+from .shared import (
+    dates_sequence,
+    datetimes_sequence,
+    number,
+    numbers_sequence,
 )
 
 
@@ -38,36 +43,40 @@ class Scale(ABC):
         ...
 
 
-class LinearScale(Scale):
+class MappedLinearScale(Scale):
     """
-    linear scale - evenly spaced between lo and hi
+    mapped linear scale - evenly spaced mapped value scale
     """
 
-    lo: date | datetime | float | int
-    hi: date | datetime | float | int
-    size: float | int | timedelta
+    lo: date | datetime | number
+    hi: date | datetime | number
+    size: timedelta | number
 
-    def __init__(self, ticks, shift: bool | date | datetime | float | int = False):
+    def __init__(
+        self,
+        ticks: dates_sequence | datetimes_sequence | numbers_sequence,
+        shift: bool | date | datetime | number = False,
+    ):
         if all(isinstance(tick, date) for tick in ticks):
             pass
         elif all(isinstance(tick, datetime) for tick in ticks):
             pass
-        elif all(isinstance(tick, float | int) for tick in ticks):
+        elif all(isinstance(tick, number) for tick in ticks):
             pass
         else:
             raise TypeError("LinearScale only supports date, datetime, float/int values")
         super().__init__(ticks)
-        self.lo = min(ticks)
-        self.hi = max(ticks)
+        self.lo = self.map_value(min(ticks))
+        self.hi = self.map_value(max(ticks))
         self.size = self.hi - self.lo
         if shift is False:
             self.shift = None
         elif isinstance(self.lo, date) and isinstance(shift, date):
-            self.shift = (shift - self.lo) / self.size
+            self.shift = (self.map_value(shift) - self.lo) / self.size
         elif isinstance(self.lo, datetime) and isinstance(shift, datetime):
-            self.shift = (shift - self.lo) / self.size
-        elif isinstance(self.lo, float | int) and isinstance(shift, float | int):
-            self.shift = (shift - self.lo) / self.size
+            self.shift = (self.map_value(shift) - self.lo) / self.size
+        elif isinstance(self.lo, number) and isinstance(shift, number):
+            self.shift = (self.map_value(shift) - self.lo) / self.size
         else:
             self.shift = None
 
@@ -77,34 +86,51 @@ class LinearScale(Scale):
     def __repr__(self):
         return f"<{self.__class__.__name__} lo={self.lo} hi={self.hi} size={self.size} shift={self.shift}>"
 
-    def get_lowest(self) -> date | datetime | float | int:
+    def get_lowest(self) -> date | datetime | number:
         return self.lo
 
-    def value_to_fraction(self, value: date | datetime | float | int) -> float:
-        fraction = (value - self.lo) / self.size
+    def value_to_fraction(self, value: date | datetime | number) -> float:
+        fraction = (self.map_value(value) - self.lo) / self.size
         return fraction - self.shift if self.shift else fraction
 
+    @staticmethod
+    @abstractmethod
+    def map_value(value: date | datetime | number) -> date | datetime | number: ...
 
-class LogarithmicScale(LinearScale):
+
+class LinearScale(MappedLinearScale):
     """
-    logarithmic scale - a patched-up linear scale
+    linear scale - values unchanged in mapping
     """
 
-    def __init__(self, ticks, shift: bool | float | int = False):
-        if all(isinstance(tick, float | int) for tick in ticks):
-            pass
-        else:
+    @staticmethod
+    def map_value(value: date | datetime | number) -> date | datetime | number:
+        """
+        values unchanged in mapping
+        """
+        return value
+
+
+class LogarithmicScale(MappedLinearScale):
+    """
+    logarithmic scale - log10 to map values
+    """
+
+    def __init__(
+        self,
+        ticks: numbers_sequence,
+        shift: bool | number = False,
+    ):
+        if not all(isinstance(tick, number) for tick in ticks):
             raise TypeError("LogarithmicScale only supports float/int values")
         super().__init__(ticks, shift)
-        # replace linear scaling parameters by their logarithmic counterparts
-        self.lo = math.log10(self.lo)
-        self.hi = math.log10(self.hi)
-        self.size = self.hi - self.lo
-        if isinstance(self.shift, float | int):
-            self.shift = (math.log10(shift) - self.lo) / self.size
 
-    def value_to_fraction(self, value: date | datetime | float | int) -> float:
-        return super().value_to_fraction(math.log10(value))
+    @staticmethod
+    def map_value(value: number) -> number:
+        """
+        values unchanged in mapping
+        """
+        return math.log10(value)
 
 
 class MappingScale(Scale):
@@ -112,7 +138,7 @@ class MappingScale(Scale):
     scale for non-numeric values
     """
 
-    def __init__(self, ticks: list) -> None:
+    def __init__(self, ticks: list | tuple):
         super().__init__(ticks)
         value_width = 1.0 / len(ticks)
         self.map = {value: (index + 0.5) * value_width for index, value in enumerate(ticks)}
@@ -130,14 +156,69 @@ class MappingScale(Scale):
         return self.map.get(value, -1.0)
 
 
-def make_scale(
-    values,
-    max_ticks,
-    min_value=None,
-    max_value=None,
-    include_zero=False,
-    shift=False,
-    min_unique_values=2,
+def make_categories_scale(
+    values: list | tuple,
+    max_ticks: int,
+    min_value: Any = None,
+    max_value: Any = None,
+    include_zero: bool = False,
+    shift: bool = False,
+    min_unique_values: int = 2,
+) -> Scale:
+    """
+    make a categories scale for a series of values
+
+    :param values: actual values
+    :param max_ticks: maximum number of ticks on the scale
+    :param min_value: optional minimum value to include on the scale
+    :param max_value: optional maximum value to include on the scale
+    :param include_zero: whether to include zero on the scale
+    :param shift: optional shift for the scale
+    :param min_unique_values: minimum number of unique values required
+    """
+    _ignore = max_ticks, min_value, max_value, include_zero, shift, min_unique_values
+    return MappingScale(list(values))
+
+
+def make_logarithmic_scale(
+    values: numbers_sequence,
+    max_ticks: int,
+    min_value: number | None = None,
+    max_value: number | None = None,
+    include_zero: bool = False,
+    shift: bool = False,
+    min_unique_values: int = 2,
+) -> Scale:
+    if (
+        values is None
+        or not isinstance(values, list | tuple)
+        or len(set(values)) < min_unique_values
+    ):
+        raise ValueError(
+            "Values must be non-empty with at least %d unique elements.",
+            min_unique_values,
+        )
+    if all(isinstance(value, int | float) for value in values):
+        ticks = get_logarithmic_ticks(
+            values,
+            max_ticks,
+            min_value=min_value,
+            max_value=max_value,
+            include_zero=include_zero,
+        )
+        return LogarithmicScale(ticks, shift=min(values) if shift is True else shift)
+    # mixed value types or value type for which there's no ticks creator
+    return MappingScale(list(values))
+
+
+def make_linear_scale(
+    values: dates_sequence | datetimes_sequence | numbers_sequence,
+    max_ticks: int,
+    min_value: date | datetime | number | None = None,
+    max_value: date | datetime | number | None = None,
+    include_zero: bool = False,
+    shift: bool = False,
+    min_unique_values: int = 2,
 ) -> Scale:
     """
     make a scale for a series of values
@@ -150,9 +231,13 @@ def make_scale(
     :param shift: optional shift for the scale
     :param min_unique_values: minimum number of unique values required
     """
-    if values is None or not isinstance(values, Iterable) or len(set(values)) < min_unique_values:
+    if (
+        values is None
+        or not isinstance(values, list | tuple)
+        or len(set(values)) < min_unique_values
+    ):
         raise ValueError(
-            "Values must be a non-empty iterable with at least %d unique elements.",
+            "Values must be non-empty with at least %d unique elements.",
             min_unique_values,
         )
     # value types for which there is a ticks creator
@@ -181,56 +266,5 @@ def make_scale(
             include_zero=include_zero,
         )
         return LinearScale(ticks, shift=min(values) if shift is True else shift)
-    # mixed value types or value type for which there's no ticks creator
-    return MappingScale(list(values))
-
-
-def make_categories_scale(
-    values,
-    max_ticks,
-    min_value=None,
-    max_value=None,
-    include_zero=False,
-    shift=False,
-    min_unique_values=2,
-) -> Scale:
-    """
-    make a categories scale for a series of values
-
-    :param values: actual values
-    :param max_ticks: maximum number of ticks on the scale
-    :param min_value: optional minimum value to include on the scale
-    :param max_value: optional maximum value to include on the scale
-    :param include_zero: whether to include zero on the scale
-    :param shift: optional shift for the scale
-    :param min_unique_values: minimum number of unique values required
-    """
-    _ignore = max_ticks, min_value, max_value, include_zero, shift, min_unique_values
-    return MappingScale(list(values))
-
-
-def make_logarithmic_scale(
-    values,
-    max_ticks,
-    min_value=None,
-    max_value=None,
-    include_zero=False,
-    shift=False,
-    min_unique_values=2,
-) -> Scale:
-    if values is None or not isinstance(values, Iterable) or len(set(values)) < min_unique_values:
-        raise ValueError(
-            "Values must be a non-empty iterable with at least %d unique elements.",
-            min_unique_values,
-        )
-    if all(isinstance(value, int | float) for value in values):
-        ticks = get_logarithmic_ticks(
-            values,
-            max_ticks,
-            min_value=min_value,
-            max_value=max_value,
-            include_zero=include_zero,
-        )
-        return LogarithmicScale(ticks, shift=min(values) if shift is True else shift)
     # mixed value types or value type for which there's no ticks creator
     return MappingScale(list(values))

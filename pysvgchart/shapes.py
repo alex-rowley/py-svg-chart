@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 from .helpers import collapse_element_list
+from .shared import number
 
 
 @dataclass
@@ -10,8 +11,8 @@ class Point:
     point in 2D space
     """
 
-    x: float | int
-    y: float | int
+    x: number
+    y: number
 
 
 class Element(ABC):
