@@ -67,7 +67,7 @@ def init_stylised_line_chart_data():
         }
 
 
-def stylised_line_chart(x_shift=False, y_shift=False):
+def stylised_line_chart(x_shift=False, y_shift=False, x_log=False, y_log=False):
     def y_labels(num):
         num = float('{:.3g}'.format(num))
         magnitude = 0
@@ -84,7 +84,21 @@ def stylised_line_chart(x_shift=False, y_shift=False):
     dates = STYLISED_LINE_CHART_DATA["dates"]
     actual = STYLISED_LINE_CHART_DATA["actual"]
     expected = STYLISED_LINE_CHART_DATA["expected"]
-    chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100, x_shift=x_shift, y_shift=y_shift)
+    chart = psc.LineChart(
+        x_values=dates,
+        y_values=[actual, expected],
+        y_names=['Actual sales', 'Predicted sales'],
+        x_max_ticks=30,
+        x_label_format=x_labels,
+        y_label_format=y_labels,
+        width=1200,
+        left_margin=100,
+        right_margin=100,
+        x_shift=x_shift,
+        y_shift=y_shift,
+        x_log=x_log,
+        y_log=y_log,
+    )
     chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
     chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
     chart.add_legend(x_position=700, element_x=200, element_y=0, y_position=60, line_length=35, line_text_gap=20)
@@ -149,70 +163,8 @@ def test_stylised_line_chart_with_xy_shift():
     write_out(chart.render_with_all_styles(), name="detailed-xy-shift.svg")
 
 
-def stylised_log_chart(x_log=False, y_log=False):
-    def y_labels(num):
-        num = float('{:.3g}'.format(num))
-        magnitude = 0
-        while abs(num) >= 1000:
-            magnitude += 1
-            num /= 1000.0
-        rtn = '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][magnitude])
-        return rtn.replace('.00', '').replace('.0', '')
-
-    def x_labels(date):
-        return date.strftime('%b')
-
-    init_stylised_line_chart_data()
-    dates = STYLISED_LINE_CHART_DATA["dates"]
-    actual = STYLISED_LINE_CHART_DATA["actual"]
-    expected = STYLISED_LINE_CHART_DATA["expected"]
-    chart = psc.LogarithmicChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100, x_log=x_log, y_log=y_log)
-    chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
-    chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
-    chart.add_legend(x_position=700, element_x=200, element_y=0, y_position=60, line_length=35, line_text_gap=20)
-    chart.add_y_grid(minor_ticks=0, major_grid_style={'stroke': '#E9E9DE'})
-    chart.x_axis.tick_lines, chart.y_axis.tick_lines = [], []
-    chart.x_axis.axis_line = None
-    chart.y_axis.axis_line.styles['stroke'] = '#E9E9DE'
-    line_end = chart.legend.lines[0].end
-    act_styles = {'fill': '#FFFFFF', 'stroke': '#DB7D33', 'stroke-width': '3'}
-    chart.add_custom_element(psc.Circle(x=line_end.x, y=line_end.y, radius=4, styles=act_styles))
-    line_end = chart.legend.lines[1].end
-    pred_styles = {'fill': '#2D2D2D', 'stroke': '#2D2D2D', 'stroke-width': '3'}
-    chart.add_custom_element(psc.Circle(x=line_end.x, y=line_end.y, radius=4, styles=pred_styles))
-    for limit, tick in zip(chart.x_axis.scale.ticks, chart.x_axis.tick_texts):
-        if tick.content == 'Jan':
-            chart.add_custom_element(psc.Text(x=tick.position.x, y=tick.position.y + 15, content=str(limit.year), styles=tick.styles))
-
-    def hover_modifier(position, x_value, y_value, series_name, styles=None):
-        default_stroke = "#808080"
-        classes = [
-            psc.hover_style_name,
-        ]
-        marker_styles = {
-            "fill": "#FFFFFF",
-            "stroke": default_stroke if styles is None else styles.get("stroke", default_stroke),
-            "stroke-width": "3",
-        }
-        text_styles = {
-            "alignment-baseline": "middle",
-            "text-anchor": "middle",
-        }
-        x_content = str(x_value)
-        y_content = "{:,.0f}".format(y_value)
-        return [
-            psc.Circle(x=position.x, y=position.y, radius=3, classes=classes, styles=marker_styles),
-            psc.Text(x=position.x, y=position.y - 10, content=x_content, classes=classes, styles=text_styles),
-            psc.Text(x=position.x, y=position.y - 30, content=y_content, classes=classes, styles=text_styles),
-            psc.Text(x=position.x, y=position.y - 50, content=series_name, classes=classes, styles=text_styles)
-        ]
-
-    chart.add_hover_modifier(hover_modifier, radius=3)
-    return chart
-
-
 def test_stylised_log_chart_with_y_log():
-    chart = stylised_log_chart(x_log=False, y_log=True)
+    chart = stylised_line_chart(x_log=False, y_log=True)
     write_out(chart.render_with_all_styles(), name="detailed-y-log.svg")
 
 
@@ -283,11 +235,11 @@ def init_scatter_chart_data():
         }
 
 
-def scatter_chart(x_shift=False, y_shift=False):
+def scatter_chart(x_shift=False, y_shift=False, x_log=False, y_log=False):
     init_scatter_chart_data()
     x_values = SCATTER_CHART_DATA["x_values"]
     y_values = SCATTER_CHART_DATA["y_values"]
-    chart = psc.ScatterChart(x_values=x_values, y_values=y_values, y_names=["A", "B"], x_shift=x_shift, y_shift=y_shift)
+    chart = psc.ScatterChart(x_values=x_values, y_values=y_values, y_names=["A", "B"], x_shift=x_shift, y_shift=y_shift, x_log=x_log, y_log=y_log)
     chart.add_legend()
     return chart
 
@@ -302,25 +254,16 @@ def test_scatter_chart_xy_shift():
     write_out(chart.render(), name="scatter-xy-shift.svg")
 
 
-def logarithmic_scatter_chart(x_log=False, y_log=False):
-    init_scatter_chart_data()
-    x_values = SCATTER_CHART_DATA["x_values"]
-    y_values = SCATTER_CHART_DATA["y_values"]
-    chart = psc.LogarithmicScatterChart(x_values=x_values, y_values=y_values, y_names=["A", "B"], x_log=x_log, y_log=y_log)
-    chart.add_legend()
-    return chart
-
-
 def test_scatter_chart_x_log():
-    chart = logarithmic_scatter_chart(x_log=True, y_log=False)
+    chart = scatter_chart(x_log=True, y_log=False)
     write_out(chart.render(), name="scatter-x-log.svg")
 
 
 def test_scatter_chart_y_log():
-    chart = logarithmic_scatter_chart(x_log=False, y_log=True)
+    chart = scatter_chart(x_log=False, y_log=True)
     write_out(chart.render(), name="scatter-y-log.svg")
 
 
 def test_scatter_chart_xy_log():
-    chart = logarithmic_scatter_chart(x_log=True, y_log=True)
+    chart = scatter_chart(x_log=True, y_log=True)
     write_out(chart.render(), name="scatter-xy-log.svg")

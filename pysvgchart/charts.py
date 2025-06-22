@@ -524,6 +524,20 @@ class LineChart(VerticalChart):
     y_axis_type = YAxis
     series_constructor = staticmethod(line_series_constructor)
 
+    def __init__(self, *args, **kwargs):
+        """
+        intercept init to handle optional logarithmic scale
+        :param x_log: optionally enable logarithmic scale
+        :param y_log: optionally enable logarithmic scale
+        """
+        x_log = kwargs.pop("x_log", False)
+        y_log = kwargs.pop("y_log", False)
+        if x_log:
+            self.x_axis_scale_maker = staticmethod(make_logarithmic_scale)
+        if y_log:
+            self.y_axis_scale_maker = staticmethod(make_logarithmic_scale)
+        super().__init__(*args, **kwargs)
+
 
 class SimpleLineChart(LineChart):
     x_axis_type = XAxis
@@ -697,41 +711,3 @@ class DonutChart(Chart):
 
     def get_element_list(self):
         return collapse_element_list([self.series[s] for s in self.series], self.custom_elements)
-
-
-class LogarithmicChart(LineChart):
-
-    def __init__(self, *args, **kwargs):
-        """
-        create a line chart with a logarithmic scale
-        :param x_log: optionally enable logarithmic scale
-        :param y_log: optionally enable logarithmic scale
-        """
-        x_log = kwargs.pop("x_log", False)
-        y_log = kwargs.pop("y_log", False)
-        if not x_log and not y_log:
-            raise ValueError("use another chart class if you don't want to use a logarithmic scale")
-        if x_log:
-            self.x_axis_scale_maker = staticmethod(make_logarithmic_scale)
-        if y_log:
-            self.y_axis_scale_maker = staticmethod(make_logarithmic_scale)
-        super().__init__(*args, **kwargs)
-
-
-class LogarithmicScatterChart(ScatterChart):
-
-    def __init__(self, *args, **kwargs):
-        """
-        create a scatter chart with a logarithmic scale
-        :param x_log: optionally enable logarithmic scale
-        :param y_log: optionally enable logarithmic scale
-        """
-        x_log = kwargs.pop("x_log", False)
-        y_log = kwargs.pop("y_log", False)
-        if not x_log and not y_log:
-            raise ValueError("use another chart class if you don't want to use a logarithmic scale")
-        if x_log:
-            self.x_axis_scale_maker = staticmethod(make_logarithmic_scale)
-        if y_log:
-            self.y_axis_scale_maker = staticmethod(make_logarithmic_scale)
-        super().__init__(*args, **kwargs)

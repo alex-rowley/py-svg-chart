@@ -8,8 +8,6 @@ from .charts import (
     BarChart,
     DonutChart,
     LineChart,
-    LogarithmicChart,
-    LogarithmicScatterChart,
     NormalisedBarChart,
     ScatterChart,
     SimpleLineChart,
