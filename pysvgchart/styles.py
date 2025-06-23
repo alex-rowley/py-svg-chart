@@ -2,6 +2,8 @@
 styles - constants and functions for CSS styles
 """
 
+from .shared import named_styles, style_def
+
 hover_style_name = "psc-hover-data"
 
 default_styles = {
@@ -14,7 +16,7 @@ default_styles = {
 }
 
 
-def render_style_dict(style_dict: dict) -> str:
+def render_style_dict(style_dict: style_def) -> str:
     indent = " " * 4
     nl = "\n"
     return f"""
@@ -25,16 +27,16 @@ def render_style_dict(style_dict: dict) -> str:
 
 
 def optionally_merge_styles_to_default(
-    styles: dict[str, dict[str, str]] | None = None,
+    styles: named_styles | None = None,
     include_default: bool = True,
-) -> dict[str, dict[str, str]]:
+) -> named_styles:
     if styles is None:
         return {**default_styles} if include_default else {}
     return {**styles, **default_styles} if include_default else {**styles}
 
 
 def render_all_styles(
-    styles: dict[str, dict[str, str]] | None = None,
+    styles: named_styles | None = None,
     include_default: bool = True,
 ) -> str:
     rendered_styles = (

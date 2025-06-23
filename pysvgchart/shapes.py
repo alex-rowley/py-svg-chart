@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 from .helpers import collapse_element_list
-from .shared import number
+from .shared import number, style_def
 
 
 @dataclass
@@ -21,11 +21,11 @@ class Element(ABC):
     """
 
     __default_classes__: list[str] = []
-    __default_styles__: dict[str, str] = {}
+    __default_styles__: style_def = {}
 
     def __init__(
         self,
-        styles: dict[str, str] | None = None,
+        styles: style_def | None = None,
         classes: list[str] | None = None,
     ):
         self.styles = self.__default_styles__.copy() if styles is None else styles
@@ -59,7 +59,7 @@ class Shape(Element):
         self,
         x: number,
         y: number,
-        styles: dict[str, str] | None = None,
+        styles: style_def | None = None,
         classes: list[str] | None = None,
     ):
         super().__init__(styles, classes)
@@ -82,7 +82,7 @@ class Line(Shape):
         height: number | None = None,
         x2: number | None = None,
         y2: number | None = None,
-        styles: dict[str, str] | None = None,
+        styles: style_def | None = None,
         classes: list[str] | None = None,
     ):
         if width is None and height is None and x2 is not None and y2 is not None:
@@ -128,7 +128,7 @@ class Circle(Shape):
         y: number,
         *,
         radius: number | None = None,
-        styles: dict[str, str] | None = None,
+        styles: style_def | None = None,
         classes: list[str] | None = None,
     ):
         super().__init__(x, y, styles, classes)
@@ -164,7 +164,7 @@ class Rect(Shape):
         height: number | None = None,
         x2: number | None = None,
         y2: number | None = None,
-        styles: dict[str, str] | None = None,
+        styles: style_def | None = None,
         classes: list[str] | None = None,
     ):
         if width is not None and height is not None and x2 is None and y2 is None:

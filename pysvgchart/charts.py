@@ -5,11 +5,11 @@ from typing import Any
 
 from .axes import Axis, XAxis, YAxis
 from .helpers import collapse_element_list, default_format
-from .legends import Legend, LineLegend, BarLegend, ScatterLegend
+from .legends import BarLegend, Legend, LineLegend, ScatterLegend
 from .scales import make_categories_scale, make_logarithmic_scale, make_linear_scale
-from .series import DonutSegment, LineSeries, BarSeries, ScatterSeries, Series
-from .shapes import Point, Line, Group, Circle
-from .shared import number, numbers_sequence
+from .series import BarSeries, DonutSegment, LineSeries, ScatterSeries, Series
+from .shapes import Circle, Group, Line, Point
+from .shared import named_styles, number, numbers_sequence, style_def
 from .styles import render_all_styles
 
 
@@ -173,11 +173,16 @@ class Chart(ABC):
 
     svg_begin_template = '<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">'
 
+    height: number
+    width: number
+    custom_elements: list[str]
+    series: dict[str, Any]
+
     def __init__(self, height: number, width: number) -> None:
         self.height = height
         self.width = width
-        self.custom_elements: list[str] = []
-        self.series: dict[str, Series] = {}
+        self.custom_elements = []
+        self.series = {}
 
     @abstractmethod
     def get_element_list(self): ...
@@ -199,22 +204,14 @@ class Chart(ABC):
 
     def render_with_all_styles(
         self,
-        styles: dict[str, dict[str, str]] | None = None,
+        styles: named_styles | None = None,
         include_default: bool = True,
     ) -> str:
         """
-        :param styles: list of styles to use
+        :param styles: styles to use
         :param include_default: also use the default styles (to enable things like hover text)
         :return:
         """
-        if styles is None:
-            return "\n".join(
-                [
-                    self.svg_begin_template.format(height=self.height, width=self.width),
-                    *self.get_element_list(),
-                    "</svg>",
-                ]
-            )
         return "\n".join(
             [
                 self.svg_begin_template.format(height=self.height, width=self.width),
@@ -442,8 +439,8 @@ class VerticalChart(Chart):
         self,
         minor_x_ticks: int = 0,
         minor_y_ticks: int = 0,
-        major_grid_style: dict[str, str] | None = None,
-        minor_grid_style: dict[str, str] | None = None,
+        major_grid_style: style_def | None = None,
+        minor_grid_style: style_def | None = None,
     ):
         self.add_y_grid(minor_y_ticks, major_grid_style, minor_grid_style)
         self.add_x_grid(minor_x_ticks, major_grid_style, minor_grid_style)
@@ -451,8 +448,8 @@ class VerticalChart(Chart):
     def add_y_grid(
         self,
         minor_ticks: int = 0,
-        major_grid_style: dict[str, str] | None = None,
-        minor_grid_style: dict[str, str] | None = None,
+        major_grid_style: style_def | None = None,
+        minor_grid_style: style_def | None = None,
     ):
         major_style = (
             major_grid_style.copy()
@@ -483,8 +480,8 @@ class VerticalChart(Chart):
     def add_x_grid(
         self,
         minor_ticks: int = 0,
-        major_grid_style: dict[str, str] | None = None,
-        minor_grid_style: dict[str, str] | None = None,
+        major_grid_style: style_def | None = None,
+        minor_grid_style: style_def | None = None,
     ):
         major_style = (
             major_grid_style.copy()
@@ -697,7 +694,6 @@ class DonutChart(Chart):
         :param rotation: rotation offset
         """
         super().__init__(height, width)
-        self.series: dict[str, Any] = dict()
         self.values = values
         series_names = self.generate_series_names("Series", len(values), labels)
         # compute start and end angles for the value segments
