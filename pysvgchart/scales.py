@@ -241,7 +241,7 @@ def make_linear_scale(
             min_unique_values,
         )
     # value types for which there is a ticks creator
-    ticks : dates_sequence | datetimes_sequence | numbers_sequence
+    ticks: dates_sequence | datetimes_sequence | numbers_sequence
     if all(isinstance(value, date) for value in values):
         ticks = get_date_or_time_ticks(
             values,  # type: ignore[arg-type]

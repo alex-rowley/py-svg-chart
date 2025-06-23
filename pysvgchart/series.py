@@ -1,7 +1,8 @@
 import math
 
-from .shapes import Shape, Circle
 from .helpers import collapse_element_list
+from .shapes import Shape, Circle
+from .shared import style_def
 
 
 class Series(Shape):
@@ -224,7 +225,7 @@ class ScatterSeries(Series):
     scatter series given as a number of (x, y)-points
     """
 
-    __default_styles__: dict[str, str] = {}
+    __default_styles__: style_def = {}
     __default_shape_template__ = staticmethod(default_scatter_shape_template)
 
     def __init__(self, points, x_values, y_values, shape_template=None, styles=None, classes=None):

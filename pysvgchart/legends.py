@@ -1,12 +1,17 @@
+from abc import abstractmethod
+
 from .helpers import collapse_element_list
 from .shapes import Shape, Line, Text, Rect
 from .shared import number
+
 
 class Legend(Shape):
     """
     base class for legends
     """
-    pass
+
+    @abstractmethod
+    def get_element_list(self) -> list: ...
 
 
 class LineLegend(Legend):
