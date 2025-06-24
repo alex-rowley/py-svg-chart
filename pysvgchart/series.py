@@ -3,7 +3,7 @@ import math
 
 from .helpers import collapse_element_list
 from .shapes import Circle, Element, Point, Shape
-from .shared import number, style_def
+from .shared import number, numbers_sequence, style_def
 
 
 class Series(Shape):
@@ -143,8 +143,8 @@ class LineSeries(Series):
     def __init__(
         self,
         points: list[Point],
-        x_values: list[number] | tuple[number, ...],
-        y_values: list[number] | tuple[number, ...],
+        x_values: numbers_sequence,
+        y_values: numbers_sequence,
         styles: style_def | None = None,
         classes: list[str] | None = None,
     ):
@@ -193,10 +193,10 @@ class BarSeries(Series):
     def __init__(
         self,
         points: list[Point],
-        x_values: list[number] | tuple[number, ...],
-        y_values: list[number] | tuple[number, ...],
+        x_values: numbers_sequence,
+        y_values: numbers_sequence,
         bar_width: number,
-        bar_heights: list[number] | tuple[number, ...],
+        bar_heights: numbers_sequence,
         styles: style_def | None = None,
         classes: list[str] | None = None,
     ):
@@ -249,8 +249,8 @@ class ScatterSeries(Series):
     def __init__(
         self,
         points: list[Point],
-        x_values: list[number] | tuple[number, ...],
-        y_values: list[number] | tuple[number, ...],
+        x_values: numbers_sequence,
+        y_values: numbers_sequence,
         shape_template: Callable[[number, number, style_def], Shape] | None = None,
         styles: style_def | None = None,
         classes: list[str] | None = None,
