@@ -51,7 +51,7 @@ def line_series_constructor(
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
-            y_values=y_value,
+            y_values=y_value,  # type: ignore[arg-type]
         )
         for name, y_value in zip(series_names, y_values)
     }
@@ -80,7 +80,7 @@ def bar_series_constructor(
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
-            y_values=y_value,
+            y_values=y_value,  # type: ignore[arg-type]
             bar_heights=[
                 y_axis.position.y + y_axis.length - y if y is not None else 0
                 for y in y_axis.get_positions(y_value)
@@ -121,7 +121,7 @@ def normalised_bar_series_constructor(
         rtn[name] = BarSeries(
             points=[Point(x=x, y=y) for x, y in zip(x_positions, scaled_positions)],  # type: ignore[arg-type]
             x_values=x_values,
-            y_values=y_value,
+            y_values=y_value,  # type: ignore[arg-type]
             bar_heights=[b - a for a, b in zip(scaled_positions, prev_scaled_positions)],  # type: ignore[operator]
             bar_width=bar_width,
         )
@@ -150,7 +150,7 @@ def scatter_series_constructor(
                 for x, y in zip(x_axis.get_positions(x_values), y_axis.get_positions(y_value))
             ],
             x_values=x_values,
-            y_values=y_value,
+            y_values=y_value,  # type: ignore[arg-type]
         )
         for name, y_value in zip(series_names, y_values)
     }

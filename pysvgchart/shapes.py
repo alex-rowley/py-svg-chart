@@ -65,6 +65,9 @@ class Shape(Element):
         super().__init__(styles, classes)
         self.position = Point(x=x, y=y)
 
+    @abstractmethod
+    def get_element_list(self) -> list: ...
+
 
 class Line(Shape):
     """
@@ -103,7 +106,7 @@ class Line(Shape):
     def start(self) -> Point:
         return self.position
 
-    def get_element_list(self) -> list[str]:
+    def get_element_list(self) -> list:
         return [
             self.line_template.format(
                 x1=self.start.x,
