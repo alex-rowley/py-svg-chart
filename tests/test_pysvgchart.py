@@ -75,7 +75,7 @@ def stylised_line_chart(x_shift=False, y_shift=False, x_log=False, y_log=False):
             magnitude += 1
             num /= 1000.0
         rtn = '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][magnitude])
-        return rtn.replace('.00', '').replace('.0', '')
+        return rtn
 
     def x_labels(date):
         return date.strftime('%b')
