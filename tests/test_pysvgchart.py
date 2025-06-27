@@ -82,8 +82,8 @@ def stylised_line_chart(x_shift=False, y_shift=False, x_log=False, y_log=False):
 
     init_stylised_line_chart_data()
     dates = STYLISED_LINE_CHART_DATA["dates"]
-    actual = STYLISED_LINE_CHART_DATA["actual"]
-    expected = STYLISED_LINE_CHART_DATA["expected"]
+    actual = [v if v > 0.0 or not y_log else 0.001 for v in STYLISED_LINE_CHART_DATA["actual"]]
+    expected = [v if v > 0.0 or not y_log else 0.001  for v in STYLISED_LINE_CHART_DATA["expected"]]
     chart = psc.LineChart(
         x_values=dates,
         y_values=[actual, expected],
