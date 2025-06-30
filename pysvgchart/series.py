@@ -1,7 +1,9 @@
+from typing import Callable
 import math
 
-from .shapes import Shape, Circle
 from .helpers import collapse_element_list
+from .shapes import Circle, Element, Point, Shape
+from .shared import number, numbers_sequence, style_def
 
 
 class Series(Shape):
@@ -9,11 +11,21 @@ class Series(Shape):
     base class for series
     """
 
-    def __init__(self, x_position, y_position, styles=None, classes=None):
+    def __init__(
+        self,
+        x_position: number,
+        y_position: number,
+        styles: style_def | None = None,
+        classes: list[str] | None = None,
+    ):
         super().__init__(x=x_position, y=y_position, styles=styles, classes=classes)
-        self.custom_elements = []
+        self.custom_elements: list[Element] = []
 
-    def add_custom_elements(self, custom_elements):
+    @property
+    def pv_generator(self):
+        return []
+
+    def add_custom_elements(self, custom_elements: list[Element]):
         self.custom_elements.extend(custom_elements)
 
     def get_element_list(self) -> list:
@@ -25,6 +37,7 @@ class DonutSegment(Series):
     donut chart segment
     """
 
+    # fmt: off
     path_template = (
         '<path d="M {outer_begin_x},{outer_begin_y} '
         'A {radius_outer} {radius_outer} 0 {large_arc_flag} 1 {outer_end_x} {outer_end_y} '
@@ -32,18 +45,19 @@ class DonutSegment(Series):
         'A {radius_inner} {radius_inner} 0 {large_arc_flag} 0 {inner_end_x} {inner_end_y} '
         'Z" fill="{colour}" {attributes}></path>'
     )
+    # fmt: on
 
     def __init__(
         self,
-        colour,
-        start_theta,
-        end_theta,
-        radius_inner,
-        radius_outer,
-        centre_x,
-        centre_y,
-        styles=None,
-        classes=None,
+        colour: str | number,
+        start_theta: number,
+        end_theta: number,
+        radius_inner: number,
+        radius_outer: number,
+        centre_x: number,
+        centre_y: number,
+        styles: style_def | None = None,
+        classes: list[str] | None = None,
     ):
         super().__init__(x_position=centre_x, y_position=centre_y, styles=styles, classes=classes)
         self.start_theta = start_theta
@@ -126,7 +140,14 @@ class LineSeries(Series):
     __default_styles__ = {"stroke-width": "2"}
     path_begin_template = '<path d="{path}" fill="none" {attributes}/>'
 
-    def __init__(self, points, x_values, y_values, styles=None, classes=None):
+    def __init__(
+        self,
+        points: list[Point],
+        x_values: numbers_sequence,
+        y_values: numbers_sequence,
+        styles: style_def | None = None,
+        classes: list[str] | None = None,
+    ):
         super().__init__(
             x_position=points[0].x,
             y_position=points[0].y,
@@ -142,7 +163,7 @@ class LineSeries(Series):
         return zip(self.points, self.x_values, self.y_values)
 
     @property
-    def path_length(self):
+    def path_length(self) -> number:
         return (
             sum(
                 math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
@@ -171,13 +192,13 @@ class BarSeries(Series):
 
     def __init__(
         self,
-        points,
-        x_values,
-        y_values,
-        bar_width,
-        bar_heights,
-        styles=None,
-        classes=None,
+        points: list[Point],
+        x_values: numbers_sequence,
+        y_values: numbers_sequence,
+        bar_width: number,
+        bar_heights: numbers_sequence,
+        styles: style_def | None = None,
+        classes: list[str] | None = None,
     ):
         super().__init__(
             x_position=points[0].x,
@@ -209,7 +230,11 @@ class BarSeries(Series):
         return bars + collapse_element_list(self.custom_elements)
 
 
-def default_scatter_shape_template(x, y, styles):
+def default_scatter_shape_template(
+    x: number,
+    y: number,
+    styles: style_def,
+) -> Shape:
     return Circle(x, y, radius=3, styles=styles)
 
 
@@ -218,10 +243,18 @@ class ScatterSeries(Series):
     scatter series given as a number of (x, y)-points
     """
 
-    __default_styles__ = {}
+    __default_styles__: style_def = {}
     __default_shape_template__ = staticmethod(default_scatter_shape_template)
 
-    def __init__(self, points, x_values, y_values, shape_template=None, styles=None, classes=None):
+    def __init__(
+        self,
+        points: list[Point],
+        x_values: numbers_sequence,
+        y_values: numbers_sequence,
+        shape_template: Callable[[number, number, style_def], Shape] | None = None,
+        styles: style_def | None = None,
+        classes: list[str] | None = None,
+    ):
         super().__init__(
             x_position=points[0].x,
             y_position=points[0].y,

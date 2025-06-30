@@ -3,12 +3,12 @@ from random import sample
 import unittest
 
 
-from pysvgchart.scales import LinearScale, MappingScale
+from pysvgchart.scales import LinearScale, LogarithmicScale, MappingScale
 
 
-class TestLinearRange(unittest.TestCase):
+class TestLinearScale(unittest.TestCase):
     """
-    test the LinearRange class
+    test the LinearScale class
     """
 
     def test__ints(self):
@@ -89,9 +89,83 @@ class TestLinearRange(unittest.TestCase):
         self.assertAlmostEqual(expect, actual.value_to_fraction(date(1984, 6, 14)), delta=delta, msg=msg)
 
 
-class TestMappingRange(unittest.TestCase):
+class TestLogarithmicScale(unittest.TestCase):
     """
-    test the MappingRange class
+    test the LogarithmicScale class
+    """
+
+    def test__close_ints(self):
+        # given
+        values = [1, 10, 100]
+        # when
+        actual = LogarithmicScale(values)
+        # then
+        expect = 0.0
+        self.assertEqual(expect, actual.lo)
+        expect = 2.0
+        self.assertEqual(expect, actual.hi)
+        expect = 2.0
+        self.assertEqual(expect, actual.size)
+        expect = 0.5
+        self.assertAlmostEqual(expect, actual.value_to_fraction(10))
+
+    def test__far_ints(self):
+        # given
+        values = [10, 1000, 100000, 10000000, 1000000000]
+        # when
+        actual = LogarithmicScale(values)
+        # then
+        expect = 1.0
+        self.assertEqual(expect, actual.lo)
+        expect = 9.0
+        self.assertEqual(expect, actual.hi)
+        expect = 8.0
+        self.assertEqual(expect, actual.size)
+        expect = 0.25
+        self.assertAlmostEqual(expect, actual.value_to_fraction(1000))
+        expect = 0.50
+        self.assertAlmostEqual(expect, actual.value_to_fraction(100000))
+        expect = 0.75
+        self.assertAlmostEqual(expect, actual.value_to_fraction(10000000))
+
+    def test__close_floats(self):
+        # given
+        values = [0.1, 1, 10]
+        # when
+        actual = LogarithmicScale(values)
+        # then
+        expect = -1.0
+        self.assertEqual(expect, actual.lo)
+        expect = 1.0
+        self.assertEqual(expect, actual.hi)
+        expect = 2.0
+        self.assertEqual(expect, actual.size)
+        expect = 0.5
+        self.assertAlmostEqual(expect, actual.value_to_fraction(1))
+
+    def test__far_floats(self):
+        # given
+        values = [0.001, 0.1, 10, 1000]
+        # when
+        actual = LogarithmicScale(values)
+        # then
+        expect = -3.0
+        self.assertEqual(expect, actual.lo)
+        expect = 3.0
+        self.assertEqual(expect, actual.hi)
+        expect = 6.0
+        self.assertEqual(expect, actual.size)
+        expect = 0.3333333333
+        self.assertAlmostEqual(expect, actual.value_to_fraction(0.1))
+        expect = 0.6666666666
+        self.assertAlmostEqual(expect, actual.value_to_fraction(10))
+        expect = 1.0
+        self.assertAlmostEqual(expect, actual.value_to_fraction(1000))
+
+
+class TestMappingScale(unittest.TestCase):
+    """
+    test the MappingScale class
     """
 
     def test__strs(self):

@@ -67,7 +67,7 @@ def init_stylised_line_chart_data():
         }
 
 
-def stylised_line_chart(x_shift=False, y_shift=False):
+def stylised_line_chart(x_shift=False, y_shift=False, x_log=False, y_log=False):
     def y_labels(num):
         num = float('{:.3g}'.format(num))
         magnitude = 0
@@ -75,16 +75,30 @@ def stylised_line_chart(x_shift=False, y_shift=False):
             magnitude += 1
             num /= 1000.0
         rtn = '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][magnitude])
-        return rtn.replace('.00', '').replace('.0', '')
+        return rtn
 
     def x_labels(date):
         return date.strftime('%b')
 
     init_stylised_line_chart_data()
     dates = STYLISED_LINE_CHART_DATA["dates"]
-    actual = STYLISED_LINE_CHART_DATA["actual"]
-    expected = STYLISED_LINE_CHART_DATA["expected"]
-    chart = psc.LineChart(x_values=dates, y_values=[actual, expected], y_names=['Actual sales', 'Predicted sales'], x_max_ticks=30, x_label_format=x_labels, y_label_format=y_labels, width=1200, left_margin=100, right_margin=100, x_shift=x_shift, y_shift=y_shift)
+    actual = [v if v > 0.0 or not y_log else 0.001 for v in STYLISED_LINE_CHART_DATA["actual"]]
+    expected = [v if v > 0.0 or not y_log else 0.001  for v in STYLISED_LINE_CHART_DATA["expected"]]
+    chart = psc.LineChart(
+        x_values=dates,
+        y_values=[actual, expected],
+        y_names=['Actual sales', 'Predicted sales'],
+        x_max_ticks=30,
+        x_label_format=x_labels,
+        y_label_format=y_labels,
+        width=1200,
+        left_margin=100,
+        right_margin=100,
+        x_shift=x_shift,
+        y_shift=y_shift,
+        x_log=x_log,
+        y_log=y_log,
+    )
     chart.series['Actual sales'].styles = {'stroke': "#DB7D33", 'stroke-width': '3'}
     chart.series['Predicted sales'].styles = {'stroke': '#2D2D2D', 'stroke-width': '3', 'stroke-dasharray': '4,4'}
     chart.add_legend(x_position=700, element_x=200, element_y=0, y_position=60, line_length=35, line_text_gap=20)
@@ -147,6 +161,11 @@ def test_stylised_line_chart_with_y_shift():
 def test_stylised_line_chart_with_xy_shift():
     chart = stylised_line_chart(x_shift=True, y_shift=True)
     write_out(chart.render_with_all_styles(), name="detailed-xy-shift.svg")
+
+
+def test_stylised_log_chart_with_y_log():
+    chart = stylised_line_chart(x_log=False, y_log=True)
+    write_out(chart.render_with_all_styles(), name="detailed-y-log.svg")
 
 
 def test_donut():
@@ -216,11 +235,11 @@ def init_scatter_chart_data():
         }
 
 
-def scatter_chart(x_shift=False, y_shift=False):
+def scatter_chart(x_shift=False, y_shift=False, x_log=False, y_log=False):
     init_scatter_chart_data()
     x_values = SCATTER_CHART_DATA["x_values"]
     y_values = SCATTER_CHART_DATA["y_values"]
-    chart = psc.ScatterChart(x_values=x_values, y_values=y_values, y_names=["A", "B"], x_shift=x_shift, y_shift=y_shift)
+    chart = psc.ScatterChart(x_values=x_values, y_values=y_values, y_names=["A", "B"], x_shift=x_shift, y_shift=y_shift, x_log=x_log, y_log=y_log)
     chart.add_legend()
     return chart
 
@@ -233,3 +252,18 @@ def test_scatter_chart_without_shift():
 def test_scatter_chart_xy_shift():
     chart = scatter_chart(x_shift=True, y_shift=True)
     write_out(chart.render(), name="scatter-xy-shift.svg")
+
+
+def test_scatter_chart_x_log():
+    chart = scatter_chart(x_log=True, y_log=False)
+    write_out(chart.render(), name="scatter-x-log.svg")
+
+
+def test_scatter_chart_y_log():
+    chart = scatter_chart(x_log=False, y_log=True)
+    write_out(chart.render(), name="scatter-y-log.svg")
+
+
+def test_scatter_chart_xy_log():
+    chart = scatter_chart(x_log=True, y_log=True)
+    write_out(chart.render(), name="scatter-xy-log.svg")

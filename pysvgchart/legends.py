@@ -1,8 +1,20 @@
-from .shapes import Shape, Line, Text, Rect
+from abc import abstractmethod
+
 from .helpers import collapse_element_list
+from .shapes import Shape, Line, Text, Rect
+from .shared import number
 
 
-class LineLegend(Shape):
+class Legend(Shape):
+    """
+    base class for legends
+    """
+
+    @abstractmethod
+    def get_element_list(self) -> list: ...
+
+
+class LineLegend(Legend):
     """
     legend for line charts
     """
@@ -11,13 +23,13 @@ class LineLegend(Shape):
 
     def __init__(
         self,
-        x,
-        y,
+        x: number,
+        y: number,
         series,
-        element_x,
-        element_y,
-        line_length,
-        line_text_gap,
+        element_x: number,
+        element_y: number,
+        line_length: number,
+        line_text_gap: number,
     ):
         super().__init__(x, y)
         self.series = series
@@ -38,18 +50,28 @@ class LineLegend(Shape):
             x_pos += element_x
             y_pos += element_y
 
-    def get_element_list(self):
+    def get_element_list(self) -> list[str]:
         return collapse_element_list(self.lines, self.texts)
 
 
-class BarLegend(Shape):
+class BarLegend(Legend):
     """
     legend for bar charts
     """
 
     default_line_legend_text_styles = {"alignment-baseline": "middle"}
 
-    def __init__(self, x, y, series, element_x, element_y, bar_width, bar_height, bar_text_gap):
+    def __init__(
+        self,
+        x: number,
+        y: number,
+        series,
+        element_x: number,
+        element_y: number,
+        bar_width: number,
+        bar_height: number,
+        bar_text_gap: number,
+    ):
         super().__init__(x, y)
         self.series = series
         self.lines, self.texts = [], []
@@ -75,11 +97,11 @@ class BarLegend(Shape):
             x_pos += element_x
             y_pos += element_y
 
-    def get_element_list(self):
+    def get_element_list(self) -> list[str]:
         return collapse_element_list(self.lines, self.texts)
 
 
-class ScatterLegend(Shape):
+class ScatterLegend(Legend):
     """
     legend for a scatter chart
     """
@@ -88,12 +110,12 @@ class ScatterLegend(Shape):
 
     def __init__(
         self,
-        x,
-        y,
+        x: number,
+        y: number,
         series,
-        element_x,
-        element_y,
-        shape_text_gap,
+        element_x: number,
+        element_y: number,
+        shape_text_gap: number,
     ):
         super().__init__(x, y)
         self.series = series
@@ -114,5 +136,5 @@ class ScatterLegend(Shape):
             x_pos += element_x
             y_pos += element_y
 
-    def get_element_list(self):
+    def get_element_list(self) -> list[str]:
         return collapse_element_list(self.legends, self.texts)

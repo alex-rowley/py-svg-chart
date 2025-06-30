@@ -2,11 +2,19 @@ import math
 import datetime as dt
 
 
-def noop(*args, **kwargs):
+from .shared import (
+    dates_sequence,
+    datetimes_sequence,
+    number,
+    numbers_sequence,
+)
+
+
+def noop(*args, **kwargs) -> None:
     pass
 
 
-def default_format(value):
+def default_format(value) -> str:
     """
     format a number
     """
@@ -21,7 +29,7 @@ def safe_get_element_list(elements):
         yield from elements.get_element_list()
 
 
-def collapse_element_list(*list_of_list_of_elements) -> list:
+def collapse_element_list(*list_of_list_of_elements) -> list[str]:
     """
     flatten any number of lists of elements to a list of elements
     """
@@ -36,12 +44,12 @@ def collapse_element_list(*list_of_list_of_elements) -> list:
 
 
 def get_numeric_ticks(
-    values,
-    max_ticks,
-    min_value=None,
-    max_value=None,
-    include_zero=False,
-):
+    values: numbers_sequence,
+    max_ticks: int,
+    min_value: number | None = None,
+    max_value: number | None = None,
+    include_zero: bool = False,
+) -> numbers_sequence:
     """
     compute ticks for a series of numbers
     :param values: actual values
@@ -82,12 +90,52 @@ def get_numeric_ticks(
     return [round(y * pad, 10) for y in range(int(start), int(end + 1))]
 
 
+def get_logarithmic_ticks(
+    values: numbers_sequence,
+    max_ticks: int,
+    min_value: number | None = None,
+    max_value: number | None = None,
+    include_zero: bool = False,
+) -> numbers_sequence:
+    """
+    compute logarithmic ticks for a series of numbers
+    :param values: actual values
+    :param max_ticks: maximum number of ticks
+    :param min_value: optional minimum value to include in ticks
+    :param max_value: optional maximum value to include in ticks
+    :param include_zero: whether to include zero in ticks
+    """
+    value_min, value_max = min(values), max(values)
+    if min_value is not None:
+        value_min = min(value_min, min_value)
+    if max_value is not None:
+        value_max = max(value_max, max_value)
+    if include_zero:
+        if value_min > 0:
+            value_min = 0
+        if value_max < 0:
+            value_max = 0
+
+    if value_max == value_min:
+        raise ValueError("All values are the same — cannot compute min/max.")
+
+    start = math.floor(math.log10(value_min))
+    end = math.ceil(math.log10(value_max)) + 1  # optimization, as we only need end+1
+    step = 1
+    while (end - start) // step > max_ticks:
+        step *= 2
+    if 10 ** ((end - start) // step) < value_max:
+        end += 1
+        step += 1
+    return [10**y for y in range(int(start), int(end), int(step))]
+
+
 def get_date_or_time_ticks(
-    dates,
-    max_ticks=10,
-    min_value=None,
-    max_value=None,
-):
+    dates: dates_sequence | datetimes_sequence,
+    max_ticks: int = 10,
+    min_value: dt.date | dt.datetime | None = None,
+    max_value: dt.date | dt.datetime | None = None,
+) -> dates_sequence | datetimes_sequence:
     """
     compute ticks for a series of dates/datetimes
     :param dates: actual dates/datetimes

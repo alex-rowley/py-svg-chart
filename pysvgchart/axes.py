@@ -1,10 +1,11 @@
 from __future__ import annotations
 from abc import abstractmethod
-from typing import Any
+from typing import Any, Callable
 
 from .helpers import collapse_element_list
-from .scales import make_scale
+from .scales import make_linear_scale
 from .shapes import Shape, Text, Line
+from .shared import number, style_def
 
 
 class Axis(Shape):
@@ -12,25 +13,25 @@ class Axis(Shape):
     axis of a graph
     """
 
-    default_axis_styles = {"stroke": "#2e2e2c"}
+    default_axis_styles: style_def = {"stroke": "#2e2e2c"}
 
     def __init__(
         self,
-        x_position,
-        y_position,
+        x_position: number,
+        y_position: number,
         data_points,
-        axis_length,
-        label_format,
-        max_ticks=10,
-        axis_styles=None,
-        tick_length=5,
+        axis_length: number,
+        label_format: Callable,
+        max_ticks: int = 10,
+        axis_styles: style_def | None = None,
+        tick_length: int = 5,
         min_value=None,
         max_value=None,
-        include_zero=False,
-        shift=False,
-        min_unique_values=2,
-        scale_maker=make_scale,
-        secondary=False,
+        include_zero: bool = False,
+        shift: bool = False,
+        min_unique_values: int = 2,
+        scale_maker=make_linear_scale,
+        secondary: bool = False,
     ):
         _ignore = secondary, axis_styles, tick_length
         super().__init__(x_position, y_position)
@@ -46,8 +47,10 @@ class Axis(Shape):
             min_unique_values=min_unique_values,
         )
         self.label_format = label_format
-        self.axis_line = None
-        self.tick_lines, self.tick_texts, self.grid_lines = [], [], []
+        self.axis_line: Line | None = None
+        self.tick_lines: list[Line] = []
+        self.tick_texts: list[Text] = []
+        self.grid_lines: list[Line] = []
 
     def get_element_list(self):
         return collapse_element_list(
@@ -73,19 +76,19 @@ class XAxis(Axis):
 
     def __init__(
         self,
-        x_position,
-        y_position,
+        x_position: number,
+        y_position: number,
         data_points,
-        axis_length,
-        label_format,
-        max_ticks=10,
-        axis_styles=None,
-        tick_length=5,
+        axis_length: number,
+        label_format: Callable,
+        max_ticks: int = 10,
+        axis_styles: style_def | None = None,
+        tick_length: int = 5,
         min_value=None,
         max_value=None,
-        include_zero=False,
-        shift=False,
-        scale_maker=make_scale,
+        include_zero: bool = False,
+        shift: bool = False,
+        scale_maker=make_linear_scale,
     ):
         super().__init__(
             x_position=x_position,
@@ -148,20 +151,20 @@ class YAxis(Axis):
 
     def __init__(
         self,
-        x_position,
-        y_position,
+        x_position: number,
+        y_position: number,
         data_points,
-        axis_length,
-        label_format,
-        max_ticks=10,
-        axis_styles=None,
-        tick_length=5,
+        axis_length: number,
+        label_format: Callable,
+        max_ticks: int = 10,
+        axis_styles: style_def | None = None,
+        tick_length: int = 5,
         min_value=None,
         max_value=None,
-        include_zero=False,
-        shift=False,
-        scale_maker=make_scale,
-        secondary=False,
+        include_zero: bool = False,
+        shift: bool = False,
+        scale_maker=make_linear_scale,
+        secondary: bool = False,
     ):
         super().__init__(
             x_position=x_position,
