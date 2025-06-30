@@ -113,7 +113,7 @@ def normalised_bar_series_constructor(
     x_positions = x_axis.get_positions(x_values)
     for name, y_value in zip(series_names, y_values):
         cumulative_scaled_y_values = [
-            a + b / t if t != 0 else a
+            min(a + b / t, 1.0) if t != 0 else a
             for a, b, t in zip(prev_cumulative_scaled_y_values, y_value, total_values)
         ]
         prev_scaled_positions = y_axis.get_positions(prev_cumulative_scaled_y_values)
