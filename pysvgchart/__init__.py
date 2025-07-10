@@ -2,7 +2,7 @@
 
 __author__ = "Alex Rowley"
 __email__ = ""
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 
 from .charts import (
     BarChart,
