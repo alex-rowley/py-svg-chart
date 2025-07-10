@@ -43,7 +43,7 @@ class DonutSegment(Series):
         'A {radius_outer} {radius_outer} 0 {large_arc_flag} 1 {outer_end_x} {outer_end_y} '
         'L {inner_begin_x},{inner_begin_y} '
         'A {radius_inner} {radius_inner} 0 {large_arc_flag} 0 {inner_end_x} {inner_end_y} '
-        'Z" fill="{colour}" {attributes}></path>'
+        'Z" {attributes}></path>'
     )
     # fmt: on
 
@@ -66,7 +66,7 @@ class DonutSegment(Series):
         self.centre_y = centre_y
         self.radius_inner = radius_inner
         self.radius_outer = radius_outer
-        self.colour = colour
+        self.styles = {"fill": colour}
 
     @property
     def start_theta_rad(self):
@@ -126,7 +126,6 @@ class DonutSegment(Series):
                 inner_end_y=self.inner_end_y,
                 inner_begin_x=self.inner_begin_x,
                 inner_begin_y=self.inner_begin_y,
-                colour=self.colour,
                 attributes=self.attributes,
             )
         ] + collapse_element_list(self.custom_elements)

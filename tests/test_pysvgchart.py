@@ -83,7 +83,7 @@ def stylised_line_chart(x_shift=False, y_shift=False, x_log=False, y_log=False):
     init_stylised_line_chart_data()
     dates = STYLISED_LINE_CHART_DATA["dates"]
     actual = [v if v > 0.0 or not y_log else 0.001 for v in STYLISED_LINE_CHART_DATA["actual"]]
-    expected = [v if v > 0.0 or not y_log else 0.001  for v in STYLISED_LINE_CHART_DATA["expected"]]
+    expected = [v if v > 0.0 or not y_log else 0.001 for v in STYLISED_LINE_CHART_DATA["expected"]]
     chart = psc.LineChart(
         x_values=dates,
         y_values=[actual, expected],
@@ -174,6 +174,13 @@ def test_donut():
     write_out(donut_chart.render(), name="donut.svg")
 
 
+def test_donut_legend():
+    values = [11.3, 20, 30, 40]
+    donut_chart = psc.DonutChart(values)
+    donut_chart.add_legend()
+    write_out(donut_chart.render(), name="donut_legend.svg")
+
+
 def test_donut_hover():
     def hover_modifier(position, name, value, chart_total):
         text_styles = {'alignment-baseline': 'middle', 'text-anchor': 'middle'}
@@ -185,10 +192,8 @@ def test_donut_hover():
 
     values = [11.3, 20, 30, 40]
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
-
     donut_chart = psc.DonutChart(values, names)
     donut_chart.add_hover_modifier(hover_modifier)
-
     write_out(donut_chart.render_with_all_styles(), name="donut_hover.svg")
 
 

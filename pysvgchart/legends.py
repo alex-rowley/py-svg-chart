@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
 from .helpers import collapse_element_list
-from .shapes import Shape, Line, Text, Rect
+from .shapes import Shape, Line, Text, Rect, Circle
 from .shared import number
 
 
@@ -22,14 +22,14 @@ class LineLegend(Legend):
     default_line_legend_text_styles = {"alignment-baseline": "middle"}
 
     def __init__(
-        self,
-        x: number,
-        y: number,
-        series,
-        element_x: number,
-        element_y: number,
-        line_length: number,
-        line_text_gap: number,
+            self,
+            x: number,
+            y: number,
+            series,
+            element_x: number,
+            element_y: number,
+            line_length: number,
+            line_text_gap: number,
     ):
         super().__init__(x, y)
         self.series = series
@@ -62,15 +62,15 @@ class BarLegend(Legend):
     default_line_legend_text_styles = {"alignment-baseline": "middle"}
 
     def __init__(
-        self,
-        x: number,
-        y: number,
-        series,
-        element_x: number,
-        element_y: number,
-        bar_width: number,
-        bar_height: number,
-        bar_text_gap: number,
+            self,
+            x: number,
+            y: number,
+            series,
+            element_x: number,
+            element_y: number,
+            bar_width: number,
+            bar_height: number,
+            bar_text_gap: number,
     ):
         super().__init__(x, y)
         self.series = series
@@ -109,13 +109,13 @@ class ScatterLegend(Legend):
     default_scatter_legend_text_styles = {"alignment-baseline": "middle"}
 
     def __init__(
-        self,
-        x: number,
-        y: number,
-        series,
-        element_x: number,
-        element_y: number,
-        shape_text_gap: number,
+            self,
+            x: number,
+            y: number,
+            series,
+            element_x: number,
+            element_y: number,
+            shape_text_gap: number,
     ):
         super().__init__(x, y)
         self.series = series
@@ -138,3 +138,48 @@ class ScatterLegend(Legend):
 
     def get_element_list(self) -> list[str]:
         return collapse_element_list(self.legends, self.texts)
+
+
+class DonutLegend(Legend):
+    """
+    Legend for donut (or pie) charts using small colored circles.
+    """
+
+    default_circle_legend_text_styles = {"alignment-baseline": "middle"}
+
+    def __init__(
+            self,
+            x: number,
+            y: number,
+            series,
+            element_x: number,
+            element_y: number,
+            circle_radius: number,
+            circle_text_gap: number,
+    ):
+        super().__init__(x, y)
+        self.series = series
+        self.circles, self.texts = [], []
+        x_pos, y_pos = self.position.x, self.position.y
+        for index, series_name in enumerate(self.series):
+            self.circles.append(
+                Circle(
+                    x=x_pos + circle_radius,
+                    y=y_pos,
+                    radius=circle_radius,
+                    styles=self.series[series_name].styles,
+                )
+            )
+            self.texts.append(
+                Text(
+                    x_pos + 2 * circle_radius + circle_text_gap,
+                    y_pos,
+                    content=series_name,
+                    styles=self.default_circle_legend_text_styles,
+                )
+            )
+            x_pos += element_x
+            y_pos += element_y
+
+    def get_element_list(self) -> list[str]:
+        return collapse_element_list(self.circles, self.texts)
