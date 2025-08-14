@@ -223,6 +223,32 @@ class Chart(ABC):
             ]
         )
 
+    def save(
+            self,
+            file_path: str
+    ) -> None:
+        """
+        :param file_path: file path to write to
+        :return:
+        """
+        with open(file_path, "w+") as file:
+            file.write(self.render())
+
+    def save_with_all_styles(
+            self,
+            file_path: str,
+            styles: named_styles | None = None,
+            include_default: bool = True
+    ) -> None:
+        """
+        :param file_path: file path to save to
+        :param styles: styles to use
+        :param include_default: also use the default styles (to enable things like hover text)
+        :return:
+        """
+        with open(file_path, "w+") as file:
+            file.write(self.render_with_all_styles(styles, include_default))
+
     @staticmethod
     def generate_series_names(
             prefix: str,
