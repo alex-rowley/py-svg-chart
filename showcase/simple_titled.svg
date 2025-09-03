@@ -1,0 +1,33 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+<line x1="100" y1="500" x2="700" y2="500" stroke="#2e2e2c"/>
+<text x="400.0" y="540" text-anchor="middle" dominant-baseline="middle">Fruit</text>
+<line x1="175.0" y1="500" x2="175.0" y2="505" stroke="#2e2e2c"/>
+<line x1="325.0" y1="500" x2="325.0" y2="505" stroke="#2e2e2c"/>
+<line x1="475.0" y1="500" x2="475.0" y2="505" stroke="#2e2e2c"/>
+<line x1="625.0" y1="500" x2="625.0" y2="505" stroke="#2e2e2c"/>
+<text x="175.0" y="510" text-anchor="middle" dominant-baseline="hanging">Apples</text>
+<text x="325.0" y="510" text-anchor="middle" dominant-baseline="hanging">Bananas</text>
+<text x="475.0" y="510" text-anchor="middle" dominant-baseline="hanging">Cherries</text>
+<text x="625.0" y="510" text-anchor="middle" dominant-baseline="hanging">Durians</text>
+<line x1="100" y1="100" x2="100" y2="500" stroke="#2e2e2c"/>
+<text x="60" y="300.0" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 60 300.0)">Sold</text>
+<line x1="95" y1="500.0" x2="100" y2="500.0" stroke="#2e2e2c"/>
+<line x1="95" y1="450.0" x2="100" y2="450.0" stroke="#2e2e2c"/>
+<line x1="95" y1="400.0" x2="100" y2="400.0" stroke="#2e2e2c"/>
+<line x1="95" y1="350.0" x2="100" y2="350.0" stroke="#2e2e2c"/>
+<line x1="95" y1="300.0" x2="100" y2="300.0" stroke="#2e2e2c"/>
+<line x1="95" y1="250.0" x2="100" y2="250.0" stroke="#2e2e2c"/>
+<line x1="95" y1="200.0" x2="100" y2="200.0" stroke="#2e2e2c"/>
+<line x1="95" y1="150.0" x2="100" y2="150.0" stroke="#2e2e2c"/>
+<line x1="95" y1="100.0" x2="100" y2="100.0" stroke="#2e2e2c"/>
+<text x="90" y="500.0" text-anchor="end" dominant-baseline="middle">0</text>
+<text x="90" y="450.0" text-anchor="end" dominant-baseline="middle">5</text>
+<text x="90" y="400.0" text-anchor="end" dominant-baseline="middle">10</text>
+<text x="90" y="350.0" text-anchor="end" dominant-baseline="middle">15</text>
+<text x="90" y="300.0" text-anchor="end" dominant-baseline="middle">20</text>
+<text x="90" y="250.0" text-anchor="end" dominant-baseline="middle">25</text>
+<text x="90" y="200.0" text-anchor="end" dominant-baseline="middle">30</text>
+<text x="90" y="150.0" text-anchor="end" dominant-baseline="middle">35</text>
+<text x="90" y="100.0" text-anchor="end" dominant-baseline="middle">40</text>
+<path d="M 175.0 387.0 L 325.0 300.0 L 475.0 200.0 L 625.0 100.0" fill="none" stroke-width="2" stroke="green"/>
+</svg>

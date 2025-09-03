@@ -306,6 +306,8 @@ class VerticalChart(Chart):
             x_max_ticks: int = 12,
             x_shift: bool = False,
             x_label_format: Callable = default_format,
+            x_axis_title: str | None = None,
+            x_axis_title_styles: dict | None = None,
             # primary y-axis
             y_min: Any = None,
             y_max: Any = None,
@@ -313,6 +315,8 @@ class VerticalChart(Chart):
             y_max_ticks: int = 12,
             y_shift: bool = False,
             y_label_format: Callable = default_format,
+            y_axis_title: str | None = None,
+            y_axis_title_styles: dict | None = None,
             # secondary y-axis
             sec_y_min: Any = None,
             sec_y_max: Any = None,
@@ -320,6 +324,8 @@ class VerticalChart(Chart):
             sec_y_max_ticks: int = 12,
             sec_y_shift: bool = False,
             sec_y_label_format: Callable = default_format,
+            sec_y_axis_title: str | None = None,
+            sec_y_axis_title_styles: dict | None = None,
             # canvas
             left_margin: number = 100,
             right_margin: number = 100,
@@ -375,6 +381,7 @@ class VerticalChart(Chart):
             include_zero=x_zero,
             shift=x_shift,
             scale_maker=self.x_axis_scale_maker,
+            title=x_axis_title,
         )
         self.y_axis = self.y_axis_type(  # type: ignore[abstract]
             x_position=left_margin,
@@ -389,6 +396,7 @@ class VerticalChart(Chart):
             shift=y_shift,
             scale_maker=self.y_axis_scale_maker,
             secondary=False,
+            title=y_axis_title,
         )
         series_names = self.generate_series_names("Series", len(y_values), y_names)
         self.series = self.series_constructor(
@@ -422,6 +430,7 @@ class VerticalChart(Chart):
                 shift=sec_y_shift,
                 scale_maker=self.y_axis_scale_maker,
                 secondary=True,
+                title=sec_y_axis_title
             )
             self.series.update(
                 self.series_constructor(

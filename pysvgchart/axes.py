@@ -32,6 +32,8 @@ class Axis(Shape):
         min_unique_values: int = 2,
         scale_maker=make_linear_scale,
         secondary: bool = False,
+        title: str | None = None,
+        title_styles: style_def | None = None
     ):
         _ignore = secondary, axis_styles, tick_length
         super().__init__(x_position, y_position)
@@ -51,10 +53,11 @@ class Axis(Shape):
         self.tick_lines: list[Line] = []
         self.tick_texts: list[Text] = []
         self.grid_lines: list[Line] = []
+        self.title: Text | None = None
 
     def get_element_list(self):
         return collapse_element_list(
-            [self.axis_line],
+            [self.axis_line, self.title] if self.title else [self.axis_line],
             self.tick_lines,
             self.tick_texts,
             self.grid_lines,
@@ -73,6 +76,7 @@ class XAxis(Axis):
     """
 
     default_tick_text_styles = {"text-anchor": "middle", "dominant-baseline": "hanging"}
+    default_title_styles = {"text-anchor": "middle", "dominant-baseline": "middle"}
 
     def __init__(
         self,
@@ -89,6 +93,8 @@ class XAxis(Axis):
         include_zero: bool = False,
         shift: bool = False,
         scale_maker=make_linear_scale,
+        title: str | None = None,
+        title_styles: style_def | None = None
     ):
         super().__init__(
             x_position=x_position,
@@ -130,6 +136,16 @@ class XAxis(Axis):
                 ),
             )
 
+        if title:
+            title_x = self.position.x + self.length / 2  # Center on the axis
+            title_y = self.position.y + 40
+            self.title = Text(
+                x=title_x,
+                y=title_y,
+                content=title,
+                styles=title_styles or self.default_title_styles.copy()
+            )
+
     def get_positions(self, values, include_axis=True) -> list[int | float | None]:
         proportions_of_range = [self.scale.value_to_fraction(value) for value in values]
         in_range = (
@@ -148,6 +164,7 @@ class YAxis(Axis):
 
     default_tick_text_styles = {"text-anchor": "end", "dominant-baseline": "middle"}
     default_sec_tick_text_styles = {"text-anchor": "start", "dominant-baseline": "middle"}
+    default_title_styles = {"text-anchor": "middle", "dominant-baseline": "middle"}
 
     def __init__(
         self,
@@ -165,6 +182,8 @@ class YAxis(Axis):
         shift: bool = False,
         scale_maker=make_linear_scale,
         secondary: bool = False,
+        title: str | None = None,
+        title_styles: style_def | None = None
     ):
         super().__init__(
             x_position=x_position,
@@ -220,6 +239,18 @@ class YAxis(Axis):
                     content=label_format(tick),
                     styles=tick_text_styles,
                 ),
+            )
+
+        if title:
+            title_x = self.position.x + tick_text_offset - 30
+            title_y = self.position.y + self.length / 2
+            styles = title_styles or self.default_title_styles.copy()
+            styles['transform'] = f'rotate(-90 {title_x} {title_y})'
+            self.title = Text(
+                x=title_x,
+                y=title_y,
+                content=title,
+                styles=styles
             )
 
     def get_positions(self, values, include_axis=True) -> list[int | float | None]:
