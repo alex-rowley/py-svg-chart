@@ -41,6 +41,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/arowley-ai/py-svg-chart',
-    version='0.5.5',
+    version='0.5.6',
     zip_safe=False,
 )
