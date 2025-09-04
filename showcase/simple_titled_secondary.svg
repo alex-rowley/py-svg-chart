@@ -25,7 +25,7 @@
 <text x="90" y="166.66666666666666" text-anchor="end" dominant-baseline="middle">35</text>
 <text x="90" y="100.0" text-anchor="end" dominant-baseline="middle">40</text>
 <line x1="700" y1="100" x2="700" y2="500" stroke="#2e2e2c"/>
-<text x="740" y="300.0" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 740 300.0)">Sold</text>
+<text x="750" y="300.0" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 750 300.0)">Sold</text>
 <line x1="700" y1="500.0" x2="705" y2="500.0" stroke="#2e2e2c"/>
 <line x1="700" y1="450.0" x2="705" y2="450.0" stroke="#2e2e2c"/>
 <line x1="700" y1="400.0" x2="705" y2="400.0" stroke="#2e2e2c"/>

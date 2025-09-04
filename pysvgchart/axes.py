@@ -33,7 +33,8 @@ class Axis(Shape):
         scale_maker=make_linear_scale,
         secondary: bool = False,
         title: str | None = None,
-        title_styles: style_def | None = None
+        title_styles: style_def | None = None,
+        title_offset: int = 40
     ):
         _ignore = secondary, axis_styles, tick_length
         super().__init__(x_position, y_position)
@@ -94,7 +95,8 @@ class XAxis(Axis):
         shift: bool = False,
         scale_maker=make_linear_scale,
         title: str | None = None,
-        title_styles: style_def | None = None
+        title_styles: style_def | None = None,
+        title_offset: int = 40
     ):
         super().__init__(
             x_position=x_position,
@@ -138,7 +140,7 @@ class XAxis(Axis):
 
         if title:
             title_x = self.position.x + self.length / 2  # Center on the axis
-            title_y = self.position.y + 40
+            title_y = self.position.y + title_offset
             self.title = Text(
                 x=title_x,
                 y=title_y,
@@ -183,7 +185,8 @@ class YAxis(Axis):
         scale_maker=make_linear_scale,
         secondary: bool = False,
         title: str | None = None,
-        title_styles: style_def | None = None
+        title_styles: style_def | None = None,
+        title_offset: int = 40
     ):
         super().__init__(
             x_position=x_position,
@@ -242,7 +245,7 @@ class YAxis(Axis):
             )
 
         if title:
-            title_x = self.position.x + tick_text_offset + (30 if secondary else -30)
+            title_x = self.position.x + tick_text_offset + (title_offset if secondary else -title_offset)
             title_y = self.position.y + self.length / 2
             styles = title_styles or self.default_title_styles.copy()
             styles['transform'] = f'rotate(-90 {title_x} {title_y})'

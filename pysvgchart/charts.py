@@ -225,29 +225,22 @@ class Chart(ABC):
 
     def save(
             self,
-            file_path: str
-    ) -> None:
-        """
-        :param file_path: file path to write to
-        :return:
-        """
-        with open(file_path, "w+") as file:
-            file.write(self.render())
-
-    def save_with_all_styles(
-            self,
             file_path: str,
             styles: named_styles | None = None,
             include_default: bool = True
     ) -> None:
         """
-        :param file_path: file path to save to
-        :param styles: styles to use
-        :param include_default: also use the default styles (to enable things like hover text)
+        Save the chart to a file.
+        :param file_path: file path to write to
+        :param styles: styles to use (if provided, will render with all styles)
+        :param include_default: also use the default styles (only used when styles is provided)
         :return:
         """
         with open(file_path, "w+") as file:
-            file.write(self.render_with_all_styles(styles, include_default))
+            if styles is not None or not include_default:
+                file.write(self.render_with_all_styles(styles, include_default))
+            else:
+                file.write(self.render())
 
     @staticmethod
     def generate_series_names(
@@ -308,6 +301,7 @@ class VerticalChart(Chart):
             x_label_format: Callable = default_format,
             x_axis_title: str | None = None,
             x_axis_title_styles: dict | None = None,
+            x_axis_title_offset: int = 40,
             # primary y-axis
             y_min: Any = None,
             y_max: Any = None,
@@ -317,6 +311,7 @@ class VerticalChart(Chart):
             y_label_format: Callable = default_format,
             y_axis_title: str | None = None,
             y_axis_title_styles: dict | None = None,
+            y_axis_title_offset: int = 40,
             # secondary y-axis
             sec_y_min: Any = None,
             sec_y_max: Any = None,
@@ -326,6 +321,7 @@ class VerticalChart(Chart):
             sec_y_label_format: Callable = default_format,
             sec_y_axis_title: str | None = None,
             sec_y_axis_title_styles: dict | None = None,
+            sec_y_axis_title_offset: int = 40,
             # canvas
             left_margin: number = 100,
             right_margin: number = 100,
@@ -382,6 +378,8 @@ class VerticalChart(Chart):
             shift=x_shift,
             scale_maker=self.x_axis_scale_maker,
             title=x_axis_title,
+            title_styles=x_axis_title_styles,
+            title_offset=x_axis_title_offset
         )
         self.y_axis = self.y_axis_type(  # type: ignore[abstract]
             x_position=left_margin,
@@ -397,6 +395,8 @@ class VerticalChart(Chart):
             scale_maker=self.y_axis_scale_maker,
             secondary=False,
             title=y_axis_title,
+            title_offset=y_axis_title_offset,
+            title_styles=y_axis_title_styles
         )
         series_names = self.generate_series_names("Series", len(y_values), y_names)
         self.series = self.series_constructor(
@@ -430,7 +430,9 @@ class VerticalChart(Chart):
                 shift=sec_y_shift,
                 scale_maker=self.y_axis_scale_maker,
                 secondary=True,
-                title=sec_y_axis_title
+                title=sec_y_axis_title,
+                title_styles=sec_y_axis_title_styles,
+                title_offset=sec_y_axis_title_offset
             )
             self.series.update(
                 self.series_constructor(

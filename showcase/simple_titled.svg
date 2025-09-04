@@ -10,7 +10,7 @@
 <text x="475.0" y="510" text-anchor="middle" dominant-baseline="hanging">Cherries</text>
 <text x="625.0" y="510" text-anchor="middle" dominant-baseline="hanging">Durians</text>
 <line x1="100" y1="100" x2="100" y2="500" stroke="#2e2e2c"/>
-<text x="60" y="300.0" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 60 300.0)">Sold</text>
+<text x="50" y="300.0" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 50 300.0)">Sold</text>
 <line x1="95" y1="500.0" x2="100" y2="500.0" stroke="#2e2e2c"/>
 <line x1="95" y1="450.0" x2="100" y2="450.0" stroke="#2e2e2c"/>
 <line x1="95" y1="400.0" x2="100" y2="400.0" stroke="#2e2e2c"/>
