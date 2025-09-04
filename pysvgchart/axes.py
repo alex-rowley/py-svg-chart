@@ -242,7 +242,7 @@ class YAxis(Axis):
             )
 
         if title:
-            title_x = self.position.x + tick_text_offset - 30
+            title_x = self.position.x + tick_text_offset + (30 if secondary else -30)
             title_y = self.position.y + self.length / 2
             styles = title_styles or self.default_title_styles.copy()
             styles['transform'] = f'rotate(-90 {title_x} {title_y})'

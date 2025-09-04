@@ -210,6 +210,12 @@ def test_simple_line_chart_with_axis_titles():
     simple_line_chart = psc.SimpleLineChart(x_values=names, y_values=[values], y_names=['number'], y_zero=True, x_axis_title='Fruit', y_axis_title='Sold')
     write_out(simple_line_chart.render(), name="simple_titled.svg")
 
+def test_simple_line_chart_with_secondary_axis_titles():
+    values = [11.3, 20, 30, 40]
+    names = ['Apples', 'Bananas', 'Cherries', 'Durians']
+    simple_line_chart = psc.SimpleLineChart(x_values=names, y_values=[values], sec_y_values=[values], sec_y_names=['number'], sec_y_zero=True, x_axis_title='Fruit', sec_y_axis_title='Sold')
+    write_out(simple_line_chart.render(), name="simple_titled_secondary.svg")
+
 
 def test_bar_chart():
     values = [[10, 20, 30, 40], [30, 10, 10, 20]]
