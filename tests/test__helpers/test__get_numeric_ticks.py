@@ -26,15 +26,31 @@ class TestNumericTicks(unittest.TestCase):
             42,
         ]
         max_ticks = 10
-        # when        # then
-        with self.assertRaises(ValueError):
-            get_numeric_ticks(values, max_ticks)
+        # when
+        actual = get_numeric_ticks(values, max_ticks)
+        # then - should create a scale from 0 to 42
+        self.assertEqual(0, min(actual))
+        self.assertGreaterEqual(max(actual), 42)
 
     def test_two_same_values(self):
         # given
         values = [
             42,
             42,
+        ]
+        max_ticks = 10
+        # when
+        actual = get_numeric_ticks(values, max_ticks)
+        # then - should create a scale from 0 to 42
+        self.assertEqual(0, min(actual))
+        self.assertGreaterEqual(max(actual), 42)
+
+    def test_all_zeros(self):
+        # given
+        values = [
+            0,
+            0,
+            0,
         ]
         max_ticks = 10
         # when        # then

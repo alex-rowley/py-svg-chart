@@ -230,6 +230,25 @@ class BarSeries(Series):
         return bars + collapse_element_list(self.custom_elements)
 
 
+class HorizontalBarSeries(BarSeries):
+    """
+    Series for horizontal bar charts where bars grow left-to-right.
+    """
+
+    def get_element_list(self) -> list:
+        bars = [
+            self.bar_template.format(
+                x=p.x,
+                y=p.y - self.bar_width / 2,
+                w=h,
+                h=self.bar_width,
+                attributes=self.attributes,
+            )
+            for p, h in zip(self.points, self.bar_heights)
+        ]
+        return bars + collapse_element_list(self.custom_elements)
+
+
 def default_scatter_shape_template(
         x: number,
         y: number,

@@ -1,0 +1,39 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+<line x1="200" y1="500" x2="700" y2="500" stroke="#2e2e2c"/>
+<text x="450.0" y="540" text-anchor="middle" dominant-baseline="middle">Units Sold</text>
+<line x1="200.0" y1="500" x2="200.0" y2="505" stroke="#2e2e2c"/>
+<line x1="262.5" y1="500" x2="262.5" y2="505" stroke="#2e2e2c"/>
+<line x1="325.0" y1="500" x2="325.0" y2="505" stroke="#2e2e2c"/>
+<line x1="387.5" y1="500" x2="387.5" y2="505" stroke="#2e2e2c"/>
+<line x1="450.0" y1="500" x2="450.0" y2="505" stroke="#2e2e2c"/>
+<line x1="512.5" y1="500" x2="512.5" y2="505" stroke="#2e2e2c"/>
+<line x1="575.0" y1="500" x2="575.0" y2="505" stroke="#2e2e2c"/>
+<line x1="637.5" y1="500" x2="637.5" y2="505" stroke="#2e2e2c"/>
+<line x1="700.0" y1="500" x2="700.0" y2="505" stroke="#2e2e2c"/>
+<text x="200.0" y="510" text-anchor="middle" dominant-baseline="hanging">0</text>
+<text x="262.5" y="510" text-anchor="middle" dominant-baseline="hanging">5</text>
+<text x="325.0" y="510" text-anchor="middle" dominant-baseline="hanging">10</text>
+<text x="387.5" y="510" text-anchor="middle" dominant-baseline="hanging">15</text>
+<text x="450.0" y="510" text-anchor="middle" dominant-baseline="hanging">20</text>
+<text x="512.5" y="510" text-anchor="middle" dominant-baseline="hanging">25</text>
+<text x="575.0" y="510" text-anchor="middle" dominant-baseline="hanging">30</text>
+<text x="637.5" y="510" text-anchor="middle" dominant-baseline="hanging">35</text>
+<text x="700.0" y="510" text-anchor="middle" dominant-baseline="hanging">40</text>
+<line x1="200" y1="100" x2="200" y2="500" stroke="#2e2e2c"/>
+<text x="100" y="300.0" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 100 300.0)">Products</text>
+<line x1="195" y1="140.0" x2="200" y2="140.0" stroke="#2e2e2c"/>
+<line x1="195" y1="220.0" x2="200" y2="220.0" stroke="#2e2e2c"/>
+<line x1="195" y1="300.0" x2="200" y2="300.0" stroke="#2e2e2c"/>
+<line x1="195" y1="380.0" x2="200" y2="380.0" stroke="#2e2e2c"/>
+<line x1="195" y1="460.0" x2="200" y2="460.0" stroke="#2e2e2c"/>
+<text x="190" y="140.0" text-anchor="end" dominant-baseline="middle">Apples</text>
+<text x="190" y="220.0" text-anchor="end" dominant-baseline="middle">Bananas</text>
+<text x="190" y="300.0" text-anchor="end" dominant-baseline="middle">Cherries</text>
+<text x="190" y="380.0" text-anchor="end" dominant-baseline="middle">Dates</text>
+<text x="190" y="460.0" text-anchor="end" dominant-baseline="middle">Elderberries</text>
+<rect x="200" y="120.0" width="312.5" height="40" stroke="none" fill="green"/>
+<rect x="200" y="200.0" width="500.0" height="40" stroke="none" fill="green"/>
+<rect x="200" y="280.0" width="187.5" height="40" stroke="none" fill="green"/>
+<rect x="200" y="360.0" width="375.0" height="40" stroke="none" fill="green"/>
+<rect x="200" y="440.0" width="437.5" height="40" stroke="none" fill="green"/>
+</svg>

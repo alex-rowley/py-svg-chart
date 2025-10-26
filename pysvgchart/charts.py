@@ -3,7 +3,7 @@ from collections.abc import Callable
 from itertools import zip_longest, cycle
 from typing import Any
 
-from .axes import Axis, XAxis, YAxis
+from .axes import Axis, XAxis, YAxis, CategoryYAxis
 from .helpers import collapse_element_list, default_format
 from .legends import BarLegend, Legend, LineLegend, ScatterLegend, DonutLegend
 from .scales import make_categories_scale, make_logarithmic_scale, make_linear_scale
@@ -156,6 +156,49 @@ def scatter_series_constructor(
     }
 
 
+def horizontal_bar_series_constructor(
+        x_values: list | tuple,
+        y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+        y_axis: Axis,
+        x_axis: Axis,
+        series_names: list[str],
+        bar_width: number,
+        bar_gap: number,
+) -> dict[str, Series]:
+    """
+    Constructor for horizontal bar series.
+    Note: Parameters are (x_values, y_values, y_axis, x_axis) - axes are swapped!
+    In horizontal bars:
+      - x_values are categories (shown on y-axis/vertical)
+      - y_values are the numerical values (shown on x-axis/horizontal)
+      - bars grow horizontally (left to right)
+    """
+    if len(y_values) != len(series_names):
+        raise ValueError("y_values and series_names must have the same length")
+    if not all(len(y_value) == len(x_values) for y_value in y_values):
+        raise ValueError("y_values must all have the same length as x_values")
+    no_series = len(series_names)
+    bar_span = bar_width + bar_gap
+    bar_shift = bar_span * (no_series - 1) / 2
+    from .series import HorizontalBarSeries
+    return {
+        name: HorizontalBarSeries(
+            points=[
+                Point(x=x_axis.position.x, y=y + bar_nr * bar_span - bar_shift)  # type: ignore[arg-type, operator]
+                for y in y_axis.get_positions(x_values)
+            ],
+            x_values=x_values,
+            y_values=y_value,  # type: ignore[arg-type]
+            bar_heights=[
+                x - x_axis.position.x if x is not None else 0
+                for x in x_axis.get_positions(y_value)
+            ],
+            bar_width=bar_width,
+        )
+        for bar_nr, name, y_value in zip(range(no_series), series_names, y_values)
+    }
+
+
 def default_x_range_constructor(x_values: list | tuple) -> list:
     return [v for v in x_values]
 
@@ -185,7 +228,7 @@ class Chart(ABC):
         self.series = {}
 
     @abstractmethod
-    def get_element_list(self): ...
+    def get_element_list(self) -> list[str]: ...
 
     def add_custom_element(self, custom_element) -> None:
         self.custom_elements.append(custom_element)
@@ -260,11 +303,11 @@ class Chart(ABC):
                ][:n]
 
 
-class VerticalChart(Chart):
+class CartesianChart(Chart):
     """
-    Any chart with a vertical y-axis and a horizontal x-axis
-    - all lines share the same x values
-    - y values differ
+    Base class for charts with two perpendicular axes (X and Y).
+    This class provides the foundation for both vertical and horizontal oriented charts.
+    Subclasses should define orientation-specific behavior.
     """
 
     __colour_defaults__ = ["green", "red", "blue", "orange", "yellow", "black"]
@@ -273,16 +316,28 @@ class VerticalChart(Chart):
     default_minor_grid_styles = {"stroke": "#6e6e6e", "stroke-width": "0.2"}
     colour_property = "stroke"
 
-    # The defaults are for axis classes
+    # The defaults are for axis classes - subclasses should override
     x_axis_type = Axis
     y_axis_type = Axis
     x_axis_scale_maker = staticmethod(make_linear_scale)
     y_axis_scale_maker = staticmethod(make_linear_scale)
 
-    # The defaults are for line class
+    # The defaults are for series - subclasses should override
     x_range_constructor = staticmethod(default_x_range_constructor)
     y_range_constructor = staticmethod(default_y_range_constructor)
     series_constructor = staticmethod(no_series_constructor)
+
+    def set_palette(self, colours: list[str] | tuple[str, ...]) -> None:
+        for series, colour in zip(self.series, cycle(colours)):
+            self.series[series].styles[self.colour_property] = colour
+
+
+class VerticalChart(CartesianChart):
+    """
+    Any chart with a vertical y-axis and a horizontal x-axis
+    - all lines share the same x values
+    - y values differ
+    """
 
     def __init__(
             self,
@@ -448,10 +503,6 @@ class VerticalChart(Chart):
         self.legend: Legend | None = None
         self.set_palette(colours if colours else self.__colour_defaults__)
 
-    def set_palette(self, colours: list[str] | tuple[str, ...]) -> None:
-        for series, colour in zip(self.series, cycle(colours)):
-            self.series[series].styles[self.colour_property] = colour
-
     def add_legend(
             self,
             x_position: number = 730,
@@ -585,6 +636,165 @@ class VerticalChart(Chart):
         )
 
 
+class HorizontalChart(CartesianChart):
+    """
+    Chart with a horizontal value axis and vertical category/data axis.
+    Useful for horizontal bar charts where categories are on Y-axis and values on X-axis.
+    """
+
+    def __init__(
+            self,
+            # chart data
+            x_values: list | tuple,
+            y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+            sec_x_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...] | None = None,
+            y_names: list[str] | None = None,
+            sec_x_names: list[str] | None = None,
+            # y-axis (categories/vertical)
+            y_min: Any = None,
+            y_max: Any = None,
+            y_zero: bool = False,
+            y_max_ticks: int = 12,
+            y_shift: bool = False,
+            y_label_format: Callable = default_format,
+            y_axis_title: str | None = None,
+            y_axis_title_styles: dict | None = None,
+            y_axis_title_offset: int = 40,
+            # primary x-axis (values/horizontal)
+            x_min: Any = None,
+            x_max: Any = None,
+            x_zero: bool = False,
+            x_max_ticks: int = 12,
+            x_shift: bool = False,
+            x_label_format: Callable = default_format,
+            x_axis_title: str | None = None,
+            x_axis_title_styles: dict | None = None,
+            x_axis_title_offset: int = 40,
+            # secondary x-axis
+            sec_x_min: Any = None,
+            sec_x_max: Any = None,
+            sec_x_zero: bool = False,
+            sec_x_max_ticks: int = 12,
+            sec_x_shift: bool = False,
+            sec_x_label_format: Callable = default_format,
+            sec_x_axis_title: str | None = None,
+            sec_x_axis_title_styles: dict | None = None,
+            sec_x_axis_title_offset: int = 40,
+            # canvas
+            left_margin: number = 100,
+            right_margin: number = 100,
+            x_margin: number = 100,
+            height: number = 600,
+            width: number = 800,
+            bar_width: number = 40,
+            bar_gap: number = 2,
+            colours: list[str] | tuple[str, ...] | None = None,
+    ):
+        """
+        Create a horizontal chart where categories are on Y-axis (vertical) and values on X-axis (horizontal).
+        Note: In horizontal orientation, x and y roles are swapped compared to VerticalChart.
+        """
+        super().__init__(height, width)
+
+        # In horizontal charts:
+        # - Y-axis is vertical and shows categories (x_values)
+        # - X-axis is horizontal and shows values (y_values)
+        self.y_axis = self.y_axis_type(  # type: ignore[abstract]
+            x_position=left_margin,
+            y_position=x_margin,
+            data_points=self.x_range_constructor(x_values),
+            axis_length=height - 2 * x_margin,
+            label_format=y_label_format,
+            max_ticks=y_max_ticks,
+            min_value=y_min,
+            max_value=y_max,
+            include_zero=y_zero,
+            shift=y_shift,
+            scale_maker=self.y_axis_scale_maker,
+            secondary=False,
+            title=y_axis_title,
+            title_styles=y_axis_title_styles,
+            title_offset=y_axis_title_offset
+        )
+
+        self.x_axis = self.x_axis_type(  # type: ignore[abstract]
+            x_position=left_margin,
+            y_position=height - x_margin,
+            data_points=self.y_range_constructor(y_values),
+            axis_length=width - left_margin - right_margin,
+            label_format=x_label_format,
+            max_ticks=x_max_ticks,
+            min_value=x_min,
+            max_value=x_max,
+            include_zero=x_zero,
+            shift=x_shift,
+            scale_maker=self.x_axis_scale_maker,
+            title=x_axis_title,
+            title_styles=x_axis_title_styles,
+            title_offset=x_axis_title_offset
+        )
+
+        series_names = self.generate_series_names("Series", len(y_values), y_names)
+        self.series = self.series_constructor(
+            x_values,
+            y_values,
+            self.y_axis,  # Note: swapped for horizontal
+            self.x_axis,  # Note: swapped for horizontal
+            series_names,
+            bar_width,
+            bar_gap,
+        )
+
+        self.sec_x_axis = None
+        if sec_x_values is not None:
+            sec_series_names = self.generate_series_names(
+                "Secondary series",
+                len(sec_x_values),
+                sec_x_names,
+            )
+            self.sec_x_axis = self.x_axis_type(  # type: ignore[abstract]
+                x_position=left_margin,
+                y_position=x_margin,
+                data_points=default_x_range_constructor(sec_x_values),
+                axis_length=width - left_margin - right_margin,
+                label_format=sec_x_label_format,
+                max_ticks=sec_x_max_ticks,
+                min_value=sec_x_min,
+                max_value=sec_x_max,
+                include_zero=sec_x_zero,
+                shift=sec_x_shift,
+                scale_maker=self.x_axis_scale_maker,
+                secondary=True,
+                title=sec_x_axis_title,
+                title_styles=sec_x_axis_title_styles,
+                title_offset=sec_x_axis_title_offset
+            )
+            self.series.update(
+                self.series_constructor(
+                    x_values,
+                    sec_x_values,
+                    self.y_axis,
+                    self.sec_x_axis,
+                    sec_series_names,
+                    bar_width,
+                    bar_gap,
+                )
+            )
+
+        self.legend: Legend | None = None
+        self.set_palette(colours if colours else self.__colour_defaults__)
+
+    def get_element_list(self) -> list[str]:
+        return collapse_element_list(
+            [self.x_axis],
+            [self.y_axis],
+            [self.legend],
+            [self.sec_x_axis],
+            [self.series[s] for s in self.series],
+            self.custom_elements,
+        )
+
+
 class LineChart(VerticalChart):
     x_axis_type = XAxis  # type: ignore[assignment]
     y_axis_type = YAxis  # type: ignore[assignment]
@@ -617,6 +827,41 @@ class BarChart(LineChart):
     x_axis_scale_maker = staticmethod(make_categories_scale)
     y_axis_scale_maker = staticmethod(make_linear_scale)
     series_constructor = staticmethod(bar_series_constructor)
+    colour_property = "fill"
+
+    def add_legend(  # type: ignore[override]
+            self,
+            x_position: number = 730,
+            y_position: number = 200,
+            element_x: number = 0,
+            element_y: number = 20,
+            bar_width: number = 30,
+            bar_height: number = 5,
+            bar_text_gap: number = 5,
+            **kwargs,
+    ):
+        self.legend = BarLegend(
+            x_position,
+            y_position,
+            self.series,
+            element_x,
+            element_y,
+            bar_width,
+            bar_height,
+            bar_text_gap,
+        )
+
+
+class HorizontalBarChart(HorizontalChart):
+    """
+    Horizontal bar chart where categories are on Y-axis (vertical) and values on X-axis (horizontal).
+    Bars grow from left to right.
+    """
+    x_axis_type = XAxis
+    y_axis_type = CategoryYAxis
+    x_axis_scale_maker = staticmethod(make_linear_scale)
+    y_axis_scale_maker = staticmethod(make_categories_scale)
+    series_constructor = staticmethod(horizontal_bar_series_constructor)
     colour_property = "fill"
 
     def add_legend(  # type: ignore[override]

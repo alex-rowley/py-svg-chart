@@ -1,7 +1,5 @@
 import unittest
 
-from pygments.lexer import include
-
 from pysvgchart.styles import render_all_styles
 
 

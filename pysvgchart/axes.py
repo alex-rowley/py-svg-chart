@@ -265,3 +265,22 @@ class YAxis(Axis):
             self.position.y + prop * self.length if in_range(prop) else None
             for prop in proportions_of_range
         ]
+
+
+class CategoryYAxis(YAxis):
+    """
+    Y-axis for categorical data where categories should appear in order from top to bottom.
+    Unlike the standard YAxis which inverts the scale (higher values at top),
+    this axis preserves the category order (first category at top).
+    """
+
+    def get_positions(self, values, include_axis=True) -> list[int | float | None]:
+        # Don't invert for categories - we want first category at top (y=0)
+        proportions_of_range = [self.scale.value_to_fraction(value) for value in values]
+        in_range = (
+            (lambda prop: 0.0 <= prop <= 1.0) if include_axis else (lambda prop: 0.0 <= prop < 1.0)
+        )
+        return [
+            self.position.y + prop * self.length if in_range(prop) else None
+            for prop in proportions_of_range
+        ]

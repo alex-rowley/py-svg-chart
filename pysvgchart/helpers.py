@@ -70,7 +70,14 @@ def get_numeric_ticks(
             value_max = 0
 
     if value_max == value_min:
-        raise ValueError("All values are the same — cannot compute min/max.")
+        # If all values are the same and non-zero, include 0 in the range
+        if value_max != 0:
+            if value_max > 0:
+                value_min = 0
+            else:
+                value_max = 0
+        else:
+            raise ValueError("All values are zero — cannot compute min/max.")
 
     raw_pad = (value_max - value_min) / max_ticks
     magnitude = 10 ** math.floor(math.log10(raw_pad))
@@ -117,7 +124,14 @@ def get_logarithmic_ticks(
             value_max = 0
 
     if value_max == value_min:
-        raise ValueError("All values are the same — cannot compute min/max.")
+        # If all values are the same and non-zero, include 0 in the range
+        if value_max != 0:
+            if value_max > 0:
+                value_min = 0
+            else:
+                value_max = 0
+        else:
+            raise ValueError("All values are zero — cannot compute min/max.")
 
     start = math.floor(math.log10(value_min))
     end = math.ceil(math.log10(value_max)) + 1  # optimization, as we only need end+1

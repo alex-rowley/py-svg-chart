@@ -6,11 +6,15 @@ __version__ = "0.5.6"
 
 from .charts import (
     BarChart,
+    CartesianChart,
     DonutChart,
+    HorizontalBarChart,
+    HorizontalChart,
     LineChart,
     NormalisedBarChart,
     ScatterChart,
     SimpleLineChart,
+    VerticalChart,
 )
 from .shapes import (
     Circle,
