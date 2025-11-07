@@ -157,8 +157,8 @@ def scatter_series_constructor(
 
 
 def horizontal_bar_series_constructor(
-        x_values: list | tuple,
-        y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+        y_values: list | tuple,
+        x_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
         y_axis: Axis,
         x_axis: Axis,
         series_names: list[str],
@@ -167,16 +167,15 @@ def horizontal_bar_series_constructor(
 ) -> dict[str, Series]:
     """
     Constructor for horizontal bar series.
-    Note: Parameters are (x_values, y_values, y_axis, x_axis) - axes are swapped!
     In horizontal bars:
-      - x_values are categories (shown on y-axis/vertical)
-      - y_values are the numerical values (shown on x-axis/horizontal)
+      - y_values are categories (shown on y-axis/vertical)
+      - x_values are the numerical values (shown on x-axis/horizontal)
       - bars grow horizontally (left to right)
     """
-    if len(y_values) != len(series_names):
-        raise ValueError("y_values and series_names must have the same length")
-    if not all(len(y_value) == len(x_values) for y_value in y_values):
-        raise ValueError("y_values must all have the same length as x_values")
+    if len(x_values) != len(series_names):
+        raise ValueError("x_values and series_names must have the same length")
+    if not all(len(x_value) == len(y_values) for x_value in x_values):
+        raise ValueError("x_values must all have the same length as y_values")
     no_series = len(series_names)
     bar_span = bar_width + bar_gap
     bar_shift = bar_span * (no_series - 1) / 2
@@ -185,17 +184,17 @@ def horizontal_bar_series_constructor(
         name: HorizontalBarSeries(
             points=[
                 Point(x=x_axis.position.x, y=y + bar_nr * bar_span - bar_shift)  # type: ignore[arg-type, operator]
-                for y in y_axis.get_positions(x_values)
+                for y in y_axis.get_positions(y_values)
             ],
-            x_values=x_values,
-            y_values=y_value,  # type: ignore[arg-type]
+            x_values=y_values,
+            y_values=x_value,  # type: ignore[arg-type]
             bar_heights=[
                 x - x_axis.position.x if x is not None else 0
-                for x in x_axis.get_positions(y_value)
+                for x in x_axis.get_positions(x_value)
             ],
             bar_width=bar_width,
         )
-        for bar_nr, name, y_value in zip(range(no_series), series_names, y_values)
+        for bar_nr, name, x_value in zip(range(no_series), series_names, x_values)
     }
 
 
@@ -645,10 +644,10 @@ class HorizontalChart(CartesianChart):
     def __init__(
             self,
             # chart data
-            x_values: list | tuple,
-            y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+            x_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+            y_values: list | tuple,
             sec_x_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...] | None = None,
-            y_names: list[str] | None = None,
+            x_names: list[str] | None = None,
             sec_x_names: list[str] | None = None,
             # y-axis (categories/vertical)
             y_min: Any = None,
@@ -692,17 +691,17 @@ class HorizontalChart(CartesianChart):
     ):
         """
         Create a horizontal chart where categories are on Y-axis (vertical) and values on X-axis (horizontal).
-        Note: In horizontal orientation, x and y roles are swapped compared to VerticalChart.
+        Parameters match the physical axes: x_values are horizontal (values), y_values are vertical (categories).
         """
         super().__init__(height, width)
 
         # In horizontal charts:
-        # - Y-axis is vertical and shows categories (x_values)
-        # - X-axis is horizontal and shows values (y_values)
+        # - Y-axis is vertical and shows categories (y_values)
+        # - X-axis is horizontal and shows values (x_values)
         self.y_axis = self.y_axis_type(  # type: ignore[abstract]
             x_position=left_margin,
             y_position=x_margin,
-            data_points=self.x_range_constructor(x_values),
+            data_points=self.x_range_constructor(y_values),
             axis_length=height - 2 * x_margin,
             label_format=y_label_format,
             max_ticks=y_max_ticks,
@@ -720,7 +719,7 @@ class HorizontalChart(CartesianChart):
         self.x_axis = self.x_axis_type(  # type: ignore[abstract]
             x_position=left_margin,
             y_position=height - x_margin,
-            data_points=self.y_range_constructor(y_values),
+            data_points=self.y_range_constructor(x_values),
             axis_length=width - left_margin - right_margin,
             label_format=x_label_format,
             max_ticks=x_max_ticks,
@@ -734,12 +733,12 @@ class HorizontalChart(CartesianChart):
             title_offset=x_axis_title_offset
         )
 
-        series_names = self.generate_series_names("Series", len(y_values), y_names)
+        series_names = self.generate_series_names("Series", len(x_values), x_names)
         self.series = self.series_constructor(
-            x_values,
             y_values,
-            self.y_axis,  # Note: swapped for horizontal
-            self.x_axis,  # Note: swapped for horizontal
+            x_values,
+            self.y_axis,
+            self.x_axis,
             series_names,
             bar_width,
             bar_gap,

@@ -8,9 +8,9 @@ categories = ['Apples', 'Bananas', 'Cherries', 'Dates', 'Elderberries']
 values = [[25, 40, 15, 30, 35]]
 
 horizontal_bar_chart = psc.HorizontalBarChart(
-    x_values=categories,
-    y_values=values,
-    y_names=['Sales'],
+    x_values=values,
+    y_values=categories,
+    x_names=['Sales'],
     x_zero=True,
     y_axis_title='Products',
     x_axis_title='Units Sold',
