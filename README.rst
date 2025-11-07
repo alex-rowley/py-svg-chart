@@ -178,6 +178,185 @@ Here's a heavily customised line chart example
 `View <https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/detailed.svg>`_ with hover effects
 
 
+Chart Types Reference
+----------------------
+
+All chart types with their parameters and usage patterns.
+
+LineChart
+^^^^^^^^^
+
+Standard line chart with vertical values and horizontal categories.
+
+.. code:: python
+
+    psc.LineChart(
+        x_values=['Jan', 'Feb', 'Mar'],      # Categories on X-axis (horizontal)
+        y_values=[[10, 20, 15], [12, 18, 14]], # Values on Y-axis (vertical)
+        y_names=['Sales', 'Costs'],          # Series names
+        x_zero=False, y_zero=True,           # Include zero on axes
+        x_max_ticks=12, y_max_ticks=10,      # Maximum ticks
+        x_label_format=str, y_label_format=str, # Label formatters
+        x_axis_title='Month', y_axis_title='Amount',
+        width=800, height=600,
+    )
+
+SimpleLineChart
+^^^^^^^^^^^^^^^
+
+Simplified line chart with minimal configuration.
+
+.. code:: python
+
+    psc.SimpleLineChart(
+        x_values=[1, 2, 3, 4, 5],
+        y_values=[[10, 20, 30, 25, 35]],
+        y_names=['Data'],
+    )
+
+BarChart
+^^^^^^^^
+
+Vertical bar chart (bars grow upward).
+
+.. code:: python
+
+    psc.BarChart(
+        x_values=['A', 'B', 'C'],            # Categories on X-axis
+        y_values=[[10, 20, 30], [15, 25, 35]], # Values on Y-axis
+        y_names=['Q1', 'Q2'],
+        y_zero=True,                         # Start Y-axis at zero
+        bar_width=40, bar_gap=2,             # Bar sizing
+        width=800, height=600,
+    )
+
+HorizontalBarChart
+^^^^^^^^^^^^^^^^^^
+
+Horizontal bar chart (bars grow rightward). Note: parameters are swapped compared to vertical charts.
+
+.. code:: python
+
+    psc.HorizontalBarChart(
+        x_values=[[10, 20, 30], [15, 25, 35]], # Values on X-axis (horizontal)
+        y_values=['A', 'B', 'C'],            # Categories on Y-axis (vertical)
+        x_names=['Q1', 'Q2'],
+        x_zero=True,                         # Start X-axis at zero
+        bar_width=40, bar_gap=2,             # Bar thickness and gap
+        y_axis_title='Products',
+        x_axis_title='Sales',
+        width=800, height=600,
+        left_margin=200,                     # Extra margin for long labels
+    )
+
+NormalisedBarChart
+^^^^^^^^^^^^^^^^^^
+
+Stacked bar chart normalised to 100%.
+
+.. code:: python
+
+    psc.NormalisedBarChart(
+        x_values=['A', 'B', 'C'],
+        y_values=[[10, 20, 30], [5, 10, 15]],
+        y_names=['Part 1', 'Part 2'],
+        bar_width=40,
+        width=800, height=600,
+    )
+
+ScatterChart
+^^^^^^^^^^^^
+
+Scatter plot with individual data points.
+
+.. code:: python
+
+    psc.ScatterChart(
+        x_values=[1, 2, 3, 4, 5],
+        y_values=[[10, 20, 15, 25, 30]],
+        y_names=['Data Points'],
+        x_zero=True, y_zero=True,
+        width=800, height=600,
+    )
+
+DonutChart
+^^^^^^^^^^
+
+Donut/pie chart for proportional data.
+
+.. code:: python
+
+    psc.DonutChart(
+        values=[25, 30, 20, 25],            # Segment sizes
+        names=['Q1', 'Q2', 'Q3', 'Q4'],     # Segment labels
+        width=400, height=400,
+        inner_radius=80,                     # Hole size
+        outer_radius=150,                    # Outer edge
+        colours=['red', 'blue', 'green', 'yellow'],
+    )
+
+Common Parameters
+^^^^^^^^^^^^^^^^^
+
+Most charts share these parameters:
+
+**Axis Configuration:**
+
+- ``x_min``, ``x_max``, ``y_min``, ``y_max``: Set axis ranges
+- ``x_zero``, ``y_zero``: Force zero to appear on axis
+- ``x_max_ticks``, ``y_max_ticks``: Maximum number of tick marks
+- ``x_label_format``, ``y_label_format``: Functions to format axis labels
+- ``x_axis_title``, ``y_axis_title``: Axis titles
+- ``x_shift``, ``y_shift``: Shift data relative to axis
+
+**Canvas Settings:**
+
+- ``width``, ``height``: Chart dimensions in pixels
+- ``left_margin``, ``right_margin``: Horizontal margins
+- ``y_margin``, ``x_margin``: Vertical margins (varies by chart orientation)
+
+**Styling:**
+
+- ``colours``: List of colours for series
+- ``bar_width``, ``bar_gap``: Bar chart specific (bar thickness and spacing)
+
+Common Methods
+^^^^^^^^^^^^^^
+
+All charts support these methods:
+
+.. code:: python
+
+    # Rendering
+    svg_string = chart.render()                    # Basic SVG output
+    svg_string = chart.render_with_all_styles()    # With inline CSS (for hovers)
+    chart.save('output.svg')                       # Save to file
+
+    # Legends
+    chart.add_legend(x_position=700, y_position=200)
+
+    # Grids
+    chart.add_grids(minor_x_ticks=4, minor_y_ticks=4)
+    chart.add_y_grid(minor_ticks=5)
+    chart.add_x_grid(minor_ticks=5)
+
+    # Hover effects (requires render_with_all_styles)
+    def hover_fn(position, x_value, y_value, series_name, styles):
+        return [psc.Text(x=position.x, y=position.y, content=str(y_value))]
+
+    chart.add_hover_modifier(hover_fn, radius=5)
+
+    # Custom elements
+    chart.add_custom_element(psc.Circle(x=100, y=100, radius=5))
+    chart.add_custom_element(psc.Line(x=50, y=50, width=100, height=0))
+    chart.add_custom_element(psc.Text(x=200, y=200, content='Label'))
+
+    # Direct series styling
+    chart.series['Series Name'].styles = {'stroke': 'red', 'stroke-width': '3'}
+
+    # Modify all series
+    chart.modify_series(lambda s: s)
+
 
 Contributing
 ------------
