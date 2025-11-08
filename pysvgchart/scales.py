@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from datetime import datetime, date, timedelta
+from numbers import Real
 from typing import Any
 
 import math
@@ -198,7 +199,7 @@ def make_logarithmic_scale(
             "Values must be non-empty with at least %d unique elements.",
             min_unique_values,
         )
-    if all(isinstance(value, int | float) for value in values):
+    if all(isinstance(value, Real) for value in values):
         ticks = get_logarithmic_ticks(
             values,
             max_ticks,
@@ -258,7 +259,7 @@ def make_linear_scale(
             max_value=max_value,  # type: ignore[arg-type]
         )
         return LinearScale(ticks, shift=min(values) if shift is True else shift)
-    if all(isinstance(value, int | float) for value in values):
+    if all(isinstance(value, Real) for value in values):
         ticks = get_numeric_ticks(
             values,  # type: ignore[arg-type]
             max_ticks,
