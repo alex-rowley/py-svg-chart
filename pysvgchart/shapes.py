@@ -1,3 +1,28 @@
+"""
+Low-level SVG shape primitives.
+
+These are the building blocks for all chart elements. Each shape knows how to
+render itself as SVG markup via get_element_list().
+
+Classes:
+    Point: 2D coordinate dataclass (x, y)
+    Element: Abstract base class with styles and CSS classes
+    Shape: Abstract positioned element (has position: Point)
+    Line: SVG <line> element
+    Circle: SVG <circle> element
+    Rect: SVG <rect> element
+    Text: SVG <text> element
+    Group: SVG <g> container for multiple elements
+
+Common patterns:
+    - All shapes have styles (dict of SVG attributes) and classes (CSS class names)
+    - attributes property formats styles/classes for SVG attribute string
+    - Shapes can be added to charts via chart.add_custom_element(shape)
+
+Example:
+    text = Text(x=100, y=50, content='Label', styles={'fill': 'red'})
+    circle = Circle(x=200, y=100, radius=5, classes=['highlight'])
+"""
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 

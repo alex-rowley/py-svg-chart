@@ -1,3 +1,22 @@
+"""
+Axis classes for chart rendering.
+
+This module handles axis creation, tick generation, and value-to-pixel positioning.
+
+Classes:
+    Axis: Abstract base class for all axes
+    XAxis: Horizontal axis (values increase left-to-right)
+    YAxis: Vertical axis (values increase bottom-to-top, so pixel Y is inverted)
+    CategoryYAxis: Y-axis for categorical data (preserves order top-to-bottom)
+
+Key responsibilities:
+    - Scale creation via pluggable scale_maker functions
+    - Tick line and label positioning
+    - Grid line storage (populated by chart.add_grids())
+    - Axis title rendering
+
+The get_positions() method converts data values to pixel coordinates using the axis scale.
+"""
 from __future__ import annotations
 from abc import abstractmethod
 from typing import Any, Callable

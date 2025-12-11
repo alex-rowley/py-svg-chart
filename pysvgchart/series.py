@@ -1,3 +1,22 @@
+"""
+Data series classes that render chart data as SVG elements.
+
+Each series type converts positioned data points into SVG markup:
+
+Classes:
+    Series: Abstract base class for all data series
+    LineSeries: Renders as SVG path (connected line through points)
+    BarSeries: Renders as vertical rectangles
+    HorizontalBarSeries: Renders as horizontal rectangles
+    ScatterSeries: Renders as point shapes (circles by default)
+    DonutSegment: Renders as arc path for pie/donut charts
+
+Key pattern:
+    - Series store both pixel positions (points) and original data values
+    - pv_generator property yields (point, x_value, y_value) tuples for hover modifiers
+    - get_element_list() returns SVG string fragments
+    - custom_elements list allows adding hover markers and annotations
+"""
 from typing import Callable
 import math
 

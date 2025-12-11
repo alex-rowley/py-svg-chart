@@ -1,3 +1,26 @@
+"""
+Scale classes for mapping data values to chart positions.
+
+Scales determine:
+    - The min/max range of an axis
+    - Tick mark positions (nice round numbers)
+    - How to convert a data value to a 0-1 fraction of the axis
+
+Classes:
+    Scale: Abstract base class
+    MappedLinearScale: Linear scale with optional value mapping (base for Linear/Log)
+    LinearScale: Standard linear scale for numbers, dates, datetimes
+    LogarithmicScale: Logarithmic scale (log10 mapping)
+    MappingScale: Categorical scale for non-numeric values
+
+Factory functions:
+    make_linear_scale(): Creates LinearScale or MappingScale based on value types
+    make_logarithmic_scale(): Creates LogarithmicScale for numeric data
+    make_categories_scale(): Creates MappingScale for categorical data
+
+The value_to_fraction() method is the key interface - converts a data value to
+a proportion (0.0 to 1.0) along the axis, which the Axis then converts to pixels.
+"""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

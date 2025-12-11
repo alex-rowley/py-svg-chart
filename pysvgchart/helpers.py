@@ -1,3 +1,16 @@
+"""
+Utility functions for chart rendering.
+
+Functions:
+    default_format(value): Format numbers with thousand separators
+    collapse_element_list(*lists): Flatten nested element lists to SVG strings
+    get_numeric_ticks(values, max_ticks, ...): Calculate nice tick values for numeric axes
+    get_logarithmic_ticks(values, max_ticks, ...): Calculate tick values for log scales
+    get_date_or_time_ticks(dates, max_ticks, ...): Calculate ticks for date/datetime ranges
+
+The tick functions implement "nice number" algorithms to find visually appealing
+tick intervals (e.g., 1, 2, 5, 10 rather than 3, 7, 11).
+"""
 import math
 import datetime as dt
 

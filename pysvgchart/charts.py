@@ -1,3 +1,39 @@
+"""
+Chart classes - the main entry points for creating SVG charts.
+
+This module contains all chart types available in pysvgchart:
+- LineChart / SimpleLineChart: Line plots for time series and trends
+- BarChart: Vertical bar charts for category comparisons
+- HorizontalBarChart: Horizontal bars (useful for long category names)
+- NormalisedBarChart: 100% stacked bars for part-of-whole comparisons
+- ScatterChart: Scatter plots for correlation/distribution
+- DonutChart: Pie/donut charts for proportions
+
+Class Hierarchy:
+    Chart (ABC)
+    ├── CartesianChart
+    │   ├── VerticalChart -> LineChart, BarChart, ScatterChart, NormalisedBarChart
+    │   └── HorizontalChart -> HorizontalBarChart
+    └── DonutChart
+
+Typical usage:
+    import pysvgchart as psc
+
+    chart = psc.SimpleLineChart(
+        x_values=[1, 2, 3],
+        y_values=[[10, 20, 15]],
+        y_names=['Sales']
+    )
+    chart.add_legend()
+    svg = chart.render()
+
+Series constructors (internal):
+    - line_series_constructor: Creates LineSeries from data
+    - bar_series_constructor: Creates vertical BarSeries
+    - horizontal_bar_series_constructor: Creates horizontal BarSeries
+    - normalised_bar_series_constructor: Creates 100% stacked bars
+    - scatter_series_constructor: Creates ScatterSeries
+"""
 from abc import ABC, abstractmethod
 from collections.abc import Callable
 from itertools import zip_longest, cycle

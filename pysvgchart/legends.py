@@ -1,3 +1,15 @@
+"""
+Legend components for different chart types.
+
+Classes:
+    Legend: Abstract base class
+    LineLegend: For line charts (short line segment + text label)
+    BarLegend: For bar charts (colored rectangle + text label)
+    ScatterLegend: For scatter charts (point shape + text label)
+    DonutLegend: For donut/pie charts (colored circle + text label)
+
+Legends are added via chart.add_legend(x, y) and rendered as part of get_element_list().
+"""
 from abc import abstractmethod
 
 from .helpers import collapse_element_list
