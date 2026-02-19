@@ -215,17 +215,20 @@ def horizontal_bar_series_constructor(
     no_series = len(series_names)
     bar_span = bar_width + bar_gap
     bar_shift = bar_span * (no_series - 1) / 2
+    # Calculate zero position on x-axis, clamped to axis bounds
+    zero_fraction = x_axis.scale.value_to_fraction(0)
+    zero_x = x_axis.position.x + max(0.0, min(1.0, zero_fraction)) * x_axis.length
     from .series import HorizontalBarSeries
     return {
         name: HorizontalBarSeries(
             points=[
-                Point(x=x_axis.position.x, y=y + bar_nr * bar_span - bar_shift)  # type: ignore[arg-type, operator]
-                for y in y_axis.get_positions(y_values)
+                Point(x=x if x is not None else zero_x, y=y + bar_nr * bar_span - bar_shift)  # type: ignore[arg-type, operator]
+                for x, y in zip(x_axis.get_positions(x_value), y_axis.get_positions(y_values))
             ],
             x_values=y_values,
             y_values=x_value,  # type: ignore[arg-type]
             bar_heights=[
-                x - x_axis.position.x if x is not None else 0
+                x - zero_x if x is not None else 0
                 for x in x_axis.get_positions(x_value)
             ],
             bar_width=bar_width,
@@ -890,7 +893,7 @@ class BarChart(LineChart):
 class HorizontalBarChart(HorizontalChart):
     """
     Horizontal bar chart where categories are on Y-axis (vertical) and values on X-axis (horizontal).
-    Bars grow from left to right.
+    Bars grow from zero: positive values extend right, negative values extend left.
     """
     x_axis_type = XAxis
     y_axis_type = CategoryYAxis
@@ -898,6 +901,19 @@ class HorizontalBarChart(HorizontalChart):
     y_axis_scale_maker = staticmethod(make_categories_scale)
     series_constructor = staticmethod(horizontal_bar_series_constructor)
     colour_property = "fill"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Move the y-axis line to the zero position on the x-axis
+        zero_fraction = self.x_axis.scale.value_to_fraction(0)
+        zero_x = self.x_axis.position.x + max(0.0, min(1.0, zero_fraction)) * self.x_axis.length
+        if self.y_axis.axis_line is not None:
+            self.y_axis.axis_line.position.x = zero_x
+            self.y_axis.axis_line.end.x = zero_x
+        # Remove tick marks — they were positioned relative to the original axis
+        # location and would float disconnected from the moved axis line
+        if zero_x != self.y_axis.position.x:
+            self.y_axis.tick_lines = []
 
     def add_legend(  # type: ignore[override]
             self,

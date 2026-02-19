@@ -19,7 +19,7 @@
 <text x="575.0" y="510" text-anchor="middle" dominant-baseline="hanging">30</text>
 <text x="637.5" y="510" text-anchor="middle" dominant-baseline="hanging">35</text>
 <text x="700.0" y="510" text-anchor="middle" dominant-baseline="hanging">40</text>
-<line x1="200" y1="100" x2="200" y2="500" stroke="#2e2e2c"/>
+<line x1="200.0" y1="100" x2="200.0" y2="500" stroke="#2e2e2c"/>
 <text x="100" y="300.0" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 100 300.0)">Products</text>
 <line x1="195" y1="140.0" x2="200" y2="140.0" stroke="#2e2e2c"/>
 <line x1="195" y1="220.0" x2="200" y2="220.0" stroke="#2e2e2c"/>
@@ -31,9 +31,9 @@
 <text x="190" y="300.0" text-anchor="end" dominant-baseline="middle">Cherries</text>
 <text x="190" y="380.0" text-anchor="end" dominant-baseline="middle">Dates</text>
 <text x="190" y="460.0" text-anchor="end" dominant-baseline="middle">Elderberries</text>
-<rect x="200" y="120.0" width="312.5" height="40" stroke="none" fill="green"/>
-<rect x="200" y="200.0" width="500.0" height="40" stroke="none" fill="green"/>
-<rect x="200" y="280.0" width="187.5" height="40" stroke="none" fill="green"/>
-<rect x="200" y="360.0" width="375.0" height="40" stroke="none" fill="green"/>
-<rect x="200" y="440.0" width="437.5" height="40" stroke="none" fill="green"/>
+<rect x="200.0" y="120.0" width="312.5" height="40" stroke="none" fill="green"/>
+<rect x="200.0" y="200.0" width="500.0" height="40" stroke="none" fill="green"/>
+<rect x="200.0" y="280.0" width="187.5" height="40" stroke="none" fill="green"/>
+<rect x="200.0" y="360.0" width="375.0" height="40" stroke="none" fill="green"/>
+<rect x="200.0" y="440.0" width="437.5" height="40" stroke="none" fill="green"/>
 </svg>

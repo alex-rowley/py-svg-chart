@@ -1,0 +1,24 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+<line x1="100" y1="500" x2="700" y2="500" stroke="#2e2e2c"/>
+<line x1="100.0" y1="500" x2="100.0" y2="505" stroke="#2e2e2c"/>
+<line x1="200.0" y1="500" x2="200.0" y2="505" stroke="#2e2e2c"/>
+<line x1="300.0" y1="500" x2="300.0" y2="505" stroke="#2e2e2c"/>
+<line x1="400.0" y1="500" x2="400.0" y2="505" stroke="#2e2e2c"/>
+<line x1="500.0" y1="500" x2="500.0" y2="505" stroke="#2e2e2c"/>
+<line x1="600.0" y1="500" x2="600.0" y2="505" stroke="#2e2e2c"/>
+<line x1="700.0" y1="500" x2="700.0" y2="505" stroke="#2e2e2c"/>
+<text x="100.0" y="510" text-anchor="middle" dominant-baseline="hanging">-30</text>
+<text x="200.0" y="510" text-anchor="middle" dominant-baseline="hanging">-25</text>
+<text x="300.0" y="510" text-anchor="middle" dominant-baseline="hanging">-20</text>
+<text x="400.0" y="510" text-anchor="middle" dominant-baseline="hanging">-15</text>
+<text x="500.0" y="510" text-anchor="middle" dominant-baseline="hanging">-10</text>
+<text x="600.0" y="510" text-anchor="middle" dominant-baseline="hanging">-5</text>
+<text x="700.0" y="510" text-anchor="middle" dominant-baseline="hanging">0</text>
+<line x1="700.0" y1="100" x2="700.0" y2="500" stroke="#2e2e2c"/>
+<text x="90" y="166.66666666666666" text-anchor="end" dominant-baseline="middle">X</text>
+<text x="90" y="300.0" text-anchor="end" dominant-baseline="middle">Y</text>
+<text x="90" y="433.3333333333333" text-anchor="end" dominant-baseline="middle">Z</text>
+<rect x="100.0" y="146.66666666666666" width="600.0" height="40" stroke="none" fill="green"/>
+<rect x="500.0" y="280.0" width="200.0" height="40" stroke="none" fill="green"/>
+<rect x="300.0" y="413.3333333333333" width="400.0" height="40" stroke="none" fill="green"/>
+</svg>

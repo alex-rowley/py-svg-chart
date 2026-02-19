@@ -251,15 +251,16 @@ class BarSeries(Series):
 
 class HorizontalBarSeries(BarSeries):
     """
-    Series for horizontal bar charts where bars grow left-to-right.
+    Series for horizontal bar charts where bars grow from zero.
+    Positive values extend right, negative values extend left.
     """
 
     def get_element_list(self) -> list:
         bars = [
             self.bar_template.format(
-                x=p.x,
+                x=p.x - max(h, 0),
                 y=p.y - self.bar_width / 2,
-                w=h,
+                w=abs(h),
                 h=self.bar_width,
                 attributes=self.attributes,
             )

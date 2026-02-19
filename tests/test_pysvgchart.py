@@ -285,3 +285,117 @@ def test_scatter_chart_y_log():
 def test_scatter_chart_xy_log():
     chart = scatter_chart(x_log=True, y_log=True)
     write_out(chart.render(), name="scatter-xy-log.svg")
+
+
+def test_horizontal_bar_chart():
+    categories = ['Apples', 'Bananas', 'Cherries', 'Dates', 'Elderberries']
+    values = [[25, 40, 15, 30, 35]]
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Sales'],
+        x_zero=True,
+    )
+    svg = chart.render()
+    write_out(svg, name="horizontal_bar.svg")
+    assert '<svg' in svg
+    assert '<rect' in svg
+
+
+def test_horizontal_bar_chart_negative_values():
+    categories = ['A', 'B', 'C', 'D']
+    values = [[-20, 30, -10, 40]]
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Score'],
+        x_zero=True,
+    )
+    svg = chart.render()
+    write_out(svg, name="horizontal_bar_negative.svg")
+    assert '<svg' in svg
+    assert '<rect' in svg
+    # All rect widths should be positive
+    import re
+    widths = re.findall(r'<rect[^>]*width="([^"]+)"', svg)
+    for w in widths:
+        assert float(w) >= 0, f"Negative rect width found: {w}"
+    # Y-axis line should be at the zero position, not at the left margin
+    zero_fraction = chart.x_axis.scale.value_to_fraction(0)
+    expected_zero_x = chart.x_axis.position.x + zero_fraction * chart.x_axis.length
+    assert chart.y_axis.axis_line.position.x == expected_zero_x
+    assert chart.y_axis.axis_line.end.x == expected_zero_x
+
+
+def test_horizontal_bar_chart_all_negative():
+    categories = ['X', 'Y', 'Z']
+    values = [[-30, -10, -20]]
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Score'],
+        x_zero=True,
+    )
+    svg = chart.render()
+    write_out(svg, name="horizontal_bar_all_negative.svg")
+    assert '<svg' in svg
+    import re
+    widths = re.findall(r'<rect[^>]*width="([^"]+)"', svg)
+    for w in widths:
+        assert float(w) >= 0, f"Negative rect width found: {w}"
+
+
+def test_horizontal_bar_chart_multi_series_negative():
+    categories = ['A', 'B', 'C']
+    values = [[-10, 20, -5], [15, -25, 10]]
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Series 1', 'Series 2'],
+        x_zero=True,
+    )
+    svg = chart.render()
+    write_out(svg, name="horizontal_bar_multi_negative.svg")
+    assert '<svg' in svg
+    import re
+    widths = re.findall(r'<rect[^>]*width="([^"]+)"', svg)
+    for w in widths:
+        assert float(w) >= 0, f"Negative rect width found: {w}"
+
+
+def test_text_escaping_ampersand():
+    text = psc.Text(x=0, y=0, content='AT&T')
+    elements = text.get_element_list()
+    assert len(elements) == 1
+    assert '&amp;' in elements[0]
+    assert 'AT&T' not in elements[0]  # raw & should not appear
+
+
+def test_text_escaping_angle_brackets():
+    text = psc.Text(x=0, y=0, content='a < b > c')
+    elements = text.get_element_list()
+    assert '&lt;' in elements[0]
+    assert '&gt;' in elements[0]
+
+
+def test_text_escaping_in_chart_labels():
+    categories = ['R&D', 'Sales & Marketing', 'Q<3']
+    values = [[10, 20, 15]]
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Budget'],
+        x_zero=True,
+    )
+    svg = chart.render()
+    write_out(svg, name="horizontal_bar_escaped_labels.svg")
+    assert 'R&amp;D' in svg
+    assert 'Sales &amp; Marketing' in svg
+    assert 'Q&lt;3' in svg
+
+
+def test_text_preserves_original_content():
+    text = psc.Text(x=0, y=0, content='AT&T')
+    assert text.content == 'AT&T'  # original preserved
+    elements = text.get_element_list()
+    assert '&amp;' in elements[0]  # rendered escaped

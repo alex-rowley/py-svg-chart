@@ -25,6 +25,7 @@ Example:
 """
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from html import escape as html_escape
 
 from .helpers import collapse_element_list
 from .shared import number, style_def
@@ -240,7 +241,7 @@ class Text(Shape):
             self.text_template.format(
                 x=self.position.x,
                 y=self.position.y,
-                content=self.content,
+                content=html_escape(str(self.content), quote=False),
                 attributes=self.attributes,
             ),
         ]

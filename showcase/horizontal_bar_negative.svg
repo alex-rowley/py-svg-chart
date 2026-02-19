@@ -1,0 +1,38 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+<line x1="100" y1="500" x2="700" y2="500" stroke="#2e2e2c"/>
+<line x1="100.0" y1="500" x2="100.0" y2="505" stroke="#2e2e2c"/>
+<line x1="150.0" y1="500" x2="150.0" y2="505" stroke="#2e2e2c"/>
+<line x1="200.0" y1="500" x2="200.0" y2="505" stroke="#2e2e2c"/>
+<line x1="250.0" y1="500" x2="250.0" y2="505" stroke="#2e2e2c"/>
+<line x1="300.0" y1="500" x2="300.0" y2="505" stroke="#2e2e2c"/>
+<line x1="350.0" y1="500" x2="350.0" y2="505" stroke="#2e2e2c"/>
+<line x1="400.0" y1="500" x2="400.0" y2="505" stroke="#2e2e2c"/>
+<line x1="450.0" y1="500" x2="450.0" y2="505" stroke="#2e2e2c"/>
+<line x1="500.0" y1="500" x2="500.0" y2="505" stroke="#2e2e2c"/>
+<line x1="550.0" y1="500" x2="550.0" y2="505" stroke="#2e2e2c"/>
+<line x1="600.0" y1="500" x2="600.0" y2="505" stroke="#2e2e2c"/>
+<line x1="650.0" y1="500" x2="650.0" y2="505" stroke="#2e2e2c"/>
+<line x1="700.0" y1="500" x2="700.0" y2="505" stroke="#2e2e2c"/>
+<text x="100.0" y="510" text-anchor="middle" dominant-baseline="hanging">-20</text>
+<text x="150.0" y="510" text-anchor="middle" dominant-baseline="hanging">-15</text>
+<text x="200.0" y="510" text-anchor="middle" dominant-baseline="hanging">-10</text>
+<text x="250.0" y="510" text-anchor="middle" dominant-baseline="hanging">-5</text>
+<text x="300.0" y="510" text-anchor="middle" dominant-baseline="hanging">0</text>
+<text x="350.0" y="510" text-anchor="middle" dominant-baseline="hanging">5</text>
+<text x="400.0" y="510" text-anchor="middle" dominant-baseline="hanging">10</text>
+<text x="450.0" y="510" text-anchor="middle" dominant-baseline="hanging">15</text>
+<text x="500.0" y="510" text-anchor="middle" dominant-baseline="hanging">20</text>
+<text x="550.0" y="510" text-anchor="middle" dominant-baseline="hanging">25</text>
+<text x="600.0" y="510" text-anchor="middle" dominant-baseline="hanging">30</text>
+<text x="650.0" y="510" text-anchor="middle" dominant-baseline="hanging">35</text>
+<text x="700.0" y="510" text-anchor="middle" dominant-baseline="hanging">40</text>
+<line x1="300.0" y1="100" x2="300.0" y2="500" stroke="#2e2e2c"/>
+<text x="90" y="150.0" text-anchor="end" dominant-baseline="middle">A</text>
+<text x="90" y="250.0" text-anchor="end" dominant-baseline="middle">B</text>
+<text x="90" y="350.0" text-anchor="end" dominant-baseline="middle">C</text>
+<text x="90" y="450.0" text-anchor="end" dominant-baseline="middle">D</text>
+<rect x="100.0" y="130.0" width="200.0" height="40" stroke="none" fill="green"/>
+<rect x="300.0" y="230.0" width="300.0" height="40" stroke="none" fill="green"/>
+<rect x="200.0" y="330.0" width="100.0" height="40" stroke="none" fill="green"/>
+<rect x="300.0" y="430.0" width="400.0" height="40" stroke="none" fill="green"/>
+</svg>
