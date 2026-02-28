@@ -381,8 +381,8 @@ class VerticalChart(CartesianChart):
             self,
             # chart data
             x_values: list | tuple,
-            y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
-            sec_y_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...] | None = None,
+            y_values: list | tuple,
+            sec_y_values: list | tuple | None = None,
             y_names: list[str] | None = None,
             sec_y_names: list[str] | None = None,
             # x-axis
@@ -457,6 +457,12 @@ class VerticalChart(CartesianChart):
         :param width: optional width of the graph
         :param colours: optional list of colours for the series
         """
+        # Allow flat list for single-series: [1,2,3] → [[1,2,3]]
+        if y_values and not isinstance(y_values[0], (list, tuple)):
+            y_values = [y_values]
+        if sec_y_values is not None and sec_y_values and not isinstance(sec_y_values[0], (list, tuple)):
+            sec_y_values = [sec_y_values]
+
         super().__init__(height, width)
         self.x_axis = self.x_axis_type(  # type: ignore[abstract]
             x_position=left_margin,
@@ -683,9 +689,9 @@ class HorizontalChart(CartesianChart):
     def __init__(
             self,
             # chart data
-            x_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...],
+            x_values: list | tuple,
             y_values: list | tuple,
-            sec_x_values: list[list] | list[tuple] | tuple[list, ...] | tuple[tuple, ...] | None = None,
+            sec_x_values: list | tuple | None = None,
             x_names: list[str] | None = None,
             sec_x_names: list[str] | None = None,
             # y-axis (categories/vertical)
@@ -732,6 +738,12 @@ class HorizontalChart(CartesianChart):
         Create a horizontal chart where categories are on Y-axis (vertical) and values on X-axis (horizontal).
         Parameters match the physical axes: x_values are horizontal (values), y_values are vertical (categories).
         """
+        # Allow flat list for single-series: [1,2,3] → [[1,2,3]]
+        if x_values and not isinstance(x_values[0], (list, tuple)):
+            x_values = [x_values]
+        if sec_x_values is not None and sec_x_values and not isinstance(sec_x_values[0], (list, tuple)):
+            sec_x_values = [sec_x_values]
+
         super().__init__(height, width)
 
         # In horizontal charts:

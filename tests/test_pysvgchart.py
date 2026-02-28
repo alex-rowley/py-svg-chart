@@ -531,3 +531,50 @@ def test_integer_ticks_in_chart():
     )
     for tick in chart.x_axis.scale.ticks:
         assert isinstance(tick, int), f"Tick {tick!r} should be int for integer data"
+
+
+# --- Flat list (single-series shorthand) tests ---
+
+def test_line_chart_flat_y_values():
+    """SimpleLineChart accepts y_values as a flat list for single series."""
+    chart = psc.SimpleLineChart(
+        x_values=[1, 2, 3, 4, 5],
+        y_values=[10, 20, 15, 25, 30],
+        y_names=['Sales'],
+    )
+    svg = chart.render()
+    assert '<svg' in svg
+
+
+def test_bar_chart_flat_y_values():
+    """BarChart accepts y_values as a flat list for single series."""
+    chart = psc.BarChart(
+        x_values=['A', 'B', 'C'],
+        y_values=[10, 20, 30],
+        y_names=['Score'],
+    )
+    svg = chart.render()
+    assert '<svg' in svg
+
+
+def test_horizontal_bar_flat_x_values():
+    """HorizontalBarChart accepts x_values as a flat list for single series."""
+    chart = psc.HorizontalBarChart(
+        x_values=[25, 40, 15],
+        y_values=['A', 'B', 'C'],
+        x_names=['Score'],
+    )
+    svg = chart.render()
+    assert '<svg' in svg
+
+
+def test_multi_series_still_works():
+    """Multi-series list-of-lists still works as before."""
+    chart = psc.SimpleLineChart(
+        x_values=[1, 2, 3],
+        y_values=[[10, 20, 30], [15, 25, 35]],
+        y_names=['A', 'B'],
+    )
+    svg = chart.render()
+    assert '<svg' in svg
+    assert len(chart.series) == 2
