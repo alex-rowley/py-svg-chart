@@ -404,9 +404,9 @@ def test_text_preserves_original_content():
 # --- Auto-zero tests ---
 
 def test_horizontal_bar_auto_zero_positive_close():
-    """Positive values with high variance relative to min → auto-include zero."""
+    """Positive values close to zero → auto-include zero."""
     categories = ['A', 'B', 'C', 'D', 'E']
-    values = [[1, 2, 3, 4, 100]]  # std ~37.5, min(1) - 2*37.5 = -74 < 0
+    values = [[1, 2, 3, 4, 100]]  # range=99, min(1) - 2*99 = -197 < 0
     chart = psc.HorizontalBarChart(
         x_values=values,
         y_values=categories,
@@ -416,9 +416,9 @@ def test_horizontal_bar_auto_zero_positive_close():
 
 
 def test_horizontal_bar_auto_zero_negative_close():
-    """Negative values with high variance relative to max → auto-include zero."""
+    """Negative values close to zero → auto-include zero."""
     categories = ['A', 'B', 'C', 'D', 'E']
-    values = [[-1, -2, -3, -4, -100]]  # std ~37.5, max(-1) + 2*37.5 = 74 > 0
+    values = [[-1, -2, -3, -4, -100]]  # range=99, max(-1) + 2*99 = 197 > 0
     chart = psc.HorizontalBarChart(
         x_values=values,
         y_values=categories,
@@ -430,7 +430,7 @@ def test_horizontal_bar_auto_zero_negative_close():
 def test_horizontal_bar_auto_zero_not_triggered():
     """Values far from zero → no auto-zero."""
     categories = ['A', 'B', 'C']
-    values = [[100, 101, 102]]  # std ~0.82, min(100) - 2*0.82 = 98.4 > 0
+    values = [[100, 101, 102]]  # range=2, min(100) - 2*2 = 96 > 0
     chart = psc.HorizontalBarChart(
         x_values=values,
         y_values=categories,
@@ -450,6 +450,38 @@ def test_horizontal_bar_explicit_x_zero_still_works():
         x_zero=True,
     )
     assert chart.x_axis.scale.ticks[0] <= 0
+
+
+def test_auto_zero_works_for_vertical_bar_chart():
+    """Auto-zero applies to BarChart (vertical) too, via get_numeric_ticks."""
+    categories = ['A', 'B', 'C', 'D', 'E']
+    values = [[1, 2, 3, 4, 100]]  # range=99, min(1) - 2*99 = -197 < 0
+    chart = psc.BarChart(
+        x_values=categories,
+        y_values=values,
+        y_names=['Score'],
+    )
+    assert chart.y_axis.scale.ticks[0] <= 0
+
+
+def test_auto_zero_works_for_line_chart():
+    """Auto-zero applies to SimpleLineChart too, via get_numeric_ticks."""
+    chart = psc.SimpleLineChart(
+        x_values=[1, 2, 3, 4, 5],
+        y_values=[[1, 2, 3, 4, 100]],  # range=99, min(1) - 2*99 = -197 < 0
+        y_names=['Score'],
+    )
+    assert chart.y_axis.scale.ticks[0] <= 0
+
+
+def test_auto_zero_not_triggered_for_far_values_line_chart():
+    """Values far from zero → no auto-zero for line chart."""
+    chart = psc.SimpleLineChart(
+        x_values=[1, 2, 3],
+        y_values=[[100, 101, 102]],  # range=2, min(100) - 2*2 = 96 > 0
+        y_names=['Score'],
+    )
+    assert chart.y_axis.scale.ticks[0] > 0
 
 
 # --- Integer tick tests ---

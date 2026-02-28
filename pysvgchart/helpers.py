@@ -76,6 +76,16 @@ def get_numeric_ticks(
         value_min = min(value_min, min_value)
     if max_value is not None:
         value_max = max(value_max, max_value)
+
+    # Auto-include zero when single-sign data is close to zero
+    if not include_zero:
+        data_range = abs(value_max - value_min)
+        if data_range > 0:
+            if all(v >= 0 for v in values) and value_min - 2 * data_range < 0:
+                include_zero = True
+            elif all(v <= 0 for v in values) and max(values) + 2 * data_range > 0:
+                include_zero = True
+
     if include_zero:
         if value_min > 0:
             value_min = 0

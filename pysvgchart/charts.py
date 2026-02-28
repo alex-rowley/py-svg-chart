@@ -903,19 +903,6 @@ class HorizontalBarChart(HorizontalChart):
     colour_property = "fill"
 
     def __init__(self, *args, **kwargs):
-        # Auto-include zero when single-sign data is close to zero
-        x_values = args[0] if args else kwargs.get('x_values')
-        x_zero = kwargs.get('x_zero', False)
-        if x_values is not None and not x_zero:
-            flat = [v for series in x_values for v in series]
-            if len(flat) > 1:
-                mean = sum(flat) / len(flat)
-                std = (sum((v - mean) ** 2 for v in flat) / len(flat)) ** 0.5
-                if all(v >= 0 for v in flat) and min(flat) - 2 * std < 0:
-                    kwargs['x_zero'] = True
-                elif all(v <= 0 for v in flat) and max(flat) + 2 * std > 0:
-                    kwargs['x_zero'] = True
-
         super().__init__(*args, **kwargs)
         # Move the y-axis line to the zero position on the x-axis
         zero_fraction = self.x_axis.scale.value_to_fraction(0)
