@@ -10,26 +10,8 @@
 <text x="625.0" y="510" text-anchor="middle" dominant-baseline="hanging">Durians</text>
 <line x1="100" y1="100" x2="100" y2="500" stroke="#2e2e2c"/>
 <line x1="95" y1="500.0" x2="100" y2="500.0" stroke="#2e2e2c"/>
-<line x1="95" y1="460.0" x2="100" y2="460.0" stroke="#2e2e2c"/>
-<line x1="95" y1="420.0" x2="100" y2="420.0" stroke="#2e2e2c"/>
-<line x1="95" y1="380.0" x2="100" y2="380.0" stroke="#2e2e2c"/>
-<line x1="95" y1="340.0" x2="100" y2="340.0" stroke="#2e2e2c"/>
-<line x1="95" y1="300.0" x2="100" y2="300.0" stroke="#2e2e2c"/>
-<line x1="95" y1="260.0" x2="100" y2="260.0" stroke="#2e2e2c"/>
-<line x1="95" y1="220.0" x2="100" y2="220.0" stroke="#2e2e2c"/>
-<line x1="95" y1="180.0" x2="100" y2="180.0" stroke="#2e2e2c"/>
-<line x1="95" y1="140.0" x2="100" y2="140.0" stroke="#2e2e2c"/>
 <line x1="95" y1="100.0" x2="100" y2="100.0" stroke="#2e2e2c"/>
 <text x="90" y="500.0" text-anchor="end" dominant-baseline="middle">0%</text>
-<text x="90" y="460.0" text-anchor="end" dominant-baseline="middle">10%</text>
-<text x="90" y="420.0" text-anchor="end" dominant-baseline="middle">20%</text>
-<text x="90" y="380.0" text-anchor="end" dominant-baseline="middle">30%</text>
-<text x="90" y="340.0" text-anchor="end" dominant-baseline="middle">40%</text>
-<text x="90" y="300.0" text-anchor="end" dominant-baseline="middle">50%</text>
-<text x="90" y="260.0" text-anchor="end" dominant-baseline="middle">60%</text>
-<text x="90" y="220.0" text-anchor="end" dominant-baseline="middle">70%</text>
-<text x="90" y="180.0" text-anchor="end" dominant-baseline="middle">80%</text>
-<text x="90" y="140.0" text-anchor="end" dominant-baseline="middle">90%</text>
 <text x="90" y="100.0" text-anchor="end" dominant-baseline="middle">100%</text>
 <rect x="730" y="197.5" width="30" height="5" stroke="none" fill="green"/>
 <rect x="730" y="217.5" width="30" height="5" stroke="none" fill="red"/>

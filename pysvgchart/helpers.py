@@ -105,6 +105,9 @@ def get_numeric_ticks(
         nice = 10
 
     pad = nice * magnitude
+    # For integer data, enforce integer ticks (minimum step of 1, int type)
+    if all(isinstance(v, int) for v in values):
+        pad = max(1, int(pad))
     start = math.floor(value_min / pad)
     end = math.ceil(value_max / pad)
     return [round(y * pad, 10) for y in range(int(start), int(end + 1))]

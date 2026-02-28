@@ -399,3 +399,103 @@ def test_text_preserves_original_content():
     assert text.content == 'AT&T'  # original preserved
     elements = text.get_element_list()
     assert '&amp;' in elements[0]  # rendered escaped
+
+
+# --- Auto-zero tests ---
+
+def test_horizontal_bar_auto_zero_positive_close():
+    """Positive values with high variance relative to min → auto-include zero."""
+    categories = ['A', 'B', 'C', 'D', 'E']
+    values = [[1, 2, 3, 4, 100]]  # std ~37.5, min(1) - 2*37.5 = -74 < 0
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Score'],
+    )
+    assert chart.x_axis.scale.ticks[0] <= 0
+
+
+def test_horizontal_bar_auto_zero_negative_close():
+    """Negative values with high variance relative to max → auto-include zero."""
+    categories = ['A', 'B', 'C', 'D', 'E']
+    values = [[-1, -2, -3, -4, -100]]  # std ~37.5, max(-1) + 2*37.5 = 74 > 0
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Score'],
+    )
+    assert chart.x_axis.scale.ticks[-1] >= 0
+
+
+def test_horizontal_bar_auto_zero_not_triggered():
+    """Values far from zero → no auto-zero."""
+    categories = ['A', 'B', 'C']
+    values = [[100, 101, 102]]  # std ~0.82, min(100) - 2*0.82 = 98.4 > 0
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Score'],
+    )
+    assert chart.x_axis.scale.ticks[0] > 0
+
+
+def test_horizontal_bar_explicit_x_zero_still_works():
+    """Explicit x_zero=True always includes zero."""
+    categories = ['A', 'B', 'C']
+    values = [[100, 200, 300]]
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Score'],
+        x_zero=True,
+    )
+    assert chart.x_axis.scale.ticks[0] <= 0
+
+
+# --- Integer tick tests ---
+
+def test_integer_ticks_type():
+    """Integer data should produce actual int-typed ticks."""
+    from pysvgchart.helpers import get_numeric_ticks
+    ticks = get_numeric_ticks([1, 2, 3, 4, 5], max_ticks=12)
+    for t in ticks:
+        assert isinstance(t, int), f"Tick {t!r} is {type(t).__name__}, expected int"
+
+
+def test_integer_ticks_small_range():
+    """Small integer range should not produce fractional ticks."""
+    from pysvgchart.helpers import get_numeric_ticks
+    ticks = get_numeric_ticks([1, 2, 3], max_ticks=12)
+    for t in ticks:
+        assert isinstance(t, int), f"Tick {t!r} is {type(t).__name__}, expected int"
+    assert all(t == int(t) for t in ticks)
+
+
+def test_integer_ticks_large_range():
+    """Larger integer range should also produce int-typed ticks."""
+    from pysvgchart.helpers import get_numeric_ticks
+    ticks = get_numeric_ticks([0, 100], max_ticks=12)
+    for t in ticks:
+        assert isinstance(t, int), f"Tick {t!r} is {type(t).__name__}, expected int"
+
+
+def test_float_ticks_preserved():
+    """Float data should still allow fractional ticks."""
+    from pysvgchart.helpers import get_numeric_ticks
+    ticks = get_numeric_ticks([0.1, 0.2, 0.3, 0.4, 0.5], max_ticks=12)
+    assert len(ticks) > 1
+    # At least some ticks should be non-integer
+    assert any(t != int(t) for t in ticks)
+
+
+def test_integer_ticks_in_chart():
+    """End-to-end: integer data in chart should produce integer tick labels."""
+    categories = ['A', 'B', 'C', 'D', 'E']
+    values = [[1, 2, 3, 4, 5]]
+    chart = psc.HorizontalBarChart(
+        x_values=values,
+        y_values=categories,
+        x_names=['Count'],
+    )
+    for tick in chart.x_axis.scale.ticks:
+        assert isinstance(tick, int), f"Tick {tick!r} should be int for integer data"
