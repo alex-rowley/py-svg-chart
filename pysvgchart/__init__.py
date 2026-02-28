@@ -34,7 +34,7 @@ Documentation:
 
 __author__ = "Alex Rowley"
 __email__ = ""
-__version__ = "0.6.4"
+__version__ = "0.7.0"
 
 from .charts import (
     BarChart,
