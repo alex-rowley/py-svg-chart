@@ -82,7 +82,7 @@ effects. These effects can be added to any base elements but I thought you'd mos
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
     donut_chart = psc.DonutChart(values, names)
     donut_chart.add_hover_modifier(hover_modifier)
-    donut_chart.render_with_all_styles()
+    donut_chart.render()
 
 `Here <https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/donut_hover.svg>`_ is the output of this code.
 In order to get the hover modifiers to display successfully you will need to either render the svg with styles
@@ -170,7 +170,7 @@ Here's a heavily customised line chart example
         ]
 
     line_chart.add_hover_modifier(hover_modifier, radius=5)
-    line_chart.render_with_all_styles()
+    line_chart.render()
 
 .. image:: https://raw.githubusercontent.com/arowley-ai/py-svg-chart/refs/heads/main/showcase/detailed.svg
    :alt: Complex line chart example
@@ -329,7 +329,7 @@ All charts support these methods:
 
     # Rendering
     svg_string = chart.render()                    # Basic SVG output
-    svg_string = chart.render_with_all_styles()    # With inline CSS (for hovers)
+    svg_string = str(chart)                        # Also works via __str__
     chart.save('output.svg')                       # Save to file
 
     # Legends
@@ -340,7 +340,7 @@ All charts support these methods:
     chart.add_y_grid(minor_ticks=5)
     chart.add_x_grid(minor_ticks=5)
 
-    # Hover effects (requires render_with_all_styles)
+    # Hover effects
     def hover_fn(position, x_value, y_value, series_name, styles):
         return [psc.Text(x=position.x, y=position.y, content=str(y_value))]
 

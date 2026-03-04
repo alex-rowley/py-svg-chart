@@ -145,27 +145,27 @@ def stylised_line_chart(x_shift=False, y_shift=False, x_log=False, y_log=False):
 
 def test_stylised_line_chart_without_shift():
     chart = stylised_line_chart(x_shift=False, y_shift=False)
-    write_out(chart.render_with_all_styles(), name="detailed.svg")
+    write_out(chart.render(), name="detailed.svg")
 
 
 def test_stylised_line_chart_with_x_shift():
     chart = stylised_line_chart(x_shift=True, y_shift=False)
-    write_out(chart.render_with_all_styles(), name="detailed-x-shift.svg")
+    write_out(chart.render(), name="detailed-x-shift.svg")
 
 
 def test_stylised_line_chart_with_y_shift():
     chart = stylised_line_chart(x_shift=False, y_shift=True)
-    write_out(chart.render_with_all_styles(), name="detailed-y-shift.svg")
+    write_out(chart.render(), name="detailed-y-shift.svg")
 
 
 def test_stylised_line_chart_with_xy_shift():
     chart = stylised_line_chart(x_shift=True, y_shift=True)
-    write_out(chart.render_with_all_styles(), name="detailed-xy-shift.svg")
+    write_out(chart.render(), name="detailed-xy-shift.svg")
 
 
 def test_stylised_log_chart_with_y_log():
     chart = stylised_line_chart(x_log=False, y_log=True)
-    write_out(chart.render_with_all_styles(), name="detailed-y-log.svg")
+    write_out(chart.render(), name="detailed-y-log.svg")
 
 
 def test_donut():
@@ -194,7 +194,7 @@ def test_donut_hover():
     names = ['Apples', 'Bananas', 'Cherries', 'Durians']
     donut_chart = psc.DonutChart(values, names)
     donut_chart.add_hover_modifier(hover_modifier)
-    write_out(donut_chart.render_with_all_styles(), name="donut_hover.svg")
+    write_out(donut_chart.render(), name="donut_hover.svg")
 
 
 def test_simple_line_chart():

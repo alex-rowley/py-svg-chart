@@ -274,31 +274,21 @@ class Chart(ABC):
     def modify_series(self, modifier: Callable) -> None:
         self.series = {name: modifier(series) for name, series in self.series.items()}
 
-    def render(self) -> str:
-        return "\n".join(
-            [
-                self.svg_begin_template.format(height=self.height, width=self.width),
-                *self.get_element_list(),
-                "</svg>",
-            ]
-        )
+    def __str__(self) -> str:
+        return self.render()
 
-    def render_with_all_styles(
+    def render(
             self,
             styles: named_styles | None = None,
             include_default: bool = True,
     ) -> str:
-        """
-        :param styles: styles to use
-        :param include_default: also use the default styles (to enable things like hover text)
-        :return:
-        """
+        style_block = []
+        if styles is not None or not include_default:
+            style_block = ["<style>", render_all_styles(styles, include_default), "</style>"]
         return "\n".join(
             [
                 self.svg_begin_template.format(height=self.height, width=self.width),
-                "<style>",
-                render_all_styles(styles, include_default),
-                "</style>",
+                *style_block,
                 *self.get_element_list(),
                 "</svg>",
             ]
@@ -308,20 +298,10 @@ class Chart(ABC):
             self,
             file_path: str,
             styles: named_styles | None = None,
-            include_default: bool = True
+            include_default: bool = True,
     ) -> None:
-        """
-        Save the chart to a file.
-        :param file_path: file path to write to
-        :param styles: styles to use (if provided, will render with all styles)
-        :param include_default: also use the default styles (only used when styles is provided)
-        :return:
-        """
         with open(file_path, "w+") as file:
-            if styles is not None or not include_default:
-                file.write(self.render_with_all_styles(styles, include_default))
-            else:
-                file.write(self.render())
+            file.write(self.render(styles, include_default))
 
     @staticmethod
     def generate_series_names(

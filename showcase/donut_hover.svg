@@ -1,13 +1,4 @@
 <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-<style>
-.psc-hover-group .psc-hover-data {
-    display: none;
-}
-
-.psc-hover-group:hover .psc-hover-data {
-    display: inline;
-}
-</style>
 <g class="psc-hover-group">
 <path d="M 201.3030214988503,340.95389311788625 A 150 150 0 0 1 98.30860776328069 340.81193120126443 L 131.0464895132029,251.63104144046363 A 55 55 0 0 0 168.81110788291178 251.68309414322496 Z" fill="green"></path>
 <text x="150" y="190" alignment-baseline="middle" text-anchor="middle" class="psc-hover-data">Apples</text>
