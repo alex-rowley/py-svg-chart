@@ -1,4 +1,13 @@
 <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+<style>
+.psc-hover-group .psc-hover-data {
+    display: none;
+}
+
+.psc-hover-group:hover .psc-hover-data {
+    display: inline;
+}
+</style>
 <line x1="100" y1="500" x2="700" y2="500" stroke="#2e2e2c"/>
 <line x1="100.0" y1="500" x2="100.0" y2="505" stroke="#2e2e2c"/>
 <line x1="166.66666666666666" y1="500" x2="166.66666666666666" y2="505" stroke="#2e2e2c"/>

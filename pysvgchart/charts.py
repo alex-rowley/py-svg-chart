@@ -283,7 +283,7 @@ class Chart(ABC):
             include_default: bool = True,
     ) -> str:
         style_block = []
-        if styles is not None or not include_default:
+        if styles is not None or include_default:
             style_block = ["<style>", render_all_styles(styles, include_default), "</style>"]
         return "\n".join(
             [

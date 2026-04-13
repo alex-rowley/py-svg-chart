@@ -1,4 +1,13 @@
 <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+<style>
+.psc-hover-group .psc-hover-data {
+    display: none;
+}
+
+.psc-hover-group:hover .psc-hover-data {
+    display: inline;
+}
+</style>
 <text x="100.0" y="510" text-anchor="middle" dominant-baseline="hanging">Oct</text>
 <text x="159.96131528046422" y="510" text-anchor="middle" dominant-baseline="hanging">Nov</text>
 <text x="217.98839458413926" y="510" text-anchor="middle" dominant-baseline="hanging">Dec</text>
